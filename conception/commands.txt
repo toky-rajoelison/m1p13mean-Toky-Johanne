@@ -63,6 +63,7 @@ git merge prod
 
 --------------
 
+git add .
 git add conception/commands.txt
 git commit -m "your message"
 
