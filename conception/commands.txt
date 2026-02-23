@@ -63,4 +63,16 @@ git merge prod
 
 --------------
 
-git commit -m "first_change"
+git add conception/commands.txt
+git commit -m "your message"
+
+------------
+
+# Switch to test branch
+git checkout test
+
+# Merge johanne into test
+git merge johanne
+
+# Push the updated test branch to GitHub
+git push origin test
