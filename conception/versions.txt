@@ -1,0 +1,14 @@
+✅ Summary
+
+Node.js: 24.13.1 ✔️
+
+npm: 11.8.0 ✔️
+
+Angular CLI: 21.1.5 ✔️
+
+
+Angular frontend will be on http://localhost:4200
+
+Node backend will be on http://localhost:5000
+
+

@@ -3,7 +3,7 @@
 IN POWERSHELL
     mongod
 OPEN ANOTHER POWERSHELL
-    mango
+    mongo
 
 use myapp
 
@@ -56,18 +56,18 @@ git commit --allow-empty -m "initial commit on johanne"
 git push -u origin johanne
 
 --------------
-Merge prod into Johanne 
+MERGE PROD INTO JOHANNE
 
 git checkout johanne
 git merge prod
 
 --------------
 
+BRINGING CHANGES TO UPPER BRANCHES
+
 git add .
 git add conception/commands.txt
 git commit -m "your message"
-
-------------
 
 # Switch to test branch
 git checkout test
@@ -75,5 +75,13 @@ git checkout test
 # Merge johanne into test
 git merge johanne
 
+git add .
+git commit -m "resolve merge conflicts"
+
 # Push the updated test branch to GitHub
 git push origin test
+
+
+---------
+
+ng generate service services/autha

@@ -1,46 +1,45 @@
-use ecommerceDB
+use ecommerce;
 
-// ---------------- ROLES ----------------
+// ROLE
 db.createCollection("roles", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
       required: ["libelle"],
       properties: {
-        libelle: { bsonType: "string", description: "Role is required" }
+        libelle: { bsonType: "string" } // ADMIN, BOUTIQUE, ACHETEUR
       }
     }
   }
-})
+});
 
-// ---------------- UTILISATEURS ----------------
+// UTILISATEUR
 db.createCollection("utilisateurs", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["nom","prenom","mot_de_passe","statut","id_role","datetime_creation"],
+      required: ["nom", "prenom", "mot_de_passe", "statut", "id_role", "datetime_creation"],
       properties: {
         nom: { bsonType: "string" },
         prenom: { bsonType: "string" },
-        email: { bsonType: "string", pattern: "^.+@.+\\..+$" },
+        email: { bsonType: "string" },
         mot_de_passe: { bsonType: "string" },
         telephone: { bsonType: "string" },
-        statut: { enum: [1,2], description: "1=actif,2=bloqué" },
-        id_role: { bsonType: "objectId" },
-        datetime_creation: { bsonType: "date" }
+        statut: { enum: [1, 2] }, // 1=actif, 2=bloqué
+        datetime_creation: { bsonType: "date" },
+        id_role: { bsonType: "objectId" }
       }
     }
-  },
-  validationAction: "warn"
-})
-db.utilisateurs.createIndex({ email: 1 }, { unique: true })
+  }
+});
+db.utilisateurs.createIndex({ email: 1 }, { unique: true });
 
-// ---------------- CENTRES COMMERCIAUX ----------------
+// CENTRE_COMMERCIAL
 db.createCollection("centres_commerciaux", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["nom","last_updated"],
+      required: ["nom"],
       properties: {
         nom: { bsonType: "string" },
         adresse: { bsonType: "string" },
@@ -50,47 +49,31 @@ db.createCollection("centres_commerciaux", {
       }
     }
   }
-})
-db.centres_commerciaux.createIndex({ nom: 1 }, { unique: true })
+});
+db.centres_commerciaux.createIndex({ nom: 1 }, { unique: true });
 
-// ---------------- ADMIN CENTRE ----------------
-db.createCollection("admin_centre", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["id_utilisateur","id_centre","date_creation","last_updated"],
-      properties: {
-        id_utilisateur: { bsonType: "objectId" },
-        id_centre: { bsonType: "objectId" },
-        date_creation: { bsonType: "date" },
-        last_updated: { bsonType: "date" }
-      }
-    }
-  }
-})
-
-// ---------------- HORAIRES CENTRE ----------------
+// Horaires_Centre
 db.createCollection("horaires_centre", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_centre","id_jour","heure_ouverture","heure_fermeture"],
+      required: ["id_centre", "id_jour", "heure_ouverture", "heure_fermeture"],
       properties: {
         id_centre: { bsonType: "objectId" },
         id_jour: { bsonType: "int", minimum: 1, maximum: 7 },
-        heure_ouverture: { bsonType: "string" }, // store HH:MM format
+        heure_ouverture: { bsonType: "string" },
         heure_fermeture: { bsonType: "string" }
       }
     }
   }
-})
+});
 
-// ---------------- BOUTIQUES ----------------
+// BOUTIQUE
 db.createCollection("boutiques", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["nom","id_categorie_boutique","etage","emplacement","email","id_statut_boutique","id_centre","datetime_added"],
+      required: ["nom", "id_categorie_boutique", "etage", "emplacement", "email", "statut", "datetime_added"],
       properties: {
         nom: { bsonType: "string" },
         description: { bsonType: "string" },
@@ -100,20 +83,20 @@ db.createCollection("boutiques", {
         telephone: { bsonType: "string" },
         email: { bsonType: "string" },
         logo: { bsonType: "string" },
-        id_statut_boutique: { bsonType: "objectId" },
+        statut: { bsonType: "objectId" },
         id_centre: { bsonType: "objectId" },
         datetime_added: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- ADMIN BOUTIQUE ----------------
+// Admin_Boutique
 db.createCollection("admin_boutique", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_utilisateur","id_boutique","last_updated"],
+      required: ["id_utilisateur", "id_boutique"],
       properties: {
         id_utilisateur: { bsonType: "objectId" },
         id_boutique: { bsonType: "objectId" },
@@ -121,9 +104,9 @@ db.createCollection("admin_boutique", {
       }
     }
   }
-})
+});
 
-// ---------------- CATEGORIES BOUTIQUE ----------------
+// Categorie_Boutique
 db.createCollection("categorie_boutique", {
   validator: {
     $jsonSchema: {
@@ -135,55 +118,43 @@ db.createCollection("categorie_boutique", {
       }
     }
   }
-})
+});
 
-// ---------------- STATUS BOUTIQUE ----------------
-db.createCollection("status_boutique", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["nom"],
-      properties: { nom: { bsonType: "string" } }
-    }
-  }
-})
-
-// ---------------- LOYER EMPLACEMENT ----------------
+// Emplacement - Loyer_Emplacement
 db.createCollection("loyer_emplacement", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["emplacement","id_centre","montant","date_debut"],
+      required: ["emplacement", "montant", "date_debut"],
       properties: {
         emplacement: { bsonType: "int" },
-        id_centre: { bsonType: "objectId" },
         montant: { bsonType: "double" },
-        date_debut: { bsonType: "date" },
-        date_fin: { bsonType: "date" }
+        date_debut: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- CHARGES EMPLACEMENT ----------------
+// Charges_Emplacement
 db.createCollection("charges_emplacement", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_admin_centre_utilisateur","id_boutique","id_type_charges","montant"],
+      required: ["id_admin_centre_utilisateur", "id_boutique", "id_type_charges", "montant"],
       properties: {
         id_admin_centre_utilisateur: { bsonType: "objectId" },
         id_boutique: { bsonType: "objectId" },
         id_type_charges: { bsonType: "objectId" },
         montant: { bsonType: "double" },
+        commentaire: { bsonType: "string" },
         datetime_payment: { bsonType: "date" },
-        commentaire: { bsonType: "string" }
+        date_limite: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- TYPES CHARGES ----------------
+// Types_Charges
 db.createCollection("types_charges", {
   validator: {
     $jsonSchema: {
@@ -195,16 +166,15 @@ db.createCollection("types_charges", {
       }
     }
   }
-})
+});
 
-// ---------------- DEMANDE CENTRE ----------------
+// Demande_Centre
 db.createCollection("demande_centre", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_centre","id_admin_boutique_utilisateur","datetime_demande"],
+      required: ["id_admin_boutique_utilisateur", "datetime_demande"],
       properties: {
-        id_centre: { bsonType: "objectId" },
         description: { bsonType: "string" },
         id_admin_boutique_utilisateur: { bsonType: "objectId" },
         datetime_demande: { bsonType: "date" },
@@ -213,114 +183,145 @@ db.createCollection("demande_centre", {
       }
     }
   }
-})
+});
 
-// ---------------- ANNONCE ----------------
+// Annonce
 db.createCollection("annonces", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["taget","id_utilisateur","datetime_annonce"],
+      required: ["target", "id_utilisateur", "datetime_annonce"],
       properties: {
-        taget: { bsonType: "string" },
+        target: { bsonType: "string" },
         id_utilisateur: { bsonType: "objectId" },
         datetime_annonce: { bsonType: "date" },
         photo: { bsonType: "string" }
       }
     }
   }
-})
+});
 
-// ---------------- CATEGORIE PRODUIT ----------------
+// CATEGORIE_PRODUIT
 db.createCollection("categorie_produit", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
       required: ["libelle"],
-      properties: { libelle: { bsonType: "string" } }
+      properties: {
+        libelle: { bsonType: "string" }
+      }
     }
   }
-})
+});
 
-// ---------------- PRODUIT ----------------
+// Sous_categorie
+db.createCollection("sous_categorie", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_categorie"],
+      properties: {
+        nom: { bsonType: "string" },
+        id_categorie: { bsonType: "objectId" }
+      }
+    }
+  }
+});
+
+// PRODUIT
 db.createCollection("produits", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["nom","image","statut","id_boutique","id_categorie"],
+      required: ["nom", "id_sous_categorie"],
       properties: {
         nom: { bsonType: "string" },
-        description: { bsonType: "string" },
-        stock: { bsonType: "int", minimum: 0 },
-        image: { bsonType: "string" },
-        statut: { enum: [1,2], description: "1=disponible, 2=indisponible" },
-        id_boutique: { bsonType: "objectId" },
-        id_categorie: { bsonType: "objectId" },
+        id_sous_categorie: { bsonType: "objectId" },
         last_updated: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- PRIX PRODUIT ----------------
+// Produit_boutique
+db.createCollection("produit_boutique", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_boutique", "id_produit_boutique", "stock", "image", "statut"],
+      properties: {
+        id_produit_boutique: { bsonType: "objectId" },
+        id_produit: { bsonType: "objectId" },
+        id_boutique: { bsonType: "objectId" },
+        stock: { bsonType: "int", minimum: 0 },
+        image: { bsonType: "string" },
+        statut: { enum: [1, 2] },
+        description: { bsonType: "string" },
+        last_updated: { bsonType: "date" }
+      }
+    }
+  }
+});
+
+// Prix_Produit
 db.createCollection("prix_produit", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_produit","montant","datetime_changement"],
+      required: ["id_produit_boutique", "montant", "datetime_changement"],
       properties: {
-        id_produit: { bsonType: "objectId" },
+        id_produit_boutique: { bsonType: "objectId" },
         montant: { bsonType: "double" },
         datetime_changement: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- STOCK MOUVEMENT PRODUIT ----------------
+// Stock_Mouvement_Produit
 db.createCollection("stock_mouvement_produit", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_produit","mouvement","nb_produit","datetime_mouvement"],
+      required: ["id_produit_boutique", "mouvement", "nb_produit", "datetime_mouvement"],
       properties: {
-        id_produit: { bsonType: "objectId" },
-        mouvement: { enum: [1,2], description: "1=in,2=out" },
+        id_produit_boutique: { bsonType: "objectId" },
+        mouvement: { enum: [1, 2] }, // 1=in, 2=out
         nb_produit: { bsonType: "int", minimum: 0 },
         datetime_mouvement: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- PANIER ----------------
-db.createCollection("paniers", {
+// Panier
+db.createCollection("panier", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_utilisateur_client","datetime_creation","last_updated","statut","mode_paiement","type_livraison"],
+      required: ["id_utilisateur_client", "datetime_creation", "last_updated", "statut", "mode_paiement", "type_livraison"],
       properties: {
         id_utilisateur_client: { bsonType: "objectId" },
         datetime_creation: { bsonType: "date" },
         last_updated: { bsonType: "date" },
-        statut: { enum: [1,2,3], description: "1=en cours,2=payed,3=livrer" },
+        statut: { enum: [1, 2, 3] }, // en cours, payed, livrer
         prix_total: { bsonType: "double" },
-        mode_paiement: { enum: [1,2], description: "1=cash,2=card" },
-        type_livraison: { enum: [1,2], description: "1=sur place,2=deplacement" }
+        mode_paiement: { enum: [1, 2] },
+        type_livraison: { enum: [1, 2] }
       }
     }
   }
-})
+});
 
-// ---------------- DETAIL PANIER ----------------
+// DETAIL_Pannier
 db.createCollection("detail_panier", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_produit","quantite","id_pannier","datetime_added","price_per_item"],
+      required: ["id_produit_boutique", "quantite", "id_pannier", "datetime_added", "price_per_item"],
       properties: {
-        id_produit: { bsonType: "objectId" },
-        quantite: { bsonType: "int", minimum: 1 },
+        id_produit_boutique: { bsonType: "objectId" },
+        quantite: { bsonType: "int", minimum: 0 },
         id_pannier: { bsonType: "objectId" },
         datetime_added: { bsonType: "date" },
         shipping_fee: { bsonType: "double" },
@@ -328,61 +329,62 @@ db.createCollection("detail_panier", {
       }
     }
   }
-})
+});
 
-// ---------------- PROMOTION ----------------
+// PROMOTION
 db.createCollection("promotions", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["nom","pourcentage","datetime_debut","datetime_fin"],
+      required: ["nom", "pourcentage", "datetime_debut", "datetime_fin"],
       properties: {
         nom: { bsonType: "string" },
         description: { bsonType: "string" },
-        pourcentage: { bsonType: "int", minimum:1, maximum:100 },
+        pourcentage: { bsonType: "int", minimum: 1, maximum: 100 },
         datetime_debut: { bsonType: "date" },
         datetime_fin: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- PRODUIT PROMOTION ----------------
+// PRODUIT_PROMOTION
 db.createCollection("produit_promotion", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_produit","id_promotion","datetime_added"],
+      required: ["id_produit_boutique", "id_promotion", "datetime_added"],
       properties: {
-        id_produit: { bsonType: "objectId" },
+        id_produit_boutique: { bsonType: "objectId" },
         id_promotion: { bsonType: "objectId" },
         datetime_added: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- CARTE FIDELITE ----------------
+// CARTE_FIDELITE
 db.createCollection("carte_fidelite", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["points","id_acheteur","datetime_added"],
+      required: ["points", "id_acheteur", "datetime_added"],
       properties: {
+        id_boutique: { bsonType: "objectId" },
         points: { bsonType: "int", minimum: 0 },
         id_acheteur: { bsonType: "objectId" },
         datetime_added: { bsonType: "date" }
       }
     }
   }
-})
+});
 
-// ---------------- AVIS BOUTIQUE ----------------
+// AVIS_Boutique
 db.createCollection("avis_boutique", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["note","datetime_avis","id_acheteur","id_boutique"],
+      required: ["note", "datetime_avis", "id_acheteur", "id_boutique"],
       properties: {
         note: { bsonType: "int", minimum: 1, maximum: 10 },
         commentaire: { bsonType: "string" },
@@ -392,37 +394,37 @@ db.createCollection("avis_boutique", {
       }
     }
   }
-})
+});
 
-// ---------------- AVIS PRODUIT ----------------
+// AVIS_Produit
 db.createCollection("avis_produit", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["note","datetime_avis","id_acheteur","id_produit"],
+      required: ["note", "datetime_avis", "id_acheteur", "id_produit_boutique"],
       properties: {
         note: { bsonType: "int", minimum: 1, maximum: 10 },
         commentaire: { bsonType: "string" },
         datetime_avis: { bsonType: "date" },
         id_acheteur: { bsonType: "objectId" },
-        id_produit: { bsonType: "objectId" }
+        id_produit_boutique: { bsonType: "objectId" }
       }
     }
   }
-})
+});
 
-// ---------------- HISTORIQUE FAVORIS ----------------
+// Historique_Favoris
 db.createCollection("historique_favoris", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["id_utilisateur_client","id_produit","datetime_modif","status"],
+      required: ["id_utilisateur_client", "id_produit_boutique", "datetime_modif", "status"],
       properties: {
         id_utilisateur_client: { bsonType: "objectId" },
-        id_produit: { bsonType: "objectId" },
+        id_produit_boutique: { bsonType: "objectId" },
         datetime_modif: { bsonType: "date" },
-        status: { enum: [1,2], description: "1=isFav,2=cancel" }
+        status: { enum: [1, 2] }
       }
     }
   }
-})
+});
