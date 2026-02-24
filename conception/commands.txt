@@ -67,7 +67,7 @@ BRINGING CHANGES TO UPPER BRANCHES
 
 git add .
 git add conception/commands.txt
-git commit -m "your message"
+git commit -m "backendOk&frontNotYet"
 
 # Switch to test branch
 git checkout test
@@ -79,7 +79,7 @@ git add .
 git commit -m "resolve merge conflicts"
 
 # Push the updated test branch to GitHub
-git push origin test
+git push origin test'
 
 
 ---------
