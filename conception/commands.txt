@@ -87,3 +87,16 @@ git push origin test'
 ng generate service services/autha
 
 git push -u origin johanne
+
+----
+
+backend:
+  node server.js
+frontend:
+  ng serve --open
+mongo:
+    mongosh "mongodb://mongo:MySimplePassword123@shortline.proxy.rlwy.net:29518/ecommerceDB?authSource=admin&retryWrites=true&w=majority"
+
+
+-------------
+db.utilisateurs.find()
