@@ -85,3 +85,5 @@ git push origin test'
 ---------
 
 ng generate service services/autha
+
+git push -u origin test

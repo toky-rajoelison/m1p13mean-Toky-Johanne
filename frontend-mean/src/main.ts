@@ -3,10 +3,12 @@ import { App } from './app/app';
 import { importProvidersFrom } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
 
 bootstrapApplication(App, {
   providers: [
-    importProvidersFrom(HttpClientModule, FormsModule, CommonModule)
+    provideRouter(routes),
+    importProvidersFrom(HttpClientModule, FormsModule)
   ]
 });

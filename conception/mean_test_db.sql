@@ -6,7 +6,7 @@ db.createCollection("roles", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["libelle"],
+      required: ["libelle"],s
       properties: {
         libelle: { bsonType: "string" } // ADMIN, BOUTIQUE, ACHETEUR
       }
