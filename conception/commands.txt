@@ -67,7 +67,7 @@ BRINGING CHANGES TO UPPER BRANCHES
 
 git add .
 git add conception/commands.txt
-git commit -m "backendOk&frontNotYet"
+git commit -m "backendOk&frontOk"
 
 # Switch to test branch
 git checkout test
@@ -86,4 +86,4 @@ git push origin test'
 
 ng generate service services/autha
 
-git push -u origin test
+git push -u origin johanne
