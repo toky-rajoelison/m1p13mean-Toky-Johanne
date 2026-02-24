@@ -6,6 +6,8 @@ npm: 11.8.0 ✔️
 
 Angular CLI: 21.1.5 ✔️
 
+MongoDB shell version v5.0.30
+
 
 Angular frontend will be on http://localhost:4200
 
