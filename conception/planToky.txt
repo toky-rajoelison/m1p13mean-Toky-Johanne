@@ -1,0 +1,29 @@
+Main goal : 
+    - Voir avis produits me
+    - Voir avis boutiques  me
+    - Promotions    
+        create promotion 
+            apply to products 
+    Commandes --izay payer
+            liste produits efacommander (details)
+
+Steps : 
+    - Produits fotsiny : 
+        - tables from mongo to models express
+            - boutiques
+            - anonces
+            - categorie_produit
+            - sous_categorie
+            - produits
+            - produit_boutique
+            - prix_produit
+            - stock_mouvement_produit
+        
+        - Tell chat to create data to the tables
+
+
+    - step 2 : promotion :
+        - promotions
+        - produit_promotion
+        - avis_boutique
+        - avis_produit
