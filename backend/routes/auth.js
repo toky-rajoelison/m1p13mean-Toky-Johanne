@@ -45,18 +45,25 @@ router.post('/login', async (req, res) => {
   try {
     const { email, mot_de_passe } = req.body;
 
-    // Find user by email
+    // 1) Find user by email
     const user = await Utilisateur.findOne({ email }).populate('id_role');
-    if (!user) return res.status(400).json({ message: "Invalid email or password" });
 
-    // Compare password
+    if (!user) {
+      return res.status(404).json({ message: "Email does not exist" });
+    }
+
+    // 2) Compare password
     const isMatch = await bcrypt.compare(mot_de_passe, user.mot_de_passe);
-    if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
 
-    // Optional: return user info (you can also generate token here)
-    res.json({
+    if (!isMatch) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+
+    // 3) Success
+    res.status(200).json({
       message: "Login successful",
       user: {
+        id: user._id,
         nom: user.nom,
         prenom: user.prenom,
         email: user.email,
