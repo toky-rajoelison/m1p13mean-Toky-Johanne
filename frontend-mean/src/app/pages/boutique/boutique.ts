@@ -43,6 +43,15 @@ export class BoutiqueComponent implements OnInit {
     this.router.navigate(['/boutique/avis', boutiqueId]);
   }
 
+  VoirAvisProduit(idProduitBoutique: string) {
+    if (!idProduitBoutique) {
+      console.error("❌ Aucun ID produit fourni");
+      return;
+    }
+    console.log("🛎 Voir avis pour le produit ID:", idProduitBoutique);
+    this.router.navigate(['/boutique/avis-produit', idProduitBoutique]);
+  }
+
   getMyBoutique(userId: string) {
     return this.http.get(`${this.BASE_URL}/boutique/me/${userId}`);
   }

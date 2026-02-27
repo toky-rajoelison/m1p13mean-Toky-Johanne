@@ -5,6 +5,7 @@ import { AdminComponent } from './pages/admin/admin';
 import { BoutiqueComponent } from './pages/boutique/boutique';
 import { AcheteurComponent } from './pages/acheteur/acheteur';
 import { AvisBoutiqueComponent } from './pages/avis/avis-boutique/avis-boutique';
+import { AvisProduitComponent } from './pages/avis/avis-produit/avis-produit';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'boutique', component: BoutiqueComponent },
   { path: 'acheteur', component: AcheteurComponent },
   {path: 'boutique/avis/:id', component: AvisBoutiqueComponent},
+  {path: 'boutique/avis-produit/:id', component: AvisProduitComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

@@ -30,6 +30,11 @@
     <td>{{ p.description }}</td>
     <td>{{ p.stock }}</td>
     <td>{{ p.prix }} Ar</td>
+    <td>
+      <button (click)="VoirAvisProduit(p._id)">
+        Voir les avis
+      </button>
+    </td>
   </tr>
 </table>
 

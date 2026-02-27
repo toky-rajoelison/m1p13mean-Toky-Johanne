@@ -197,3 +197,76 @@ db.annonces.insertMany([
     photo: "promo.jpg"
   }
 ]);
+
+
+
+
+
+//--------------------------------------
+
+db.avis_produit.insertMany([
+
+  // ===== iPhone 15 =====
+  {
+    note: 10,
+    commentaire: "Téléphone ultra rapide, autonomie excellente !",
+    datetime_avis: ISODate("2026-02-27T22:00:00Z"),
+    id_acheteur: ObjectId("69a1f93da3ee642f0ded3387"), 
+    id_produit_boutique: ObjectId("680000000000000000000041")
+  },
+  {
+    note: 8,
+    commentaire: "Très bon smartphone mais un peu cher.",
+    datetime_avis: ISODate("2026-02-27T22:05:00Z"),
+    id_acheteur: ObjectId("69a1f951a3ee642f0ded338a"), 
+    id_produit_boutique: ObjectId("680000000000000000000041")
+  },
+
+  // ===== MacBook Air M3 =====
+  {
+    note: 9,
+    commentaire: "Super léger et très performant pour le travail.",
+    datetime_avis: ISODate("2026-02-27T22:10:00Z"),
+    id_acheteur: ObjectId("69a1f93da3ee642f0ded3387"), 
+    id_produit_boutique: ObjectId("680000000000000000000042")
+  },
+  {
+    note: 7,
+    commentaire: "Bonne machine mais stockage un peu limité.",
+    datetime_avis: ISODate("2026-02-27T22:15:00Z"),
+    id_acheteur: ObjectId("69a1f951a3ee642f0ded338a"), 
+    id_produit_boutique: ObjectId("680000000000000000000042")
+  },
+
+  // ===== T-shirt Nike =====
+  {
+    note: 9,
+    commentaire: "Très confortable et bonne qualité du tissu.",
+    datetime_avis: ISODate("2026-02-27T22:20:00Z"),
+    id_acheteur: ObjectId("69a1f93da3ee642f0ded3387"), 
+    id_produit_boutique: ObjectId("680000000000000000000043")
+  },
+  {
+    note: 6,
+    commentaire: "Correct mais la taille est un peu petite.",
+    datetime_avis: ISODate("2026-02-27T22:25:00Z"),
+    id_acheteur: ObjectId("69a1f951a3ee642f0ded338a"), 
+    id_produit_boutique: ObjectId("680000000000000000000043")
+  },
+
+  // ===== Avis supplémentaires variés =====
+  {
+    note: 5,
+    commentaire: "Livraison un peu lente mais produit conforme.",
+    datetime_avis: ISODate("2026-02-27T22:30:00Z"),
+    id_acheteur: ObjectId("69a1f93da3ee642f0ded3387"), 
+    id_produit_boutique: ObjectId("680000000000000000000043")
+  },
+  {
+    note: 10,
+    commentaire: "Parfait ! Je recommande sans hésiter.",
+    datetime_avis: ISODate("2026-02-27T22:35:00Z"),
+    id_acheteur: ObjectId("69a1f951a3ee642f0ded338a"), 
+    id_produit_boutique: ObjectId("680000000000000000000041")
+  }
+]);

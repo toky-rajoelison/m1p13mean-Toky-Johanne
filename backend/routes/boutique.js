@@ -6,6 +6,7 @@ const Boutique = require('../models/Boutique');
 const ProduitBoutique = require('../models/ProduitBoutique');
 const PrixProduit = require('../models/PrixProduit');
 const AvisBoutique = require('../models/AvisBoutique');
+const AvisProduit = require('../models/AvisProduit');
 require('../models/Produit');
 require('../models/Utilisateur');
 
@@ -100,6 +101,70 @@ router.get('/avis/:idBoutique', async (req, res) => {
 
   } catch (error) {
     console.error("Erreur récupération avis boutique:", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+router.get('/avis-produit/:idProduitBoutique', async (req, res) => {
+  console.log("=======================================");
+  console.log("🔥 ROUTE /avis-produit HIT");
+
+  try {
+    const { idProduitBoutique } = req.params;
+
+    console.log("📦 ID produit reçu :", idProduitBoutique);
+    console.log("📦 Type ID :", typeof idProduitBoutique);
+
+    // Vérifier si l'ID est valide
+    if (!mongoose.Types.ObjectId.isValid(idProduitBoutique)) {
+      console.log("❌ ID produit invalide");
+      return res.status(400).json({ message: "ID produit invalide" });
+    }
+
+    console.log("🧠 Conversion en ObjectId...");
+    const objectId = new mongoose.Types.ObjectId(idProduitBoutique);
+
+    console.log("🔎 Recherche des avis en base...");
+
+    // Récupérer les avis liés au produit boutique
+    const avis = await AvisProduit.find({
+      id_produit_boutique: objectId
+    })
+    .populate({
+      path: "id_acheteur",
+      select: "nom prenom email"
+    })
+    .sort({ datetime_avis: -1 });
+
+    console.log(`✅ ${avis.length} avis trouvés`);
+
+    if (avis.length > 0) {
+      console.log("📝 Exemple avis :", {
+        note: avis[0].note,
+        commentaire: avis[0].commentaire,
+        acheteur: avis[0].id_acheteur
+      });
+    }
+
+    const moyenne =
+      avis.length > 0
+        ? (avis.reduce((sum, a) => sum + a.note, 0) / avis.length).toFixed(2)
+        : 0;
+
+    console.log("⭐ Moyenne calculée :", moyenne);
+
+    console.log("📤 Envoi de la réponse JSON");
+
+    res.json({
+      total: avis.length,
+      moyenne,
+      avis
+    });
+
+    console.log("✅ Réponse envoyée avec succès");
+
+  } catch (error) {
+    console.error("💥 ERREUR SERVEUR /avis-produit :", error);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
