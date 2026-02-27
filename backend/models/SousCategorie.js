@@ -5,4 +5,4 @@ const SousCategorieSchema = new mongoose.Schema({
   id_categorie: { type: mongoose.Schema.Types.ObjectId, ref: "Categorie_Produit", required: true }
 });
 
-module.exports = mongoose.model('Sous_Categorie', SousCategorieSchema);
+module.exports = mongoose.model('Sous_Categorie', SousCategorieSchema, 'sous_categorie');

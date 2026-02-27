@@ -7,4 +7,4 @@ const StockMouvementProduitSchema = new mongoose.Schema({
   datetime_mouvement: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Stock_Mouvement_Produit', StockMouvementProduitSchema);
+module.exports = mongoose.model('Stock_Mouvement_Produit', StockMouvementProduitSchema, 'stock_mouvement_produit');

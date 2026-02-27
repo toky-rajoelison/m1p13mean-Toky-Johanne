@@ -10,4 +10,4 @@ const ProduitBoutiqueSchema = new mongoose.Schema({
   last_updated: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Produit_Boutique', ProduitBoutiqueSchema);
+module.exports = mongoose.model('Produit_Boutique', ProduitBoutiqueSchema, 'produit_boutique');

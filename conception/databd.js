@@ -1,4 +1,4 @@
-use ecommerce;
+use ecommerceDB;
 
 /* ================================
    CATEGORIE_PRODUIT
@@ -43,18 +43,30 @@ db.produits.insertMany([
     _id: ObjectId("680000000000000000000021"),
     nom: "iPhone 15",
     id_sous_categorie: ObjectId("680000000000000000000011"),
+    id_categorie: ObjectId("680000000000000000000001"),
+    id_boutique: ObjectId("680000000000000000000101"),
+    image: "iphone15.jpg",
+    statut: 1,  // 1 = disponible
     last_updated: new Date()
   },
   {
     _id: ObjectId("680000000000000000000022"),
     nom: "MacBook Air M3",
     id_sous_categorie: ObjectId("680000000000000000000012"),
+    id_categorie: ObjectId("680000000000000000000001"),
+    id_boutique: ObjectId("680000000000000000000102"),
+    image: "macbook_air_m3.jpg",
+    statut: 1,
     last_updated: new Date()
   },
   {
     _id: ObjectId("680000000000000000000023"),
     nom: "T-shirt Nike Sport",
     id_sous_categorie: ObjectId("680000000000000000000013"),
+    id_categorie: ObjectId("680000000000000000000002"),
+    id_boutique: ObjectId("680000000000000000000103"),
+    image: "nike_tshirt.jpg",
+    statut: 1,
     last_updated: new Date()
   }
 ]);
@@ -73,7 +85,7 @@ db.boutiques.insertMany([
     telephone: "0340000000",
     email: "tech@store.com",
     logo: "techstore.png",
-    statut: ObjectId("670000000000000000000010"),
+    id_statut_boutique: ObjectId("670000000000000000000010"), // <-- champ corrigé
     id_centre: ObjectId("670000000000000000000020"),
     datetime_added: new Date()
   },
@@ -87,7 +99,7 @@ db.boutiques.insertMany([
     telephone: "0330000000",
     email: "fashion@shop.com",
     logo: "fashion.png",
-    statut: ObjectId("670000000000000000000010"),
+    id_statut_boutique: ObjectId("670000000000000000000010"), // <-- champ corrigé
     id_centre: ObjectId("670000000000000000000020"),
     datetime_added: new Date()
   }
@@ -134,18 +146,18 @@ db.produit_boutique.insertMany([
 ================================ */
 db.prix_produit.insertMany([
   {
-    id_produit_boutique: ObjectId("680000000000000000000041"),
-    montant: 4500000,
+    id_produit: ObjectId("680000000000000000000041"),
+    montant: 4500000.01,   // force le type double
     datetime_changement: new Date()
   },
   {
-    id_produit_boutique: ObjectId("680000000000000000000042"),
-    montant: 6200000,
+    id_produit: ObjectId("680000000000000000000042"),
+    montant: 6200000.01,
     datetime_changement: new Date()
   },
   {
-    id_produit_boutique: ObjectId("680000000000000000000043"),
-    montant: 80000,
+    id_produit: ObjectId("680000000000000000000043"),
+    montant: 80000.01,
     datetime_changement: new Date()
   }
 ]);
@@ -155,19 +167,19 @@ db.prix_produit.insertMany([
 ================================ */
 db.stock_mouvement_produit.insertMany([
   {
-    id_produit_boutique: ObjectId("680000000000000000000041"),
+    id_produit: ObjectId("680000000000000000000041"), // nom exact attendu
     mouvement: 1,
     nb_produit: 50,
     datetime_mouvement: new Date()
   },
   {
-    id_produit_boutique: ObjectId("680000000000000000000042"),
+    id_produit: ObjectId("680000000000000000000042"),
     mouvement: 1,
     nb_produit: 20,
     datetime_mouvement: new Date()
   },
   {
-    id_produit_boutique: ObjectId("680000000000000000000043"),
+    id_produit: ObjectId("680000000000000000000043"),
     mouvement: 1,
     nb_produit: 100,
     datetime_mouvement: new Date()
