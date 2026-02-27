@@ -5,9 +5,8 @@ const AdminBoutique = require('../models/AdminBoutique');
 const Boutique = require('../models/Boutique');
 const ProduitBoutique = require('../models/ProduitBoutique');
 const PrixProduit = require('../models/PrixProduit');
-const AvisBoutique = require('../models/AvisBoutique');
 require('../models/Produit');
-require('../models/Utilisateur');
+
 
 const mongoose = require('mongoose');
 
@@ -76,32 +75,10 @@ router.get('/me/:userId', async (req, res) => {
   }
 });
 
-router.get('/avis/:idBoutique', async (req, res) => {
-  try {
-    const { idBoutique } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(idBoutique)) {
-      return res.status(400).json({ message: "ID boutique invalide" });
-    }
-
-    const avis = await AvisBoutique.find({
-      id_boutique: new mongoose.Types.ObjectId(idBoutique)
-    })
-    .populate({
-      path: "id_acheteur",
-      select: "nom prenom email"
-    })
-    .sort({ datetime_avis: -1 });
-
-    res.json({
-      total: avis.length,
-      avis
-    });
-
-  } catch (error) {
-    console.error("Erreur récupération avis boutique:", error);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-});
-
 module.exports = router;
+
+
+
+ici, creer /avis/id de boutique
+
+pour voir tous les avis données pour la boutique

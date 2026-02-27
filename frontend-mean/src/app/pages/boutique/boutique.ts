@@ -1,6 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environments';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-boutique',
@@ -10,6 +14,8 @@ import { AuthService } from '../../services/auth';
   styleUrls: ['./boutique.css']
 })
 export class BoutiqueComponent implements OnInit {
+
+  private BASE_URL = environment.apiUrl;
 
   userName: string | null = localStorage.getItem('userName');
   userRole: string | null = localStorage.getItem('userRole');
@@ -21,16 +27,30 @@ export class BoutiqueComponent implements OnInit {
   loading: boolean = true;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private authService: AuthService, 
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.loadBoutiqueData();
   }
 
+  voirAvis() {
+    const boutiqueId = this.boutique._id; // adapte selon ton code
+    this.router.navigate(['/boutique/avis', boutiqueId]);
+  }
+
+  getMyBoutique(userId: string) {
+    return this.http.get(`${this.BASE_URL}/boutique/me/${userId}`);
+  }
+
   loadBoutiqueData(): void {
     console.log("🔥 loadBoutiqueData appelé");
     console.log("🆔 userId:", this.userId);
-
+    
     if (!this.userId) {
       console.log("❌ Pas de userId");
       this.errorMessage = "Utilisateur non identifié";
@@ -39,19 +59,21 @@ export class BoutiqueComponent implements OnInit {
     }
 
     console.log("📡 Appel API en cours...");
-
-    this.authService.getMyBoutique(this.userId).subscribe({
+    
+    this.getMyBoutique(this.userId).subscribe({
       next: (res: any) => {
+        localStorage.setItem("boutiqueId", res.boutique._id);
         this.boutique = res.boutique;
         this.produits = res.produits;
         this.loading = false;
-        this.cd.detectChanges(); // ⚡️ important
+        this.cd.detectChanges();
       },
       error: (err) => {
         this.errorMessage = err.error?.message || "Erreur serveur";
         this.loading = false;
-        this.cd.detectChanges(); // ⚡️ important
+        this.cd.detectChanges();
       }
     });
+    console.log("📡 Done calling API ");
   }
 }

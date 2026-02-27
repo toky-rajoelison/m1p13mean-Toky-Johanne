@@ -1,3 +1,5 @@
+
+
 <h2>Welcome, {{ userName }} ({{ userRole }})</h2>
 
 <div *ngIf="loading">Chargement...</div>
@@ -31,6 +33,13 @@
   </tr>
 </table>
 
+<button (click)="voirAvis()" class="btn-avis">
+  Voir les avis
+</button>
+
 <div *ngIf="!loading && produits.length === 0">
   Aucun produit trouvé.
 </div>
+
+
+

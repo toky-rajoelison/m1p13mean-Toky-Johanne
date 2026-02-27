@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   // private BASE_URL = 'https://m1p13mean-toky-johanne.onrender.com/api/auth'; // your backend API
-  private BASE_URL = 'http://localhost:5000/api'; // your backend API
+  private BASE_URL = environment.apiUrl; // your backend API
 
   constructor(private http: HttpClient) { }
 
@@ -20,9 +21,5 @@ export class AuthService {
   // Login user
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.BASE_URL}/auth/login`, credentials);
-  }
-
-  getMyBoutique(userId: string) {
-    return this.http.get(`${this.BASE_URL}/boutique/me/${userId}`);
   }
 }
