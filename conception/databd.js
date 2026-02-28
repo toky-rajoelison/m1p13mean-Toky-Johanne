@@ -316,3 +316,63 @@ db.produit_promotion.insertMany([
     datetime_added: new Date()
   }
 ])
+
+// PANIER acheteur1
+db.panier.insertOne({
+  id_utilisateur_client: ObjectId("69a1f93da3ee642f0ded3387"),
+  datetime_creation: new Date(),
+  last_updated: new Date(),
+  statut: 1, // en cours
+  prix_total: 0.01,
+  mode_paiement: 1, // ex: mobile money
+  type_livraison: 1 // ex: livraison standard
+});
+
+// PANIER acheteur2
+db.panier.insertOne({
+  id_utilisateur_client: ObjectId("69a1f951a3ee642f0ded338a"),
+  datetime_creation: new Date(),
+  last_updated: new Date(),
+  statut: 2, // confirmé
+  prix_total: 0.01,
+  mode_paiement: 2, // ex: carte bancaire
+  type_livraison: 2 // ex: retrait boutique
+});
+
+db.detail_panier.insertMany([
+  {
+    id_produit_boutique: ObjectId("69a0c2fa2309485ca4cb0cec"),
+    quantite: 2,
+    id_pannier: ObjectId("69a335b625d28d1c297c2918"),
+    datetime_added: new Date(),
+    shipping_fee: 5000.01,
+    price_per_item: 20000.01
+  },
+  {
+    id_produit_boutique: ObjectId("680000000000000000000041"),
+    quantite: 1,
+    id_pannier: ObjectId("69a335b625d28d1c297c2918"),
+    datetime_added: new Date(),
+    shipping_fee: 5000.01,
+    price_per_item: 4500000.01
+  }
+]);
+
+db.detail_panier.insertMany([
+  {
+    id_produit_boutique: ObjectId("680000000000000000000042"),
+    quantite: 1,
+    id_pannier: ObjectId("69a335b725d28d1c297c2919"),
+    datetime_added: new Date(),
+    shipping_fee: 10000.01,
+    price_per_item: 6000000.01
+  },
+  {
+    id_produit_boutique: ObjectId("680000000000000000000043"),
+    quantite: 3,
+    id_pannier: ObjectId("69a335b725d28d1c297c2919"),
+    datetime_added: new Date(),
+    shipping_fee: 10000.01,
+    price_per_item: 80000.01
+  }
+]);

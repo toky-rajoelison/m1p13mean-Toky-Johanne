@@ -9,22 +9,8 @@ Main goal :
             liste produits efacommander (details)
 
 Steps : 
-    - Produits fotsiny : 
-        - tables from mongo to models express
-            - boutiques
-            - anonces
-            - categorie_produit
-            - sous_categorie
-            - produits
-            - produit_boutique
-            - prix_produit
-            - stock_mouvement_produit
-        
-        - Tell chat to create data to the tables
+    - detele tables panier et details !
+    - add data according to boutiques and stuff
+    - test the URL
 
-
-    - step 2 : promotion :
-        - promotions
-        - produit_promotion
-        - avis_boutique
-        - avis_produit
+    - ask chat for the frontend side
