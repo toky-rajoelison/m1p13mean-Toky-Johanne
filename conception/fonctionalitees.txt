@@ -57,6 +57,7 @@ ADMIN BOUTIQUE
 - Demande boutique
     Liste de demandes by me
     Creer une demande vers le centre 
+    
 - Voir avis produits me
 - Voir avis boutiques  me
 - Promotions    

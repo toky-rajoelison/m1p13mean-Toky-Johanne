@@ -270,3 +270,49 @@ db.avis_produit.insertMany([
     id_produit_boutique: ObjectId("680000000000000000000041")
   }
 ]);
+db.promotions.insertMany([
+  {
+    nom: "Promo Été 2026",
+    description: "Remise spéciale été sur produits sélectionnés",
+    pourcentage: 20,
+    datetime_debut: ISODate("2026-03-01T00:00:00Z"),
+    datetime_fin: ISODate("2026-03-31T23:59:59Z")
+  },
+  {
+    nom: "Black Friday 2026",
+    description: "Promotion exceptionnelle Black Friday",
+    pourcentage: 40,
+    datetime_debut: ISODate("2026-11-25T00:00:00Z"),
+    datetime_fin: ISODate("2026-11-30T23:59:59Z")
+  },
+  {
+    nom: "Promo Lancement",
+    description: "Offre spéciale lancement produit",
+    pourcentage: 15,
+    datetime_debut: ISODate("2026-02-27T00:00:00Z"),
+    datetime_fin: ISODate("2026-03-10T23:59:59Z")
+  }
+])
+
+db.produit_promotion.insertMany([
+  {
+    id_produit_boutique: ObjectId("680000000000000000000041"), // iPhone 15
+    id_promotion: ObjectId("700000000000000000000001"), // Promo Été
+    datetime_added: new Date()
+  },
+  {
+    id_produit_boutique: ObjectId("680000000000000000000042"), // MacBook
+    id_promotion: ObjectId("700000000000000000000002"), // Black Friday
+    datetime_added: new Date()
+  },
+  {
+    id_produit_boutique: ObjectId("680000000000000000000043"), // T-shirt
+    id_promotion: ObjectId("700000000000000000000001"), // Promo Été
+    datetime_added: new Date()
+  },
+  {
+    id_produit_boutique: ObjectId("69a0c2fa2309485ca4cb0cec"), // Produit A
+    id_promotion: ObjectId("700000000000000000000003"), // Promo Lancement
+    datetime_added: new Date()
+  }
+])

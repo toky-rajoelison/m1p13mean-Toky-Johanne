@@ -12,6 +12,34 @@ require('../models/Utilisateur');
 
 const mongoose = require('mongoose');
 
+router.get('/produits/:idBoutique', async (req, res) => {
+  console.log("=======================================");
+  console.log("🔥 ROUTE /produits/:idBoutique HIT");
+
+  try {
+    const { idBoutique } = req.params;
+
+    console.log("📦 ID Boutique reçu :", idBoutique);
+
+    if (!mongoose.Types.ObjectId.isValid(idBoutique)) {
+      console.log("❌ ID Boutique invalide");
+      return res.status(400).json({ message: "ID boutique invalide" });
+    }
+
+    const produits = await ProduitBoutique.find({
+      id_boutique: new mongoose.Types.ObjectId(idBoutique)
+    }).populate('id_produit');
+
+    console.log(`📦 ${produits.length} produits trouvés`);
+
+    res.json({ produits });
+
+  } catch (error) {
+    console.error("💥 ERREUR GET PRODUITS:", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
 router.get('/me/:userId', async (req, res) => {
   console.log("=======================================");
   console.log("🔥 ROUTE /admin-boutique/me HIT");
@@ -115,7 +143,6 @@ router.get('/avis-produit/:idProduitBoutique', async (req, res) => {
     console.log("📦 ID produit reçu :", idProduitBoutique);
     console.log("📦 Type ID :", typeof idProduitBoutique);
 
-    // Vérifier si l'ID est valide
     if (!mongoose.Types.ObjectId.isValid(idProduitBoutique)) {
       console.log("❌ ID produit invalide");
       return res.status(400).json({ message: "ID produit invalide" });
@@ -126,7 +153,6 @@ router.get('/avis-produit/:idProduitBoutique', async (req, res) => {
 
     console.log("🔎 Recherche des avis en base...");
 
-    // Récupérer les avis liés au produit boutique
     const avis = await AvisProduit.find({
       id_produit_boutique: objectId
     })

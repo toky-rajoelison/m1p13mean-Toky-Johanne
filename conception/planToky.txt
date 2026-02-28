@@ -1,6 +1,7 @@
 Main goal : 
     - Voir avis produits me
     - Voir avis boutiques  me
+    
     - Promotions    
         create promotion 
             apply to products 
