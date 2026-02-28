@@ -57,6 +57,7 @@ ADMIN BOUTIQUE
 - Demande boutique
     Liste de demandes by me
     Creer une demande vers le centre 
+    
 - Voir avis produits me
 - Voir avis boutiques  me
 - Promotions    
@@ -64,7 +65,6 @@ ADMIN BOUTIQUE
         apply to products 
 Commandes --izay payer
         liste produits efacommander (details)
-
 
 CLIENTS
     Listes des panier  / create
@@ -82,12 +82,3 @@ CLIENTS
     Mes Cartes de fidelite 
         per boutiques w points 
     Page recherche produits 
-    
-    
-
-
-
-
-    
-
-    

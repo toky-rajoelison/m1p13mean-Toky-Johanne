@@ -304,7 +304,7 @@ db.createCollection("panier", {
         id_utilisateur_client: { bsonType: "objectId" },
         datetime_creation: { bsonType: "date" },
         last_updated: { bsonType: "date" },
-        statut: { enum: [1, 2, 3] }, // en cours, payed, livrer
+        statut: { enum: [1, 2, 3, 4] }, // en cours, confirmé, payed, livrer
         prix_total: { bsonType: "double" },
         mode_paiement: { enum: [1, 2] },
         type_livraison: { enum: [1, 2] }
@@ -428,3 +428,5 @@ db.createCollection("historique_favoris", {
     }
   }
 });
+
+
