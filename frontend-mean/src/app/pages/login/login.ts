@@ -37,8 +37,8 @@ export class LoginComponent {
         localStorage.setItem('userRole', role);
 
         // Redirect based on role
-        if (role === 'ADMIN') this.router.navigate(['/admin']);
-        else if (role === 'BOUTIQUE') this.router.navigate(['/boutique']);
+        if (role === 'ADMIN_CENTRE') this.router.navigate(['/admin']);
+        else if (role === 'ADMIN_BOUTIQUE') this.router.navigate(['/boutique']);
         else if (role === 'ACHETEUR') this.router.navigate(['/acheteur']);
       },
       error: (err) => {
