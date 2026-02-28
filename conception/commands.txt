@@ -1,0 +1,102 @@
+
+
+IN POWERSHELL
+    mongod
+OPEN ANOTHER POWERSHELL
+    mongo
+
+use myapp
+
+db.createCollection("users")
+
+show collections
+
+db.users.insertOne({
+  name: "Alice",
+  age: 22,
+  email: "alice@gmail.com"
+})
+
+db.users.insertMany([
+  { name: "Bob", age: 25, email: "bob@gmail.com" },
+  { name: "Sara", age: 20, email: "sara@gmail.com" }
+])
+
+-----------
+
+
+git clone https://github.com/toky-rajoelison/Commercial-Back.git
+
+git status
+git branch
+git checkout -b new-branch-name
+git add .
+git commit -m "your message"
+git push origin new-branch-name
+
+---
+git checkout -b prod
+git add .
+git commit -m "initial commit on prod"
+
+
+git checkout prod
+git checkout -b test
+git commit --allow-empty -m "initial commit on test"
+git push -u origin test
+
+git checkout test
+git checkout -b toky
+git commit --allow-empty -m "initial commit on toky"
+git push -u origin toky
+
+git checkout test
+git checkout -b johanne
+git commit --allow-empty -m "initial commit on johanne"
+git push -u origin johanne
+
+--------------
+MERGE PROD INTO JOHANNE
+
+git checkout johanne
+git merge prod
+
+--------------
+
+BRINGING CHANGES TO UPPER BRANCHES
+
+git add .
+git add conception/commands.txt
+git commit -m "backendOk&frontOk"
+
+# Switch to test branch
+git checkout test
+
+# Merge johanne into test
+git merge johanne
+
+git add .
+git commit -m "resolve merge conflicts"
+
+# Push the updated test branch to GitHub
+git push origin test'
+
+
+---------
+ng generate component pages/acheteur
+ng generate service services/autha
+
+git push -u origin johanne
+
+----
+
+backend:
+  node server.js
+frontend:
+  ng serve --open
+mongo:
+    mongosh "mongodb://mongo:MySimplePassword123@shortline.proxy.rlwy.net:29518/ecommerceDB?authSource=admin&retryWrites=true&w=majority"
+
+
+-------------
+db.utilisateurs.find()

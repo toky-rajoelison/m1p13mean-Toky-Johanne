@@ -1,0 +1,84 @@
+
+
+
+LOGIN des trois (3 pages)
+
+Roles:
+ADMIN CENTRE
+ADMIN Boutique 
+Client 
+
+INTERACTIONS:
+
+ADMIN CENTRE <-> ADMIN Boutique 
+-Loyer 
+-Jirama 
+-Demande 
+-Page annonce news from ADMIN CENTRE (avis)
+
+ADMIN Boutique <-> client
+-Vente, commande
+-Point de fidelite 
+-remarque from client to boutique (avis)
+
+produits : promotions , favoris 
+
+ADMIN CENTRE <-> Client 
+- annonce EVENEMENT 
+- remarque from client to centre 
+
+----------------
+- Login 3
+
+ADMIN CENTRE
+- Dashboard
+    - charges non payer 
+-Annonces 
+    create une annonce
+    listes des annonces paginner
+- Loyer 
+    Historique payement Loyer 
+- Charges/Facturation non-fixe
+    Historique charges
+- Demande boutique
+    Liste de demandes
+
+
+ADMIN BOUTIQUE
+-Dashboard 
+    - samy manao
+-Annonces 
+    create une annonce
+    listes des annonces paginner
+- Loyer 
+    Voir status Loyer payement Historique
+- Charges/Facturation non-fixe
+    Voir les Facturation avec status payment
+- Demande boutique
+    Liste de demandes by me
+    Creer une demande vers le centre 
+    
+- Voir avis produits me
+- Voir avis boutiques  me
+- Promotions    
+    create promotion 
+        apply to products 
+Commandes --izay payer
+        liste produits efacommander (details)
+
+CLIENTS
+    Listes des panier  / create
+        liste produits in panier (details)
+        payement panier -- can edit if noy finished 
+    Pages home 
+        produits favoris 
+        promotions 
+    Listes Boutiques
+        infos boutiques
+        produits boutique (add to cart - number - favoris )
+            creer un avis sur produit 
+        mes points si j'ai une carte de fidelite
+        Creer un avis 
+    Mes Cartes de fidelite 
+        per boutiques w points 
+    Page recherche produits 

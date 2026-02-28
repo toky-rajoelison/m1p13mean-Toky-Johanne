@@ -1,0 +1,6 @@
+| File               | Type            | Purpose                               | Analogy         |
+| ------------------ | --------------- | ------------------------------------- | --------------- |
+| `register.ts`      | TypeScript      | Component logic, functions, variables | Brain           |
+| `register.html`    | HTML            | Component structure, user interface   | Face            |
+| `register.css`     | CSS             | Component styling                     | Clothes/makeup  |
+| `register.spec.ts` | TypeScript test | Component testing                     | Quality control |
