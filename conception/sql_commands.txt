@@ -3,11 +3,11 @@ use myDatabase
 show collections
 
 //create collections
-db.createCollection("utilisateurs")
+db.createCollection("boutiques")
 //insert
 db.utilisateurs.insertOne({ name: "Anna", age: 20 })
 //select
-db.utilisateurs.find()
+db.roles.find()
 db.utilisateurs.find().pretty()
 db.utilisateurs.find({ age: 25 })
 

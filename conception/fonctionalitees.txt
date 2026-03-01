@@ -28,7 +28,7 @@ ADMIN CENTRE <-> Client
 - remarque from client to centre 
 
 ----------------
-- Login 3
+- Login 3 .
 
 ADMIN CENTRE
 - Dashboard
@@ -37,8 +37,10 @@ ADMIN CENTRE
     create une annonce
     listes des annonces paginner
 - Loyer 
+    Payer le loyer 
     Historique payement Loyer 
 - Charges/Facturation non-fixe
+    create 
     Historique charges
 - Demande boutique
     Liste de demandes
@@ -51,14 +53,20 @@ ADMIN BOUTIQUE
     create une annonce
     listes des annonces paginner
 - Loyer 
-    Voir status Loyer payement Historique
+    payer
+    Voir status Loyer payement Historique me
 - Charges/Facturation non-fixe
     Voir les Facturation avec status payment
+    payer charge
 - Demande boutique
     Liste de demandes by me
     Creer une demande vers le centre 
     
 - Voir avis produits me
+
+TOKYYYYY
+
+- liste produits (Voir avis produits me)
 - Voir avis boutiques  me
 - Promotions    
     create promotion 

@@ -8,6 +8,8 @@ import { AvisBoutiqueComponent } from './pages/avis/avis-boutique/avis-boutique'
 import { AvisProduitComponent } from './pages/avis/avis-produit/avis-produit';
 import { PromotionComponent } from './pages/promotion/promotion/promotion';
 import { ApplyPromotionComponent } from './pages/promotion/apply-promotion/apply-promotion';
+import { AnnoncesComponent } from './pages/annonces/annonces.component';
+
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,5 +21,6 @@ export const routes: Routes = [
   {path: 'boutique/avis-produit/:id', component: AvisProduitComponent},
   {path: 'promotion', component: PromotionComponent},
   {path: 'apply-promotion', component: ApplyPromotionComponent},
+  { path: 'annonces', component: AnnoncesComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

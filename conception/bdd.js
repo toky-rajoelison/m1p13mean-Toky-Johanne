@@ -91,6 +91,11 @@ db.createCollection("boutiques", {
   }
 });
 
+db.boutiques.createIndex(
+  { emplacement: 1 },
+  { unique: true, name: "unique_emplacement" }
+)
+
 // Admin_Boutique
 db.createCollection("admin_boutique", {
   validator: {
@@ -199,6 +204,26 @@ db.createCollection("annonces", {
       }
     }
   }
+});
+
+db.runCommand({
+  collMod: "annonces",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["target", "id_utilisateur", "datetime_annonce"],
+      properties: {
+        target: { 
+          enum: ["PUBLIC", "PRIVATE"]   // 🔒 restriction
+        },
+        id_utilisateur: { bsonType: "objectId" },
+        datetime_annonce: { bsonType: "date" },
+        photo: { bsonType: "string" }
+      }
+    }
+  },
+  validationLevel: "strict",
+  validationAction: "error"
 });
 
 // CATEGORIE_PRODUIT
