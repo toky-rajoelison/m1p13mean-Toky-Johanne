@@ -4,12 +4,13 @@ import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environments';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-boutique',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './boutique.html',
   styleUrls: ['./boutique.css']
 })

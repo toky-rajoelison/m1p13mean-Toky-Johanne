@@ -12,3 +12,9 @@ db.admin_boutique.insertMany([
     last_updated: new Date()
   }
 ]);
+
+db.admin_boutique.insertOne({
+  id_utilisateur: ObjectId(''),
+  id_boutique: ObjectId('680000000000000000000032'),     // Fashion Shop
+  last_updated: new Date()
+});

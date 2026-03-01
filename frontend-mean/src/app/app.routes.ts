@@ -9,6 +9,8 @@ import { AvisProduitComponent } from './pages/avis/avis-produit/avis-produit';
 import { PromotionComponent } from './pages/promotion/promotion/promotion';
 import { ApplyPromotionComponent } from './pages/promotion/apply-promotion/apply-promotion';
 import { AnnoncesComponent } from './pages/annonces/annonces.component';
+import { LoyerComponent } from './pages/loyer/loyer.component';
+import { DemandesComponent } from './pages/demandes/demandes.component';
 
 
 export const routes: Routes = [
@@ -22,5 +24,12 @@ export const routes: Routes = [
   {path: 'promotion', component: PromotionComponent},
   {path: 'apply-promotion', component: ApplyPromotionComponent},
   { path: 'annonces', component: AnnoncesComponent },
+  { path: 'loyer', component: LoyerComponent },
+  {
+  path: 'demandes',
+  component: DemandesComponent,
+  // canActivate: [AuthGuard], // optional if you use role-based access
+  // data: { roles: ['ADMIN_CENTRE', 'ADMIN_BOUTIQUE'] }
+  },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

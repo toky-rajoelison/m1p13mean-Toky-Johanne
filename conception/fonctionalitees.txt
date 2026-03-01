@@ -33,7 +33,7 @@ ADMIN CENTRE <-> Client
 ADMIN CENTRE
 - Dashboard
     - charges non payer 
--Annonces 
+-OKAnnonces 
     create une annonce
     listes des annonces paginner
 - Loyer 
@@ -42,7 +42,7 @@ ADMIN CENTRE
 - Charges/Facturation non-fixe
     create 
     Historique charges
-- Demande boutique
+-OKDemande boutique
     Liste de demandes
 
 

@@ -1,6 +1,11 @@
 
 
-<h2>Welcome, {{ userName }} ({{ userRole }})</h2>
+<h2>Welcome boutique , {{ userName }} ({{ userRole }})</h2>
+
+<div>
+  <a routerLink="/demandes">Voir les demandes</a>
+</div>
+
 
 <div *ngIf="loading">Chargement...</div>
 

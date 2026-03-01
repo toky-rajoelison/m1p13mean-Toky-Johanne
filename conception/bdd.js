@@ -141,24 +141,6 @@ db.createCollection("loyer_emplacement", {
 });
 
 // Charges_Emplacement
-db.createCollection("charges_emplacement", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["id_admin_centre_utilisateur", "id_boutique", "id_type_charges", "montant"],
-      properties: {
-        id_admin_centre_utilisateur: { bsonType: "objectId" },
-        id_boutique: { bsonType: "objectId" },
-        id_type_charges: { bsonType: "objectId" },
-        montant: { bsonType: "double" },
-        commentaire: { bsonType: "string" },
-        datetime_payment: { bsonType: "date" },
-        date_limite: { bsonType: "date" }
-      }
-    }
-  }
-});
-
 // Types_Charges
 db.createCollection("types_charges", {
   validator: {
@@ -183,8 +165,30 @@ db.createCollection("demande_centre", {
         description: { bsonType: "string" },
         id_admin_boutique_utilisateur: { bsonType: "objectId" },
         datetime_demande: { bsonType: "date" },
-        read_at: { bsonType: "date" },
-        read_by: { bsonType: "string" }
+      }
+    }
+  }
+});
+db.createCollection("commentaire_demande", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_demande", "id_utilisateur", "commentaire", "datetime_commentaire"],
+      properties: {
+        id_demande: {
+          bsonType: "objectId",
+          description: "Reference to demande_centre _id"
+        },
+        id_utilisateur: {
+          bsonType: "objectId",
+          description: "Reference to utilisateur _id"
+        },
+        commentaire: {
+          bsonType: "string"
+        },
+        datetime_commentaire: {
+          bsonType: "date"
+        }
       }
     }
   }
@@ -449,6 +453,24 @@ db.createCollection("historique_favoris", {
         id_produit_boutique: { bsonType: "objectId" },
         datetime_modif: { bsonType: "date" },
         status: { enum: [1, 2] }
+      }
+    }
+  }
+});
+
+db.createCollection("loyer_payments", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_utilisateur_centre", "id_boutique", "datetime_payment", "month", "year", "amount"],
+      properties: {
+        id_utilisateur_centre: { bsonType: "objectId" },
+        id_boutique: { bsonType: "objectId" },
+        description: { bsonType: "string" },
+        datetime_payment: { bsonType: "date" },
+        month: { bsonType: "int", minimum: 1, maximum: 12 },
+        year: { bsonType: "int" },
+        amount: { bsonType: "double", minimum: 0 }
       }
     }
   }

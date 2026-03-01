@@ -1,0 +1,110 @@
+hello so I am working on this mean project.
+I alredy created it. 
+It already has a few functionalities.
+I want this next functionality.
+
+in which the admin of a boutique makes a request to the admin of a centre.
+note that all the boutiques existing in this bdd is related to one and the same centre commercial.
+
+so basically, he can send a demande 
+
+
+// Demande_Centre
+db.createCollection("demande_centre", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_admin_boutique_utilisateur", "datetime_demande"],
+      properties: {
+        description: { bsonType: "string" },
+        id_admin_boutique_utilisateur: { bsonType: "objectId" },
+        datetime_demande: { bsonType: "date" },
+      }
+    }
+  }
+});
+
+// // Commentaire_Demande (corrected)
+db.createCollection("commentaire_demande", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_demande", "id_utilisateur", "commentaire", "datetime_commentaire"],
+      properties: {
+        id_demande: {
+          bsonType: "objectId",
+          description: "Reference to demande_centre _id"
+        },
+        id_utilisateur: {
+          bsonType: "objectId",
+          description: "Reference to utilisateur _id"
+        },
+        commentaire: {
+          bsonType: "string"
+        },
+        datetime_commentaire: {
+          bsonType: "date"
+        }
+      }
+    }
+  }
+});
+
+Then when the demande is sent, the admin centre or the admin boutique can comment on the demande as a suivi.
+
+
+So basically, I have a welcome page for an admin centre, and another one for a admin boutique
+I want both of them to have the links to look for the list of demandes, I want them to be paginated 10 (demandes).
+when I click the links I see 10 per 10 demandes with the commentaire below it if it has . 
+the most recent one at the top. 
+If one is a id_admin_boutique he create a demande. not the admin centre not the acheteur though so check that. 
+
+An admin can see all the demandes. paginated 10as usual.
+the id_admin_boutique can see the demandes corresponding to his boutique 
+
+we can know that relation because in utilisateur there is 
+
+// Admin_Boutique
+db.createCollection("admin_boutique", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_utilisateur", "id_boutique"],
+      properties: {
+        id_utilisateur: { bsonType: "objectId" },
+        id_boutique: { bsonType: "objectId" },
+        last_updated: { bsonType: "date" }
+      }
+    }
+  }
+});
+
+also check that the role of the person is admin_boutique
+
+heres an example of the utilisateur model 
+const mongoose = require('mongoose');
+
+const UtilisateurSchema = new mongoose.Schema({
+  nom: { type: String, required: true },
+  prenom: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  mot_de_passe: { type: String, required: true },
+  telephone: { type: String },
+  statut: { type: Number, enum: [1,2], default: 1 }, // 1=actif, 2=bloqué
+  datetime_creation: { type: Date, default: Date.now },
+
+  id_role: { type: mongoose.Schema.Types.ObjectId, ref: "Role", required: true }
+});
+
+module.exports = mongoose.model('Utilisateur', UtilisateurSchema);
+
+....
+
+so what I want you to do is to create the model for demande, and for commentaire_demande.
+after that add a routes "demande.js"
+
+here is an example of route I used before. 
+
+ANNONCE
+
+then after that add the route to server.js

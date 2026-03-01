@@ -1,21 +1,26 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // ✅ make sure this is imported
-import { RouterModule } from '@angular/router'; // ✅ for routerLink in your template
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, RouterModule], // ✅ add CommonModule and RouterModule
+  imports: [CommonModule, RouterModule],
   template: `
     <h2>Welcome, {{ userName }} ({{ userRole }})</h2>
-
-    <!-- Link to annonces page -->
     <div class="admin-links">
-      <a routerLink="/annonces" class="btn btn-primary">
-        Voir les annonces
-      </a>
+      <a routerLink="/annonces" class="btn btn-primary">Voir les annonces</a>
+      <a routerLink="/loyer" class="btn btn-success">Gestion Loyer</a>
+      <a routerLink="/demandes" class="btn btn-warning">Voir les demandes</a>
     </div>
-  `
+  `,
+  styles: [`
+    .admin-links { margin-top: 20px; display: flex; gap: 15px; }
+    .btn { padding: 10px 20px; text-decoration: none; color: white; border-radius: 5px; display: inline-block; }
+    .btn-primary { background-color: #007bff; }
+    .btn-success { background-color: #28a745; }
+    .btn-warning { background-color: #ffc107; color: #000; }
+  `]
 })
 export class AdminComponent {
   userName = localStorage.getItem('userName') || '';

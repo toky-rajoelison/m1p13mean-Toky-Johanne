@@ -83,6 +83,7 @@ git push origin test'
 
 
 ---------
+
 ng generate component pages/acheteur
 ng generate service services/autha
 

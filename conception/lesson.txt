@@ -4,3 +4,17 @@
 | `register.html`    | HTML            | Component structure, user interface   | Face            |
 | `register.css`     | CSS             | Component styling                     | Clothes/makeup  |
 | `register.spec.ts` | TypeScript test | Component testing                     | Quality control |
+
+
+| Name / Email         | _id (Utilisateur)                            | Role           | Role _id                 |
+| -------------------- | -------------------------------------------- | -------------- | ------------------------ |
+| Rabearivelo Customer | 699d79b164292a3813eadab8                     | ACHETEUR       | 699d7486e0924110b2cb0ce4 |
+| LOLOU Customer       | 699db030194790c1a70dbcc5                     | ADMIN_CENTRE   | 699d7486e0924110b2cb0ce2 |
+| Rabearivelo Johanne  | 69a015d7d9b0a3282427f662                     | ACHETEUR       | 699d7486e0924110b2cb0ce4 |
+| hock fifa            | 69a0410c97c710ee766cd91d                     | ADMIN_CENTRE   | 699d7486e0924110b2cb0ce2 |
+| RAJOELISON Toky      | 69a054e4b6088a0dbb41d1b5                     | ADMIN_CENTRE   | 699d7486e0924110b2cb0ce2 |
+| John Doe             | 69a05537b6088a0dbb41d1ba                     | ADMIN_BOUTIQUE | 699d7486e0924110b2cb0ce3 |
+| Coco coco            | 69a19159225277ca7f7aaede / e0 / e3 / e6 / e9 | ADMIN_CENTRE   | 699d7486e0924110b2cb0ce2 |
+| client1 acheter      | 69a1f93da3ee642f0ded3387                     | ACHETEUR       | 699d7486e0924110b2cb0ce4 |
+| client2 acheter2     | 69a1f951a3ee642f0ded338a                     | ACHETEUR       | 699d7486e0924110b2cb0ce4 |
+| adminCentre1 admin   | 69a3914600d9aa89ad73ddf1                     | ADMIN_CENTRE   | 699d7486e0924110b2cb0ce2 |
