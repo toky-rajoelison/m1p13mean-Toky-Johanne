@@ -39,11 +39,11 @@ export class AddAvisBoutiqueComponent implements OnInit {
       id_boutique: this.boutiqueId
     };
 
-    this.http.post(`${this.BASE_URL}/avis-boutique`, body).subscribe({
+    this.http.post(`${this.BASE_URL}/avisBoutique`, body).subscribe({
       next: () => {
         this.message = "Avis envoyé avec succès !";
         // Optionnel : redirection vers la page des boutiques
-        setTimeout(() => this.router.navigate(['/boutiques']), 1500);
+        setTimeout(() => this.router.navigate(['/boutique_a']), 1500);
       },
       error: (err) => {
         console.error(err);

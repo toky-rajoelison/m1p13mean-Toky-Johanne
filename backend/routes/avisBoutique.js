@@ -10,7 +10,7 @@ require('../models/Utilisateur');
 // ===============================
 // 📝 CREER UN AVIS BOUTIQUE
 // ===============================
-router.post('/avis-boutique', async (req, res) => {
+router.post('/', async (req, res) => {
 
   console.log("=======================================");
   console.log("🔥 ROUTE POST /avis-boutique HIT");

@@ -18,10 +18,8 @@ router.post('/', async (req, res) => {
 
     console.log("📥 Données reçues :", req.body);
 
-    if (!note || !id_acheteur || !id_produit_boutique) {
-      return res.status(400).json({
-        message: "Champs obligatoires manquants"
-      });
+    if (note === undefined || note === null || !id_acheteur || !id_produit_boutique) {
+        return res.status(400).json({ message: "Champs obligatoires manquants" });
     }
 
     if (note < 1 || note > 10) {
