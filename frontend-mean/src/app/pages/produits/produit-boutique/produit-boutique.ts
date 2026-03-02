@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environments';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-produits-boutique',
@@ -13,10 +14,12 @@ import { RouterModule } from '@angular/router';
 })
 export class ProduitsBoutiqueComponent implements OnInit {
   BASE_URL = environment.apiUrl;
-
+  
+  userId: string | null = localStorage.getItem('userId');
   produits: any[] = [];
   boutiques: any[] = [];
   categories: any[] = [];
+  favorisIds: string[] = [];
 
   page = 1;
   limit = 10;
@@ -26,16 +29,17 @@ export class ProduitsBoutiqueComponent implements OnInit {
   filterBoutique: string = '';
   filterCategorie: string = '';
   filterDescription: string = '';
-
+  
   loading = true;
   message = '';
 
-  constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
+  constructor(private http: HttpClient, private cd: ChangeDetectorRef, private router: Router) {}
 
   ngOnInit(): void {
     this.getBoutiques();
     this.getCategories();
     this.getProduits();
+    this.getFavoris();
   }
 
   getBoutiques(): void {
@@ -43,6 +47,16 @@ export class ProduitsBoutiqueComponent implements OnInit {
       next: (res) => this.boutiques = res,
       error: (err) => console.error(err)
     });
+  }
+
+  allerAvisProduit(produitBoutiqueId: string): void {
+    if (!this.userId) {
+      this.message = "Vous devez être connecté pour laisser un avis";
+      return;
+    }
+
+    // On passe l'ID du produit boutique dans l'URL
+    this.router.navigate(['/avis-produit', produitBoutiqueId]);
   }
 
   getCategories(): void {
@@ -97,5 +111,49 @@ export class ProduitsBoutiqueComponent implements OnInit {
       this.page--;
       this.getProduits();
     }
+  }
+
+  getFavoris(): void {
+    if (!this.userId) return;
+
+    this.http.get<any[]>(`${this.BASE_URL}/favoris/utilisateur/${this.userId}`)
+      .subscribe({
+        next: (res) => {
+          // On stocke seulement les IDs des produits
+          this.favorisIds = res.map(f => f.id_produit_boutique._id);
+        },
+        error: (err) => console.error(err)
+      });
+  }
+
+  isFavori(produitId: string): boolean {
+    return this.favorisIds.includes(produitId);
+  }
+
+
+  toggleFavori(produitBoutiqueId: string): void {
+    if (!this.userId) {
+      this.message = "Utilisateur non connecté";
+      return;
+    }
+
+    this.http.post(`${this.BASE_URL}/favoris/toggle`, {
+      id_utilisateur_client: this.userId,
+      id_produit_boutique: produitBoutiqueId
+    }).subscribe({
+      next: () => {
+
+        if (this.isFavori(produitBoutiqueId)) {
+          this.favorisIds = this.favorisIds.filter(id => id !== produitBoutiqueId);
+        } else {
+          this.favorisIds.push(produitBoutiqueId);
+        }
+
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 }

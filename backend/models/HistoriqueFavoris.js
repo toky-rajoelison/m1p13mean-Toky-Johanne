@@ -8,7 +8,7 @@ const HistoriqueFavorisSchema = new mongoose.Schema({
   },
   id_produit_boutique: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: "ProduitBoutique", 
+    ref: "Produit_Boutique", 
     required: true 
   },
   datetime_modif: { 

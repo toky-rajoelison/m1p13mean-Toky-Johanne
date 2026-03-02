@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
   selector: 'app-acheteur',
   standalone: true,
   imports: [CommonModule, RouterModule], // for *ngIf, routerLink etc.
-  templateUrl: './acheteur.html', // moved from inline
-  styleUrls: ['./acheteur.css']   // optional, can create a CSS file
+  templateUrl: './acheteur.html',
+  styleUrls: ['./acheteur.css']
 })
 export class AcheteurComponent {
   userName = localStorage.getItem('userName') || '';

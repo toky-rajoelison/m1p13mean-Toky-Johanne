@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environments';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BoutiquePAcheteur } from "../boutique-p-acheteur/boutique-p-acheteur";
+import { Router } from '@angular/router'; // déjà dans les imports
 
 @Component({
   selector: 'app-boutique-acheteur',
@@ -16,6 +17,7 @@ import { BoutiquePAcheteur } from "../boutique-p-acheteur/boutique-p-acheteur";
 export class BoutiqueAcheteur implements OnInit {
   BASE_URL = environment.apiUrl;
 
+  userId: string | null = localStorage.getItem('userId');
   boutiques: any[] = [];
   selectedBoutique: any = null;
   isModalOpen: boolean = false;
@@ -28,9 +30,7 @@ export class BoutiqueAcheteur implements OnInit {
   loading = true;
   message = '';
 
-  constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
-
-  
+  constructor(private http: HttpClient, private cd: ChangeDetectorRef, private router: Router) {}
 
   ngOnInit(): void {
     this.getBoutiques();
@@ -57,6 +57,15 @@ export class BoutiqueAcheteur implements OnInit {
         this.cd.detectChanges();
       }
     });
+  }
+
+  allerAvisBoutique(boutiqueId: string): void {
+    if (!this.userId) {
+      this.message = "Vous devez être connecté pour laisser un avis";
+      return;
+    }
+
+    this.router.navigate(['/avis-boutique', boutiqueId]);
   }
 
   selectBoutique(boutique: any): void {

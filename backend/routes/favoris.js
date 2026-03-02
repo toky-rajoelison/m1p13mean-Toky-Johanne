@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const HistoriqueFavoris = require('../models/HistoriqueFavoris');
+require('../models/ProduitBoutique');
+require('../models/Utilisateur');
 
 
 router.get('/utilisateur/:id', async (req, res) => {
@@ -32,7 +34,7 @@ router.get('/utilisateur/:id', async (req, res) => {
 // ===============================
 // ✅ Add produitBoutique to favorites
 // ===============================
-router.post('/add', async (req, res) => {
+router.post('/toggle', async (req, res) => {
   try {
     const { id_utilisateur_client, id_produit_boutique } = req.body;
 
@@ -43,27 +45,58 @@ router.post('/add', async (req, res) => {
       return res.status(400).json({ message: "ID invalide" });
     }
 
-    // Vérifier si déjà en favori actif
     const existing = await HistoriqueFavoris.findOne({
       id_utilisateur_client,
-      id_produit_boutique,
-      status: 1
+      id_produit_boutique
     });
 
+    // 🟢 Si existe
     if (existing) {
-      return res.status(400).json({ message: "Produit déjà en favori" });
-    }
 
+      // Toggle status
+      existing.status = existing.status === 1 ? 2 : 1;
+      existing.datetime_modif = new Date();
+
+        console.log("in");
+        console.log({
+            id_utilisateur_client,
+            id_produit_boutique,
+            status: 1,
+            datetime_modif: new Date()
+        });
+        
+        await existing.save();
+        
+        return res.json({
+            message: existing.status === 1
+            ? "Ajouté aux favoris"
+            : "Retiré des favoris",
+            status: existing.status
+        });
+    }
+    
+    // 🔵 Si n'existe pas → créer
     const newFavori = new HistoriqueFavoris({
-      id_utilisateur_client,
+        id_utilisateur_client,
       id_produit_boutique,
-      status: 1, // ajouté
+      status: 1,
       datetime_modif: new Date()
+    });
+    
+    console.log("out");
+    console.log({
+        id_utilisateur_client,
+        id_produit_boutique,
+        status: 1,
+        datetime_modif: new Date()
     });
 
     await newFavori.save();
 
-    res.status(201).json(newFavori);
+    res.status(201).json({
+      message: "Ajouté aux favoris",
+      status: 1
+    });
 
   } catch (err) {
     console.error(err);

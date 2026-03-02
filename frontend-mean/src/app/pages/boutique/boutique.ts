@@ -24,6 +24,7 @@ export class BoutiqueComponent implements OnInit {
 
   boutique: any = null;
   produits: any[] = [];
+  boutiques: any[] = [];
 
   loading: boolean = true;
   errorMessage: string = '';
@@ -55,6 +56,13 @@ export class BoutiqueComponent implements OnInit {
 
   getMyBoutique(userId: string) {
     return this.http.get(`${this.BASE_URL}/boutique/me/${userId}`);
+  }
+
+  getBoutiques(): void {
+    this.http.get<any>(`${this.BASE_URL}/boutique`).subscribe({
+      next: (res) => this.boutiques = res,
+      error: (err) => console.error(err)
+    });
   }
 
   loadBoutiqueData(): void {

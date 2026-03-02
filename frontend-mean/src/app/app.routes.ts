@@ -15,6 +15,9 @@ import { FacturesComponent } from './pages/factures/factures.component';
 import { FacturerComponent } from './pages/factures/facturer/facturer.component';
 import { ProduitsBoutiqueComponent } from './pages/produits/produit-boutique/produit-boutique';
 import { BoutiqueAcheteur } from './pages/boutique/boutique-acheteur/boutique-acheteur';
+import { FavorisComponent } from './pages/acheteur/favoris/favoris';
+import { AddAvisProduitComponent } from './pages/avis/avis-produit/add-avis/add-avis';
+import { AddAvisBoutiqueComponent } from './pages/avis/avis-boutique/add-avis/add-avis';
 
 
 export const routes: Routes = [
@@ -33,6 +36,9 @@ export const routes: Routes = [
   { path: 'facturer', component: FacturerComponent },
   { path: 'produit_b', component: ProduitsBoutiqueComponent },
   { path: 'boutique_a', component: BoutiqueAcheteur },
+  { path: 'favoris', component: FavorisComponent },
   { path: 'demandes', component: DemandesComponent },
+  { path: 'avis-produit/:idProduitBoutique',component: AddAvisProduitComponent},
+  { path: 'avis-boutique/:idBoutique',component: AddAvisBoutiqueComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

@@ -17,6 +17,12 @@
         <td>{{ b.telephone }}</td>
         <td>{{ b.email }}</td>
         <td><button (click)="openModal(b)">Voir</button></td>
+        <td>
+            <!-- Bouton Laisser un avis -->
+            <button (click)="allerAvisBoutique(b._id)" class="btn btn-sm btn-warning">
+                Laisser un avis
+            </button>
+        </td>
       </tr>
     </tbody>
   </table>
