@@ -13,7 +13,12 @@ import { LoyerComponent } from './pages/loyer/loyer.component';
 import { DemandesComponent } from './pages/demandes/demandes.component';
 import { FacturesComponent } from './pages/factures/factures.component';
 import { FacturerComponent } from './pages/factures/facturer/facturer.component';
-import { TestComponent } from './pages/test/test.component';
+import { ProduitsBoutiqueComponent } from './pages/produits/produit-boutique/produit-boutique';
+import { BoutiqueAcheteur } from './pages/boutique/boutique-acheteur/boutique-acheteur';
+import { FavorisComponent } from './pages/acheteur/favoris/favoris';
+import { AddAvisProduitComponent } from './pages/avis/avis-produit/add-avis/add-avis';
+import { AddAvisBoutiqueComponent } from './pages/avis/avis-boutique/add-avis/add-avis';
+
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,12 +34,11 @@ export const routes: Routes = [
   { path: 'loyer', component: LoyerComponent },
   { path: 'factures', component: FacturesComponent },
   { path: 'facturer', component: FacturerComponent },
-   { path: 'test', component: TestComponent },
-  {
-  path: 'demandes',
-  component: DemandesComponent,
-  // canActivate: [AuthGuard], // optional if you use role-based access
-  // data: { roles: ['ADMIN_CENTRE', 'ADMIN_BOUTIQUE'] }
-  },
+  { path: 'produit_b', component: ProduitsBoutiqueComponent },
+  { path: 'boutique_a', component: BoutiqueAcheteur },
+  { path: 'favoris', component: FavorisComponent },
+  { path: 'demandes', component: DemandesComponent },
+  { path: 'avis-produit/:idProduitBoutique',component: AddAvisProduitComponent},
+  { path: 'avis-boutique/:idBoutique',component: AddAvisBoutiqueComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

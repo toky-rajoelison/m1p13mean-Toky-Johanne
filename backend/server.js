@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('Server running');
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 const authRoutes = require('./routes/auth');
 const boutiqueRoutes = require('./routes/boutique');
@@ -32,6 +32,11 @@ const loyerRoutes = require('./routes/loyer');
 const demandeRoutes = require('./routes/demande');
 const facturesRoutes = require('./routes/factures');
 const typeChargesRoutes = require('./routes/typeCharges');
+const produitBoutiqueRoutes = require('./routes/produitBoutique');
+const categorieRoutes = require('./routes/categorie');
+const favorisRoutes = require('./routes/favoris');
+const avisProduitRoutes = require('./routes/avisProduit');
+const avisBoutiqueRoutes = require('./routes/avisBoutique');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/boutique', boutiqueRoutes); 
@@ -42,4 +47,10 @@ app.use('/api/loyer', loyerRoutes);
 app.use('/api/demandes', demandeRoutes);
 app.use('/api/factures', facturesRoutes);
 app.use('/api/typeCharges', typeChargesRoutes);
+app.use('/api/produitBoutique', produitBoutiqueRoutes);
+app.use('/api/categorie', categorieRoutes);
+app.use('/api/favoris', favorisRoutes);
+app.use('/api/avisProduit', avisProduitRoutes);
+app.use('/api/avisBoutique', avisBoutiqueRoutes);
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
