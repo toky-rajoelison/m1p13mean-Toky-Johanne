@@ -1,0 +1,93 @@
+<div class="factures-container">
+  <h2>Factures</h2>
+
+  <!-- Filters -->
+  <div class="filters">
+    <label>
+      Année:
+      <input type="number" [(ngModel)]="filterAnnee" placeholder="YYYY" min="2000" max="2100">
+    </label>
+
+    <label>
+      Mois:
+      <select [(ngModel)]="filterMois">
+        <option value="">Tous</option>
+        <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+      </select>
+    </label>
+
+    <label>
+      Catégorie:
+      <select [(ngModel)]="filterCategorie">
+        <option value="">Tous</option>
+        <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+      </select>
+    </label>
+
+    <label>
+      Type de charge:
+      <select [(ngModel)]="filterTypeCharge">
+        <option value="">Tous</option>
+        <option *ngFor="let t of typesCharges" [value]="t._id">{{ t.nom }}</option>
+      </select>
+    </label>
+
+    <button (click)="applyFilters()">Filtrer</button>
+    <button *ngIf="userRole === 'ADMIN_CENTRE'" routerLink="/facturer">Créer Facture</button>
+  </div>
+
+  <hr>
+
+  <!-- Loading / Error -->
+  <div *ngIf="loading">Chargement...</div>
+  <div *ngIf="message && !loading">{{ message }}</div>
+
+  <!-- Factures Table -->
+  <table *ngIf="factures.length > 0" border="1">
+    <thead>
+      <tr>
+        <th>Boutique</th>
+        <th>Type charge</th>
+        <th>Catégorie</th>
+        <th>Période</th>
+        <th>Montant</th>
+        <th>Date facturation</th>
+        <th>Date de paiement</th>
+        <th>Statut</th>
+        <th *ngIf="userRole === 'ADMIN_CENTRE'">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of factures">
+        <td>{{ f.id_boutique?.nom || '—' }}</td>
+        <td>{{ f.id_type_charge?.nom || '—' }}</td>
+        <td>{{ f.categorie }}</td>
+        <td>{{ f.mois }}/{{ f.annee }}</td>
+        <td>{{ f.montant | number:'1.0-2' }} Ar</td>
+        <td>{{ f.date_facturation | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>
+          {{ f.date_paiement ? (f.date_paiement | date:'dd/MM/yyyy HH:mm') : '—' }}
+        </td>
+        <td>{{ f.statut }}</td>
+        <td *ngIf="userRole === 'ADMIN_CENTRE'">
+          <button 
+            *ngIf="f.statut === 'EN_ATTENTE'" 
+            (click)="payerFacture(f._id)">
+            Payer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && factures.length === 0">
+    Aucun facture trouvé.
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="page === 1">Précédent</button>
+    <span>Page {{ page }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page === totalPages">Suivant</button>
+  </div>
+</div>

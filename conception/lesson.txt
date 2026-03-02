@@ -18,3 +18,9 @@
 | client1 acheter      | 69a1f93da3ee642f0ded3387                     | ACHETEUR       | 699d7486e0924110b2cb0ce4 |
 | client2 acheter2     | 69a1f951a3ee642f0ded338a                     | ACHETEUR       | 699d7486e0924110b2cb0ce4 |
 | adminCentre1 admin   | 69a3914600d9aa89ad73ddf1                     | ADMIN_CENTRE   | 699d7486e0924110b2cb0ce2 |
+
+
+| Nom         | Prénom   | Email                                                 | Role ID                  | Boutique ID              | Boutique Nom |
+| ----------- | -------- | ----------------------------------------------------- | ------------------------ | ------------------------ | ------------ |
+| Rabearivelo | Customer | [rabejohanne@gmail.com](mailto:rabejohanne@gmail.com) | 699d7486e0924110b2cb0ce3 | 680000000000000000000031 | Boutique1  tech  |
+| John        | Doe      | [johndoe@gmail.com](mailto:johndoe@gmail.com)         | 699d7486e0924110b2cb0ce3 | 680000000000000000000032 | Boutique2   fashion |

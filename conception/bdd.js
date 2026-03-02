@@ -155,6 +155,113 @@ db.createCollection("types_charges", {
   }
 });
 
+db.types_charges.insertMany([
+  {
+    _id: ObjectId("65f000000000000000000001"),
+    nom: "LOYER",
+    description: "Paiement mensuel fixe pour l’occupation du local"
+  },
+  {
+    _id: ObjectId("65f000000000000000000002"),
+    nom: "EAU",
+    description: "Consommation d’eau facturée selon usage"
+  },
+  {
+    _id: ObjectId("65f000000000000000000003"),
+    nom: "ELECTRICITE",
+    description: "Consommation électrique facturée selon compteur"
+  },
+  {
+    _id: ObjectId("65f000000000000000000004"),
+    nom: "SECURITE",
+    description: "Frais de sécurité du centre (gardiennage, surveillance)"
+  },
+  {
+    _id: ObjectId("65f000000000000000000005"),
+    nom: "ENTRETIEN",
+    description: "Nettoyage, maintenance, entretien des espaces communs"
+  },
+  {
+    _id: ObjectId("65f000000000000000000006"),
+    nom: "REPARATION",
+    description: "Intervention technique ponctuelle (plomberie, électricité, etc.)"
+  },
+  {
+    _id: ObjectId("65f000000000000000000007"),
+    nom: "PENALITE",
+    description: "Pénalité de retard ou non-respect de règlement"
+  },
+  {
+    _id: ObjectId("65f000000000000000000008"),
+    nom: "SERVICE",
+    description: "Service spécifique demandé par une boutique"
+  }
+]);
+
+db.createCollection("factures", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "id_boutique",
+        "id_type_charge",
+        "categorie",
+        "mois",
+        "annee",
+        "montant",
+        "date_facturation",
+        "statut"
+      ],
+      properties: {
+        id_boutique: { bsonType: "objectId" },      // admin_boutique
+        id_type_charge: { bsonType: "objectId" },   // types_charges
+        categorie: { enum: ["FIXE", "VARIABLE", "PONCTUEL"] },
+        mois: { bsonType: "int", minimum: 1, maximum: 12 },
+        annee: { bsonType: "int" },
+        montant: { bsonType: "double" },
+        date_facturation: { bsonType: "date" },
+        description: { bsonType: "string" },
+        statut: { enum: ["EN_ATTENTE", "PAYEE", "EN_RETARD"] }
+      }
+    }
+  }
+});
+
+db.runCommand({
+  collMod: "factures",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "id_boutique",
+        "id_type_charge",
+        "categorie",
+        "mois",
+        "annee",
+        "montant",
+        "date_facturation",
+        "statut"
+      ],
+      properties: {
+        id_boutique: { bsonType: "objectId" },
+        id_type_charge: { bsonType: "objectId" },
+        categorie: { enum: ["FIXE", "VARIABLE", "PONCTUEL"] },
+        mois: { bsonType: "int", minimum: 1, maximum: 12 },
+        annee: { bsonType: "int" },
+
+        // ✅ FIX HERE
+        montant: { bsonType: "number" },
+
+        date_facturation: { bsonType: "date" },
+        description: { bsonType: "string" },
+        statut: { enum: ["EN_ATTENTE", "PAYEE", "EN_RETARD"] },
+        date_paiement: { bsonType: ["date", "null"] }
+      }
+    }
+  },
+  validationLevel: "moderate"   // keeps old docs valid
+});
+
 // Demande_Centre
 db.createCollection("demande_centre", {
   validator: {

@@ -1,1 +1,137 @@
-okay so in this next functionality, I am going, 
+okay so in this next functionality, I am going, to add a facturation functionality
+
+basicaly, the admin_centre can facturer a tenant (admin boutique) for something.
+
+for example there is smth to be done and it will be charged for that 
+
+db.createCollection("types_charges", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nom"],
+      properties: {
+        nom: { bsonType: "string" },
+        description: { bsonType: "string" }
+      }
+    }
+  }
+});
+
+db.types_charges.insertMany([
+  {
+    _id: ObjectId("65f000000000000000000001"),
+    nom: "LOYER",
+    description: "Paiement mensuel fixe pour l’occupation du local"
+  },
+  {
+    _id: ObjectId("65f000000000000000000002"),
+    nom: "EAU",
+    description: "Consommation d’eau facturée selon usage"
+  },
+  {
+    _id: ObjectId("65f000000000000000000003"),
+    nom: "ELECTRICITE",
+    description: "Consommation électrique facturée selon compteur"
+  },
+  {
+    _id: ObjectId("65f000000000000000000004"),
+    nom: "SECURITE",
+    description: "Frais de sécurité du centre (gardiennage, surveillance)"
+  },
+  {
+    _id: ObjectId("65f000000000000000000005"),
+    nom: "ENTRETIEN",
+    description: "Nettoyage, maintenance, entretien des espaces communs"
+  },
+  {
+    _id: ObjectId("65f000000000000000000006"),
+    nom: "REPARATION",
+    description: "Intervention technique ponctuelle (plomberie, électricité, etc.)"
+  },
+  {
+    _id: ObjectId("65f000000000000000000007"),
+    nom: "PENALITE",
+    description: "Pénalité de retard ou non-respect de règlement"
+  },
+  {
+    _id: ObjectId("65f000000000000000000008"),
+    nom: "SERVICE",
+    description: "Service spécifique demandé par une boutique"
+  }
+])
+
+db.createCollection("factures", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "id_boutique",
+        "id_type_charge",
+        "categorie",
+        "mois",
+        "annee",
+        "montant",
+        "date_facturation",
+        "statut"
+      ],
+      properties: {
+        id_boutique: { bsonType: "objectId" },      // admin_boutique
+        id_type_charge: { bsonType: "objectId" },   // types_charges
+        categorie: { enum: ["FIXE", "VARIABLE", "PONCTUEL"] },
+        mois: { bsonType: "int", minimum: 1, maximum: 12 },
+        annee: { bsonType: "int" },
+        montant: { bsonType: "double" },
+        date_facturation: { bsonType: "date" },
+        description: { bsonType: "string" },
+        statut: { enum: ["EN_ATTENTE", "PAYEE", "EN_RETARD"] }
+      }
+    }
+  }
+});
+
+
+EXAMPLE:
+    Every month, admin creates:
+    Facture: “Loyer Mars”
+    Facture: “Charges communes Mars”
+    Facture: “Maintenance Mars”
+
+
+---
+
+Okay so rn, what I want to do is that I will have a link 
+- one in admin centre 
+- one in admin boutique
+
+both can see the facturation 
+I think the best is to make this a table, and have a column pay at the end a button. if I want to pay I click, there will be a popup confirmation if okay then its confirmed and payed
++ as admin centre 
+    - I will see every facturation (from the most recent ones, date_facturation).
+    - we can have a filter of year and month (corresponding to the period [mois and annee])
+    - we also have a filter of the categorie[FIXE ...]
+    - we also have a filter for type charges . so I will get al the types of charges to filter 
+
+    - in that I will add a link that goes to a page facturer which is to create a facturation
+    - there will be a liste deroulante of (categorie, type charges,boutiques)
+    - the date_facturation is now 
+
++ as admin boutique
+    -I cannot pay first of all (i dont have the last column)
+    -I hgave the list of facturation to the boutique I am admin of 
+    - same filters as the ones above
+    -I cannot add any facture so there wont be the link for making facturation
+    
+
+-------
+
+db.factures.insertOne({
+  id_boutique: ObjectId("680000000000000000000032"),
+  id_type_charge: ObjectId("65f000000000000000000005"),
+  categorie: "VARIABLE",
+  montant: Double(30000),   // ✅ correct BSON double
+  description: "Test facture",
+  date_facturation: ISODate("2026-03-01T10:00:00.000Z"),
+  mois: 3,
+  annee: 2026,
+  statut: "EN_ATTENTE"
+})

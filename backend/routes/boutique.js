@@ -195,4 +195,15 @@ router.get('/avis-produit/:idProduitBoutique', async (req, res) => {
   }
 });
 
+// GET all boutiques (for ADMIN_CENTRE)
+router.get('/', async (req, res) => {
+  try {
+    const boutiques = await Boutique.find();
+    res.json(boutiques);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 module.exports = router;

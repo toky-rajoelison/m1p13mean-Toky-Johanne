@@ -11,6 +11,8 @@ import { ApplyPromotionComponent } from './pages/promotion/apply-promotion/apply
 import { AnnoncesComponent } from './pages/annonces/annonces.component';
 import { LoyerComponent } from './pages/loyer/loyer.component';
 import { DemandesComponent } from './pages/demandes/demandes.component';
+import { FacturesComponent } from './pages/factures/factures.component';
+import { FacturerComponent } from './pages/factures/facturer/facturer.component';
 
 
 export const routes: Routes = [
@@ -25,6 +27,8 @@ export const routes: Routes = [
   {path: 'apply-promotion', component: ApplyPromotionComponent},
   { path: 'annonces', component: AnnoncesComponent },
   { path: 'loyer', component: LoyerComponent },
+  { path: 'factures', component: FacturesComponent },
+  { path: 'facturer', component: FacturerComponent },
   {
   path: 'demandes',
   component: DemandesComponent,

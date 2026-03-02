@@ -6,9 +6,12 @@ show collections
 db.createCollection("boutiques")
 //insert
 db.utilisateurs.insertOne({ name: "Anna", age: 20 })
-//select
-db.utilisateurs.find()
+//select.
+
 db.roles.find()
+db.utilisateurs.find()
+db.admin_boutique.find()
+db.factures.find()
 db.utilisateurs.find().pretty()
 db.utilisateurs.find({ age: 25 })
 
