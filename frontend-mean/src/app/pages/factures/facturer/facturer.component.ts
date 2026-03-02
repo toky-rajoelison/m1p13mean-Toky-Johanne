@@ -26,6 +26,7 @@ export class FacturerComponent implements OnInit {
   mois: number = new Date().getMonth() + 1; // current month
   annee: number = new Date().getFullYear(); // current year
   statut: string = 'EN_ATTENTE';
+  date_echeance: string = '';
 
   message: string = '';
   loading = false;
@@ -55,8 +56,10 @@ export class FacturerComponent implements OnInit {
     });
   }
 
+  
+
   creerFacture(): void {
-    if (!this.selectedBoutique || !this.selectedTypeCharge || !this.montant || !this.mois || !this.annee) {
+    if (!this.selectedBoutique || !this.selectedTypeCharge || !this.montant || !this.mois || !this.annee || !this.date_echeance) {
         this.message = "Tous les champs obligatoires doivent être remplis";
         return;
     }
@@ -70,10 +73,11 @@ export class FacturerComponent implements OnInit {
         categorie: this.selectedCategorie,
         montant: this.montant,
         description: this.description,
-        date_facturation: new Date(),
+        // date_facturation: new Date(),
         mois: this.mois,
         annee: this.annee,
-        statut: this.statut
+        statut: this.statut,
+        date_echeance: this.date_echeance
     };
 
     console.log("📤 Facture Data being sent:", factureData); // <--- ADD THIS LINE

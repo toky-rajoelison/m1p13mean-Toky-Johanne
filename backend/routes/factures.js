@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const { createNotifications } = require('../services/notification.service');
 
+const Notification = require('../models/Notification'); // adjust path
 const Facture = require('../models/Facture');
+const TypeCharge = require('../models/TypeCharge');
 const Utilisateur = require('../models/Utilisateur');
 const Role = require('../models/Role');
 const Boutique = require('../models/Boutique');
@@ -21,7 +24,8 @@ router.post('/', async (req, res) => {
       mois,
       annee,
       montant,
-      description
+      description,
+      date_echeance
     } = req.body;
 
     // Presence validation
@@ -32,7 +36,8 @@ router.post('/', async (req, res) => {
       !categorie ||
       mois == null ||
       annee == null ||
-      montant == null
+      montant == null ||
+      !date_echeance
     ) {
       return res.status(400).json({ message: 'Champs manquants' });
     }
@@ -41,10 +46,17 @@ router.post('/', async (req, res) => {
     const moisInt = parseInt(mois);
     const anneeInt = parseInt(annee);
     const montantDouble = parseFloat(montant);
+    const dateEcheanceObj = new Date(date_echeance);
 
-    // Type validation
-    if (isNaN(moisInt) || isNaN(anneeInt) || isNaN(montantDouble)) {
-      return res.status(400).json({ message: 'Types invalides (mois, année ou montant)' });
+    if (
+      isNaN(moisInt) ||
+      isNaN(anneeInt) ||
+      isNaN(montantDouble) ||
+      isNaN(dateEcheanceObj.getTime())
+    ) {
+      return res.status(400).json({ 
+        message: 'Types invalides (mois, année, montant ou date_echeance)' 
+      });
     }
 
     const user = await Utilisateur.findById(id_utilisateur);
@@ -55,19 +67,36 @@ router.post('/', async (req, res) => {
       return res.status(403).json({ message: 'Seul ADMIN_CENTRE peut facturer' });
     }
 
+
+    const typeCharge = await TypeCharge.findById(id_type_charge);
+    if (!typeCharge) return res.status(404).json({ message: 'Type de charge introuvable' });
+
     const facture = new Facture({
       id_boutique,
       id_type_charge,
       categorie,
-      mois: moisInt,              // ✅ int
-      annee: anneeInt,            // ✅ int
-      montant: montantDouble,     // ✅ double
+      mois: moisInt,
+      annee: anneeInt,
+      montant: montantDouble,
       description: description || '',
       date_facturation: new Date(),
+      date_echeance: dateEcheanceObj,
       statut: 'EN_ATTENTE'
     });
 
     await facture.save();
+
+    // ✅ Create notification for the admins of that boutique
+    await Notification.create({
+      type: 'FACTURE',
+      event: 'FACTURE_CREATED',
+      source_user_id: user._id,
+      target_roles: ['ADMIN_BOUTIQUE'],
+      target_boutiques: [id_boutique],
+      message: `Nouvelle facture créée pour votre boutique (Type: ${typeCharge.nom}, Catégorie: ${categorie}, Mois: ${moisInt}, Année: ${anneeInt}, Montant: ${montantDouble})`,
+      created_at: new Date()
+    });
+
     res.status(201).json({ message: 'Facture créée', facture });
 
   } catch (err) {
@@ -75,7 +104,6 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
-
 // ------------------------
 // GET FACTURES (ROLE BASED)
 // ------------------------
@@ -148,7 +176,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
 // ------------------------
 // PAY FACTURE (ADMIN_CENTRE ONLY)
 // ------------------------
@@ -172,6 +199,19 @@ router.post('/payer/:id_facture', async (req, res) => {
     facture.date_paiement = new Date();
 
     await facture.save();
+    
+    const typeCharge = await TypeCharge.findById(facture.id_type_charge);
+    if (!typeCharge) return res.status(404).json({ message: 'Type de charge introuvable' });
+
+    await Notification.create({
+      type: 'FACTURE',
+      event: 'FACTURE_PAYEE',
+      source_user_id: user._id,
+      target_roles: ['ADMIN_BOUTIQUE'],
+      target_boutiques: [facture.id_boutique],
+      message: `La facture pour votre boutique a été payée (Type: ${typeCharge.nom}, Catégorie: ${facture.categorie}, Mois: ${facture.mois}, Année: ${facture.annee}, Montant: ${facture.montant})`,
+      created_at: new Date()
+    });
 
     res.json({ message: 'Facture payée', facture });
 

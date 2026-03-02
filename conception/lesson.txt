@@ -24,3 +24,27 @@
 | ----------- | -------- | ----------------------------------------------------- | ------------------------ | ------------------------ | ------------ |
 | Rabearivelo | Customer | [rabejohanne@gmail.com](mailto:rabejohanne@gmail.com) | 699d7486e0924110b2cb0ce3 | 680000000000000000000031 | Boutique1  tech  |
 | John        | Doe      | [johndoe@gmail.com](mailto:johndoe@gmail.com)         | 699d7486e0924110b2cb0ce3 | 680000000000000000000032 | Boutique2   fashion |
+
+| Column           | Type          | Null | Key | Default   | Description                                              |
+| ---------------- | ------------- | ---- | --- | --------- | -------------------------------------------------------- |
+| id               | BIGINT / UUID | NO   | PK  | AUTO      | Unique ID for the notification                           |
+| type             | ENUM          | NO   |     |           | "DEMANDE", "FACTURE", "ANNONCE"                          |
+| event            | VARCHAR(50)   | NO   |     |           | Specific event, e.g., "DEMANDE_CREATED"                  |
+| source_user_id   | BIGINT        | NO   | FK  |           | ID of user who triggered the notification                |
+| target_roles     | JSON / TEXT   | NO   |     |           | Roles to notify, e.g., ["ADMIN_CENTRE","ADMIN_BOUTIQUE"] |
+| target_boutiques | JSON / TEXT   | YES  |     | NULL      | Optional boutiques to notify (NULL = all)                |//only if target_roles is boutique
+| message          | TEXT          | NO   |     |           | Human-readable message                                   |
+| visibility       | ENUM          | NO   |     | "PRIVATE" | "PUBLIC" or "PRIVATE"                                    |
+| created_at       | TIMESTAMP     | NO   |     | NOW()     | Creation timestamp                                       |
+
+
+
+| Column          | Type          | Null | Key | Default | Description                                                      |
+| --------------- | ------------- | ---- | --- | ------- | ---------------------------------------------------------------- |
+| id              | BIGINT / UUID | NO   | PK  | AUTO    | Unique ID                                                        |
+| notification_id | BIGINT        | NO   | FK  |         | Reference to `notifications.id`                                  |
+| scope           | ENUM          | NO   |     |         | Who “reads” the notification. Can be: "USER", "BOUTIQUE", "ROLE" |
+| scope_id        | BIGINT        | NO   |     |         | The ID of the scope. For example:                                |
+| read_at         | TIMESTAMP     | NO   |     | NOW()   | When it was read                                                 |
+
+

@@ -52,6 +52,7 @@
         <th>Période</th>
         <th>Montant</th>
         <th>Date facturation</th>
+        <th>Date echeance</th>
         <th>Date de paiement</th>
         <th>Statut</th>
         <th *ngIf="userRole === 'ADMIN_CENTRE'">Actions</th>
@@ -65,6 +66,7 @@
         <td>{{ f.mois }}/{{ f.annee }}</td>
         <td>{{ f.montant | number:'1.0-2' }} Ar</td>
         <td>{{ f.date_facturation | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ f.date_echeance | date:'dd/MM/yyyy HH:mm' }}</td>
         <td>
           {{ f.date_paiement ? (f.date_paiement | date:'dd/MM/yyyy HH:mm') : '—' }}
         </td>

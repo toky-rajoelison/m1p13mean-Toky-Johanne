@@ -40,6 +40,11 @@ const FactureSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  
+  date_echeance: {
+    type: Date,
+    required: true
+  },
 
   description: {
     type: String,

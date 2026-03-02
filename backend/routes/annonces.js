@@ -5,48 +5,95 @@ const mongoose = require('mongoose');
 const Annonce = require('../models/Annonce');
 const Utilisateur = require('../models/Utilisateur');
 const Role = require('../models/Role'); // your roles collection
+const Boutique = require('../models/Boutique');
+const Notification = require('../models/Notification');
 
 // ------------------------
 // Create a new announcement
 // ------------------------
+// ROUTER: POST /annonces
 router.post('/', async (req, res) => {
   try {
     const { id_utilisateur, target, contenu, photo } = req.body;
 
-    // Validate required fields
+    // 1️⃣ Validate required fields
     if (!id_utilisateur || !target || !contenu) {
       return res.status(400).json({ message: 'Champs manquants' });
     }
-
     if (!['PUBLIC', 'PRIVATE'].includes(target)) {
       return res.status(400).json({ message: 'Target invalide' });
     }
 
-    // Optional: check if the user exists
+    // 2️⃣ Check if user exists
     const user = await Utilisateur.findById(id_utilisateur);
     if (!user) {
       return res.status(404).json({ message: 'Utilisateur introuvable' });
     }
 
-    // Only admins can create announcements
+    // 3️⃣ Check if user is admin
     const role = await Role.findById(user.id_role);
     if (!['ADMIN_CENTRE', 'ADMIN_BOUTIQUE'].includes(role.libelle)) {
       return res.status(403).json({ message: 'Vous n\'avez pas la permission' });
     }
 
+    // 4️⃣ Create the annonce
     const annonce = new Annonce({
       target,
       id_utilisateur,
       contenu,
       photo: photo || ''
     });
-
     await annonce.save();
-    res.status(201).json({ message: 'Annonce créée', annonce });
+
+    // 5️⃣ Prepare notification logic
+    let targetRoles = [];
+    let targetBoutiques = [];
+
+    // PUBLIC or PRIVATE target determines roles to notify
+    if (target === 'PUBLIC') {
+      targetRoles = ['ADMIN_CENTRE', 'ADMIN_BOUTIQUE', 'ACHETEUR'];
+    } else if (target === 'PRIVATE') {
+      targetRoles = ['ADMIN_CENTRE', 'ADMIN_BOUTIQUE'];
+    }
+
+    // Remove creator's role from notification
+    targetRoles = targetRoles.filter(r => r !== role.libelle);
+
+    // Determine target boutiques if annonce made by admin centre
+    if (role.libelle === 'ADMIN_CENTRE') {
+      const boutiques = await Boutique.find({});
+      targetBoutiques = boutiques.map(b => b._id);
+    }
+
+    // If annonce made by boutique admin, notify admin centre only
+    if (role.libelle === 'ADMIN_BOUTIQUE') {
+      targetRoles = targetRoles.filter(r => r === 'ADMIN_CENTRE'); // only center admins
+      targetBoutiques = []; // no boutique filtering needed
+    }
+
+    // 6️⃣ Create notification
+    const notif = new Notification({
+      type: 'ANNONCE',
+      event: 'NOUVELLE_ANNONCE',
+      source_user_id: id_utilisateur,
+      target_roles: targetRoles,
+      target_boutiques: targetBoutiques.length ? targetBoutiques : null,
+      message: contenu,
+      created_at: new Date()
+    });
+
+    await notif.save();
+
+    // 7️⃣ Response
+    return res.status(201).json({
+      message: 'Annonce créée et notifications envoyées',
+      annonce,
+      notification: notif
+    });
 
   } catch (err) {
     console.error('Erreur création annonce:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
+    return res.status(500).json({ message: 'Erreur serveur' });
   }
 });
 

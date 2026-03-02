@@ -198,35 +198,6 @@ db.types_charges.insertMany([
   }
 ]);
 
-db.createCollection("factures", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: [
-        "id_boutique",
-        "id_type_charge",
-        "categorie",
-        "mois",
-        "annee",
-        "montant",
-        "date_facturation",
-        "statut"
-      ],
-      properties: {
-        id_boutique: { bsonType: "objectId" },      // admin_boutique
-        id_type_charge: { bsonType: "objectId" },   // types_charges
-        categorie: { enum: ["FIXE", "VARIABLE", "PONCTUEL"] },
-        mois: { bsonType: "int", minimum: 1, maximum: 12 },
-        annee: { bsonType: "int" },
-        montant: { bsonType: "double" },
-        date_facturation: { bsonType: "date" },
-        description: { bsonType: "string" },
-        statut: { enum: ["EN_ATTENTE", "PAYEE", "EN_RETARD"] }
-      }
-    }
-  }
-});
-
 db.runCommand({
   collMod: "factures",
   validator: {
@@ -240,27 +211,37 @@ db.runCommand({
         "annee",
         "montant",
         "date_facturation",
+        "date_echeance",   // ✅ REQUIRED
         "statut"
       ],
       properties: {
         id_boutique: { bsonType: "objectId" },
         id_type_charge: { bsonType: "objectId" },
+
         categorie: { enum: ["FIXE", "VARIABLE", "PONCTUEL"] },
+
         mois: { bsonType: "int", minimum: 1, maximum: 12 },
         annee: { bsonType: "int" },
 
-        // ✅ FIX HERE
         montant: { bsonType: "number" },
 
         date_facturation: { bsonType: "date" },
+
+        // ✅ NEW REQUIRED FIELD (French name)
+        date_echeance: { bsonType: "date" },
+
         description: { bsonType: "string" },
+
         statut: { enum: ["EN_ATTENTE", "PAYEE", "EN_RETARD"] },
+
         date_paiement: { bsonType: ["date", "null"] }
       }
     }
   },
-  validationLevel: "moderate"   // keeps old docs valid
+  validationLevel: "strict",   // now strict since old docs removed
+  validationAction: "error"
 });
+
 
 // Demande_Centre
 db.createCollection("demande_centre", {
@@ -582,5 +563,82 @@ db.createCollection("loyer_payments", {
     }
   }
 });
+
+db.createCollection("notifications", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "type",
+        "event",
+        "source_user_id",
+        "target_roles",
+        "message",
+        "created_at"
+      ],
+      properties: {
+        type: {
+          bsonType: "string",
+          enum: ["DEMANDE", "FACTURE", "ANNONCE"]
+        },
+        event: {
+          bsonType: "string"
+        },
+        source_user_id: {
+          bsonType: "objectId"
+        },
+        target_roles: {
+          bsonType: "array",
+          items: {
+            bsonType: "string",
+            enum: ["ADMIN_CENTRE", "ADMIN_BOUTIQUE", "ACHETEUR"]
+          }
+        },
+        target_boutiques: {
+          bsonType: ["array", "null"],
+          items: {
+            bsonType: "objectId"
+          }
+        },
+        message: {
+          bsonType: "string"
+        },
+        created_at: {
+          bsonType: "date"
+        }
+      }
+    }
+  }
+});
+
+
+db.createCollection("notification_reads", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "notification_id",
+        "utilisateur_id",
+        "read_at"
+      ],
+      properties: {
+
+        notification_id: {
+          bsonType: "objectId"
+        },
+
+        utilisateur_id: {
+          bsonType: "objectId"
+        },
+
+        read_at: {
+          bsonType: "date"
+        }
+      }
+    }
+  }
+});
+
+
 
 

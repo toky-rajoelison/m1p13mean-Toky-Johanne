@@ -7,6 +7,7 @@ const CommentaireDemande = require('../models/CommentaireDemande');
 const Utilisateur = require('../models/Utilisateur');
 const Role = require('../models/Role');
 const AdminBoutique = require('../models/AdminBoutique');
+const Notification = require('../models/Notification'); 
 
 
 // ============================
@@ -16,9 +17,7 @@ router.post('/', async (req, res) => {
   try {
     const { id_utilisateur, description } = req.body;
 
-    if (!id_utilisateur) {
-      return res.status(400).json({ message: 'Missing user id' });
-    }
+    if (!id_utilisateur) return res.status(400).json({ message: 'Missing user id' });
 
     const user = await Utilisateur.findById(id_utilisateur);
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -28,20 +27,34 @@ router.post('/', async (req, res) => {
       return res.status(403).json({ message: 'Only ADMIN_BOUTIQUE can create demandes' });
     }
 
-    // check admin_boutique relation
+    // Check admin_boutique relation
     const adminBoutique = await AdminBoutique.findOne({ id_utilisateur });
     if (!adminBoutique) {
       return res.status(403).json({ message: 'User is not linked to any boutique' });
     }
 
+    // Create the demande
     const demande = new DemandeCentre({
       description,
       id_admin_boutique_utilisateur: id_utilisateur
     });
-
     await demande.save();
 
-    res.status(201).json({ message: 'Demande created', demande });
+    // =====================
+    // Notification to ADMIN_CENTRE
+    // =====================
+    const notif = new Notification({
+      type: 'DEMANDE',
+      event: 'NOUVELLE_DEMANDE',
+      source_user_id: id_utilisateur,
+      target_roles: ['ADMIN_CENTRE'],
+      target_boutiques: null,
+      message: description,
+      created_at: new Date()
+    });
+    await notif.save();
+
+    res.status(201).json({ message: 'Demande created and notification sent', demande, notification: notif });
 
   } catch (err) {
     console.error('Create demande error:', err);
@@ -126,7 +139,6 @@ router.get('/', async (req, res) => {
 router.post('/commentaire', async (req, res) => {
   try {
     const { id_demande, id_utilisateur, commentaire } = req.body;
-
     if (!id_demande || !id_utilisateur || !commentaire) {
       return res.status(400).json({ message: 'Missing fields' });
     }
@@ -147,15 +159,42 @@ router.post('/commentaire', async (req, res) => {
       id_utilisateur,
       commentaire
     });
-
     await comment.save();
 
-    res.status(201).json({ message: 'Comment added', comment });
+    // =====================
+    // Notifications on comment
+    // =====================
+    let targetRoles = [];
+    let targetBoutiques = null;
+
+    if (role.libelle === 'ADMIN_CENTRE') {
+      // notify all admins of the boutique that made the demande
+      const boutiqueAdmins = await AdminBoutique.find({ id_boutique: demande.id_admin_boutique_utilisateur });
+      targetRoles = ['ADMIN_BOUTIQUE'];
+      targetBoutiques = boutiqueAdmins.map(b => b.id_boutique);
+    } else if (role.libelle === 'ADMIN_BOUTIQUE') {
+      // notify all admin centres
+      targetRoles = ['ADMIN_CENTRE'];
+    }
+
+    const notif = new Notification({
+      type: 'DEMANDE',
+      event: 'NOUVEAU_COMMENTAIRE',
+      source_user_id: id_utilisateur,
+      target_roles: targetRoles,
+      target_boutiques: targetBoutiques && targetBoutiques.length ? targetBoutiques : null,
+      message: commentaire,
+      created_at: new Date()
+    });
+    await notif.save();
+
+    res.status(201).json({ message: 'Comment added and notification sent', comment, notification: notif });
 
   } catch (err) {
     console.error('Add comment error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 module.exports = router;

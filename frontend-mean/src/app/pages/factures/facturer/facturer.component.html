@@ -50,6 +50,16 @@
     </label>
 
     <label>
+      Date d’échéance:
+      <input 
+        type="datetime-local" 
+        [(ngModel)]="date_echeance" 
+        name="date_echeance" 
+        required
+      >
+    </label>
+
+    <label>
     Statut:
     <select [(ngModel)]="statut" name="statut" required>
         <option value="EN_ATTENTE">EN_ATTENTE</option>
