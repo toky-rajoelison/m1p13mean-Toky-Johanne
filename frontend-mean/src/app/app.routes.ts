@@ -13,6 +13,8 @@ import { LoyerComponent } from './pages/loyer/loyer.component';
 import { DemandesComponent } from './pages/demandes/demandes.component';
 import { FacturesComponent } from './pages/factures/factures.component';
 import { FacturerComponent } from './pages/factures/facturer/facturer.component';
+import { ProduitsBoutiqueComponent } from './pages/produits/produit-boutique/produit-boutique';
+import { BoutiqueAcheteur } from './pages/boutique/boutique-acheteur/boutique-acheteur';
 
 
 export const routes: Routes = [
@@ -29,11 +31,8 @@ export const routes: Routes = [
   { path: 'loyer', component: LoyerComponent },
   { path: 'factures', component: FacturesComponent },
   { path: 'facturer', component: FacturerComponent },
-  {
-  path: 'demandes',
-  component: DemandesComponent,
-  // canActivate: [AuthGuard], // optional if you use role-based access
-  // data: { roles: ['ADMIN_CENTRE', 'ADMIN_BOUTIQUE'] }
-  },
+  { path: 'produit_b', component: ProduitsBoutiqueComponent },
+  { path: 'boutique_a', component: BoutiqueAcheteur },
+  { path: 'demandes', component: DemandesComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

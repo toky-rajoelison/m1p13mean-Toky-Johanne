@@ -90,3 +90,19 @@ CLIENTS
     Mes Cartes de fidelite 
         per boutiques w points 
     Page recherche produits 
+
+
+    To do reste : 
+    - dashboar client : 
+        - liste de produits en promotion
+    - dashboard admin
+    - dashboard boutique
+
+    Client : 
+    - liste produits / produits par boutique 
+    - Liste boutique sy ny desciprtion sy ny information 
+    - ajout dans favoris
+    - creer avis pour boutique sa produit ?
+
+    Boutique : 
+    - CRUD produit_boutique

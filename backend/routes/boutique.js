@@ -48,9 +48,9 @@ router.get('/me/:userId', async (req, res) => {
     const { userId } = req.params;
 
     console.log("🆔 userId reçu:", userId);
-    
+
     console.log("Type userId:", typeof userId);
-    
+
     console.log("🧠 Conversion en ObjectId...");
     const admin = await AdminBoutique.findOne({
       id_utilisateur: new mongoose.Types.ObjectId(userId)
