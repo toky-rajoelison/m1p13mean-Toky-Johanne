@@ -1,0 +1,7 @@
+okay ! so I am making this mean project. 
+I am going to make all the styles in css. 
+I need a header 
+and a footer that all my pages will have. 
+Its just that for some roles, some will not see certain links . 
+
+I would like for you to show me a html css of a dashboard that would work in angular like this project. 

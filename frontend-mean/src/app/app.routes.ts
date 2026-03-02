@@ -13,7 +13,7 @@ import { LoyerComponent } from './pages/loyer/loyer.component';
 import { DemandesComponent } from './pages/demandes/demandes.component';
 import { FacturesComponent } from './pages/factures/factures.component';
 import { FacturerComponent } from './pages/factures/facturer/facturer.component';
-
+import { TestComponent } from './pages/test/test.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +29,7 @@ export const routes: Routes = [
   { path: 'loyer', component: LoyerComponent },
   { path: 'factures', component: FacturesComponent },
   { path: 'facturer', component: FacturerComponent },
+   { path: 'test', component: TestComponent },
   {
   path: 'demandes',
   component: DemandesComponent,
