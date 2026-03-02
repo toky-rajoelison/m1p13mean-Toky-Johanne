@@ -1,0 +1,16 @@
+Main goal : 
+    - Voir avis produits me
+    - Voir avis boutiques  me
+    
+    - Promotions    
+        create promotion 
+            apply to products 
+    Commandes --izay payer
+            liste produits efacommander (details)
+
+Steps : 
+    - detele tables panier et details !
+    - add data according to boutiques and stuff
+    - test the URL
+
+    - ask chat for the frontend side

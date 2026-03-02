@@ -1,0 +1,59 @@
+okay so basically I am trying to add a functionality where someone can send an annoucement to let people know about smth.
+That annoucement can be either PUBLIC or PRIVATE 
+
+PUBLIC : acheteur, admin_centre, admin_boutique can see it 
+can be made by admin_boutique or admin_centre
+
+PRIVATE : admin_boutique, admin_centre can see
+can be made by admin_boutique or admin_centre
+
+that is the target. 
+
+------------
+
+So I have the Dashboard of admin_centre
+
+- I want to have a link to go see the annoucements
+  - In it I will see all the annouhncement that I can see
+  - I can also create a new annouhncement at the top of all of that. 
+  - let the annoucement be paginated per 10, annoncements
+
+
+this is the table 
+
+
+// Annonce
+db.createCollection("annonces", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["target", "id_utilisateur", "datetime_annonce"],
+      properties: {
+        target: { bsonType: "string" },
+        id_utilisateur: { bsonType: "objectId" },
+        datetime_annonce: { bsonType: "date" },
+        photo: { bsonType: "string" }
+      }
+    }
+  }
+});
+
+I want to do this step by step, so first of maybe create a model ?? or what, then a
+
+I guess I would make the model first , then the routes, then the changes in server.js ??
+Let's do it step by step
+
+----------------------
+
+
+Create the Mongoose model for Annonce.
+
+Create the Express routes for:
+
+Creating a new announcement
+
+Listing announcements visible to the current user (with pagination)
+
+Update server.js to include the new routes.
+
+Test the API with Postman before connecting to Angular.

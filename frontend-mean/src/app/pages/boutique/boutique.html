@@ -1,1 +1,63 @@
-<h2>Welcome, {{ userName }} ({{ userRole }})</h2>
+
+
+<h2>Welcome boutique , {{ userName }} ({{ userRole }})</h2>
+
+<div>
+  <a routerLink="/demandes">Voir les demandes</a>
+</div>
+
+<div>
+  <a routerLink="/factures">Voir les factures</a>
+</div>
+
+<div>
+  <a routerLink="/annonces">Voir les annonces</a>
+</div>
+
+
+<div *ngIf="loading">Chargement...</div>
+
+<div *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="boutique">
+  <h3>{{ boutique.nom }}</h3>
+  <p>{{ boutique.description }}</p>
+</div>
+
+<hr>
+
+<h3>Produits</h3>
+
+<table *ngIf="produits.length > 0" border="1">
+  <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Stock</th>
+    <th>Prix</th>
+  </tr>
+
+  <tr *ngFor="let p of produits">
+    <td>{{ p.id_produit?.nom }}</td>
+    <td>{{ p.description }}</td>
+    <td>{{ p.stock }}</td>
+    <td>{{ p.prix }} Ar</td>
+    <td>
+      <button (click)="VoirAvisProduit(p._id)">
+        Voir les avis
+      </button>
+    </td>
+  </tr>
+</table>
+
+<button (click)="voirAvis()" class="btn-avis">
+  Voir les avis
+</button>
+
+<div *ngIf="!loading && produits.length === 0">
+  Aucun produit trouvé.
+</div>
+
+
+

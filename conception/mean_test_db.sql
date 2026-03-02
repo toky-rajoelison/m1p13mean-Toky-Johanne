@@ -15,10 +15,22 @@ db.createCollection("roles", {
 });
 
 db.roles.insertMany([
-  { libelle: "ADMIN" },
-  { libelle: "BOUTIQUE" },
+  { libelle: "ADMIN_CENTRE" },
+  { libelle: "ADMIN_BOUTIQUE" },
   { libelle: "ACHETEUR" }
 ]);
+
+// Change 'ADMIN' to 'ADMIN_CENTRE'
+db.roles.updateOne(
+  { libelle: "ADMIN" },
+  { $set: { libelle: "ADMIN_CENTRE" } }
+);
+
+// Change 'BOUTIQUE' to 'ADMIN_BOUTIQUE'
+db.roles.updateOne(
+  { libelle: "BOUTIQUE" },
+  { $set: { libelle: "ADMIN_BOUTIQUE" } }
+);
 
 db.createCollection("utilisateurs", {
   validator: {

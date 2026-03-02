@@ -1,0 +1,65 @@
+.demandes-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.create-demande textarea {
+  width: 100%;
+  min-height: 80px;
+  margin-bottom: 10px;
+}
+
+.demande-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #fafafa;
+}
+
+.demande-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+}
+
+.description {
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+.commentaires {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 3px solid #ddd;
+}
+
+.commentaire {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.add-comment {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.add-comment input {
+  flex: 1;
+  padding: 6px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.message {
+  color: red;
+  margin-bottom: 10px;
+}

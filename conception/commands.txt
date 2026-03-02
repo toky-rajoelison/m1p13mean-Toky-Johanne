@@ -83,6 +83,7 @@ git push origin test'
 
 
 ---------
+
 ng generate component pages/acheteur
 ng generate service services/autha
 
@@ -100,3 +101,26 @@ mongo:
 
 -------------
 db.utilisateurs.find()
+
+
+---
+BACKEND ::
+
+  model - routes - server.js
+  tester
+
+FRONT END
+  create pages (3 trucs)
+  include the components in app.routes.ts 
+  now make the .ts 
+    note that it is standalone , give example
+    make the html 
+    add css (optional)
+    add the link to go to this component
+
+  
+
+
+
+
+

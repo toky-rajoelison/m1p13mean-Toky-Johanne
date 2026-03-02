@@ -8,6 +8,7 @@ const UtilisateurSchema = new mongoose.Schema({
   telephone: { type: String },
   statut: { type: Number, enum: [1,2], default: 1 }, // 1=actif, 2=bloqué
   datetime_creation: { type: Date, default: Date.now },
+
   id_role: { type: mongoose.Schema.Types.ObjectId, ref: "Role", required: true }
 });
 

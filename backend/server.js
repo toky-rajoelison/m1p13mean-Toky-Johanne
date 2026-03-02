@@ -24,6 +24,22 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
+const boutiqueRoutes = require('./routes/boutique');
+const promotionRoutes = require('./routes/promotion');
+const commandesRoutes = require('./routes/commandes');
+const annonceRoutes = require('./routes/annonces');
+const loyerRoutes = require('./routes/loyer');
+const demandeRoutes = require('./routes/demande');
+const facturesRoutes = require('./routes/factures');
+const typeChargesRoutes = require('./routes/typeCharges');
 
+app.use('/api/auth', authRoutes);
+app.use('/api/boutique', boutiqueRoutes); 
+app.use('/api/promotion', promotionRoutes);
+app.use('/api/commandes', commandesRoutes);
+app.use('/api/annonces', annonceRoutes);
+app.use('/api/loyer', loyerRoutes);
+app.use('/api/demandes', demandeRoutes);
+app.use('/api/factures', facturesRoutes);
+app.use('/api/typeCharges', typeChargesRoutes);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

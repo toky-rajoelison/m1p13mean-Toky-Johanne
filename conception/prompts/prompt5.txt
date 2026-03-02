@@ -1,0 +1,94 @@
+okay so rn I want to implement a system of notification
+
+so when there is an interaction between roles, they should be notified 
+
+Like for example 
+
+Type of notification 
+    - demande 
+    +when admin_boutique creates a demande 
+        notify the admin_centre
+    +when someone  other than the admin_boutique(admin centre) commented on a demande that one of the admin of that boutique made writes a commentary
+        notify an admin_boutique
+    +when the admin of a boutique comments on his demande
+        notify the admin centre
+
+note: (our rules)
+only a admin_boutique can make a demande
+only admins of the boutique who made the demande and admins of the centre can see and comment there 
+ 
+    -facture
+    +when a facture is created for a boutique
+        notify the admins of that boutique
+    +when a facture was paid
+        notify the admins of that boutiquecc
+note:(roles)
+only admin centre can make factures 
+only admin centre can mark the factures as paid 
+
+    - annonce
+    when an annonce is made by an admin centre depending if it is public(the 3 roles can see) or private(only admin centre and admin can see)
+        notify the admin of each boutiques, if one sees it then its considered as seen by all admins of that boutiques -- IF the announcement was made by admin centre 
+        notify the admin centre, if one admin centre sees it then its considered as seen by all admins centres
+        not notify your role if your role made the announcement
+note :
+only admin centre and admin boutique can create an announcement
+
+
+----
+
+okay so what I will do then is that in my apis 
+basically in my routes in my backend I will put the inserts of these notifications or how ? 
+like in my routes of creating annonce, demande,commetaire, facture ??
+or how will I do it , I just want to ask then I will show you each routes and we can implement them together if its the ideal. 
+
+Also will we need to create models for the new tables.
+if yes, wait, I will show uou an example so we can just imutate
+
+
+RECAP
+
+This table stores all notifications created in your system. Think of it as “a log of all events that users should be notified about.”
+
+| Field              | Type             | Description                                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                       |
+| ------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`             | `string`         | The **category of the notification**. You have three types: `DEMANDE` (for demandes), `FACTURE` (for invoices), `ANNONCE` (for announcements). This helps filter or group notifications.                                       |                                                                                                                                                                                                                                                                       |
+| `event`            | `string`         | A **specific event within the type**. Example: `NOUVELLE_DEMANDE`, `NOUVEAU_COMMENTAIRE`, `ANNONCE_PUBLIQUE`, `ANNONCE_PRIVEE`. This tells the frontend exactly what action occurred.                                          |                                                                                                                                                                                                                                                                       |
+| `source_user_id`   | `ObjectId`       | The **user who triggered the notification** (created a demande, posted a comment, created an annonce, etc.).                                                                                                                   |                                                                                                                                                                                                                                                                       |
+| `target_roles`     | `array<string>`  | The **roles who should see this notification**. Possible values: `ADMIN_CENTRE`, `ADMIN_BOUTIQUE`, `ACHETEUR`. If the role of the source_user matches one of these, that role is **excluded** from receiving the notification. |                                                                                                                                                                                                                                                                       |
+| `target_boutiques` | `array<ObjectId> | null`                                                                                                                                                                                                                          | Optional. Used when the notification is meant for **admins of specific boutiques**. Example: if an admin centre creates a demande targeting a boutique, all admins of that boutique should be notified, so their boutique IDs go here. Null if it’s global to a role. |
+| `message`          | `string`         | The **content** of the notification. Could be the demande description, comment text, or announcement summary.                                                                                                                  |                                                                                                                                                                                                                                                                       |
+| `created_at`       | `date`           | When the notification was **created**. Useful for sorting, displaying “new notifications,” or expiration logic.                                                                                                                |                                                                                                                                                                                                                                                                       |
+
+
+notifications are always created, even if no one has read them yet.
+
+They contain all the information needed to deliver to the right users or roles.
+
+You can filter notifications by target_roles and optionally by target_boutiques.
+
+Table: notification_reads
+
+This table tracks which users have read which notifications. This is how you implement “seen” logic for group notifications.
+
+| Field             | Type       | Description                                                 |
+| ----------------- | ---------- | ----------------------------------------------------------- |
+| `notification_id` | `ObjectId` | Reference to the **notification in `notifications` table**. |
+| `utilisateur_id`  | `ObjectId` | The **user who has read this notification**.                |
+| `read_at`         | `date`     | The **timestamp when the user read the notification**.      |
+
+Key logic:
+
+Every time a user views a notification, you create a record in notification_reads.
+
+To know unread notifications for a user:
+
+unread = notifications where notification_id NOT IN (notification_reads for this user)
+
+For group-read notifications (like “if one admin of a boutique reads an annonce, it counts for all admins of that boutique”):
+
+You check target_boutiques and target_roles.
+
+If one of the admins of a boutique reads it, you can programmatically mark it as read for all other admins of that boutique.
+
+This allows efficient tracking of which notifications are still new per user while keeping a history of everyone’s reads.

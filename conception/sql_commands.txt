@@ -3,11 +3,18 @@ use myDatabase
 show collections
 
 //create collections
-db.createCollection("utilisateurs")
+db.createCollection("boutiques")
 //insert
 db.utilisateurs.insertOne({ name: "Anna", age: 20 })
-//select
+//select.
+
+db.roles.find()
 db.utilisateurs.find()
+db.admin_boutique.find()
+db.notifications.find()
+db.factures.find()
 db.utilisateurs.find().pretty()
 db.utilisateurs.find({ age: 25 })
+
+db.notifications.drop()
 

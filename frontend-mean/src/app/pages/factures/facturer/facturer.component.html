@@ -1,0 +1,75 @@
+<div class="facturer-container">
+  <h2>Créer Facture</h2>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <form (ngSubmit)="creerFacture()">
+
+    <label>
+      Boutique:
+      <select [(ngModel)]="selectedBoutique" name="boutique" required>
+        <option value="">Sélectionnez une boutique</option>
+        <option *ngFor="let b of boutiques" [value]="b._id">{{ b.nom }}</option>
+      </select>
+    </label>
+
+    <label>
+      Type de charge:
+      <select [(ngModel)]="selectedTypeCharge" name="typeCharge" required>
+        <option value="">Sélectionnez un type</option>
+        <option *ngFor="let t of typesCharges" [value]="t._id">{{ t.nom }}</option>
+      </select>
+    </label>
+
+    <label>
+      Catégorie:
+      <select [(ngModel)]="selectedCategorie" name="categorie">
+        <option value="FIXE">FIXE</option>
+        <option value="VARIABLE">VARIABLE</option>
+        <option value="PONCTUEL">PONCTUEL</option>
+      </select>
+    </label>
+
+    <label>
+      Montant:
+      <input type="number" [(ngModel)]="montant" name="montant" required min="0">
+    </label>
+
+    <label>
+      Description:
+      <textarea [(ngModel)]="description" name="description"></textarea>
+    </label>
+    <label>
+    Mois:
+    <input type="number" [(ngModel)]="mois" name="mois" min="1" max="12" required>
+    </label>
+
+    <label>
+    Année:
+    <input type="number" [(ngModel)]="annee" name="annee" min="2000" max="2100" required>
+    </label>
+
+    <label>
+      Date d’échéance:
+      <input 
+        type="datetime-local" 
+        [(ngModel)]="date_echeance" 
+        name="date_echeance" 
+        required
+      >
+    </label>
+
+    <label>
+    Statut:
+    <select [(ngModel)]="statut" name="statut" required>
+        <option value="EN_ATTENTE">EN_ATTENTE</option>
+        <option value="PAYEE">PAYEE</option>
+        <option value="EN_RETARD">EN_RETARD</option>
+    </select>
+    </label>
+
+    <button type="submit" [disabled]="loading">{{ loading ? 'Création...' : 'Créer Facture' }}</button>
+  </form>
+
+  <button routerLink="/factures" style="margin-top: 10px;">Retour à la liste</button>
+</div>

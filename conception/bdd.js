@@ -91,6 +91,11 @@ db.createCollection("boutiques", {
   }
 });
 
+db.boutiques.createIndex(
+  { emplacement: 1 },
+  { unique: true, name: "unique_emplacement" }
+)
+
 // Admin_Boutique
 db.createCollection("admin_boutique", {
   validator: {
@@ -136,24 +141,6 @@ db.createCollection("loyer_emplacement", {
 });
 
 // Charges_Emplacement
-db.createCollection("charges_emplacement", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["id_admin_centre_utilisateur", "id_boutique", "id_type_charges", "montant"],
-      properties: {
-        id_admin_centre_utilisateur: { bsonType: "objectId" },
-        id_boutique: { bsonType: "objectId" },
-        id_type_charges: { bsonType: "objectId" },
-        montant: { bsonType: "double" },
-        commentaire: { bsonType: "string" },
-        datetime_payment: { bsonType: "date" },
-        date_limite: { bsonType: "date" }
-      }
-    }
-  }
-});
-
 // Types_Charges
 db.createCollection("types_charges", {
   validator: {
@@ -168,6 +155,94 @@ db.createCollection("types_charges", {
   }
 });
 
+db.types_charges.insertMany([
+  {
+    _id: ObjectId("65f000000000000000000001"),
+    nom: "LOYER",
+    description: "Paiement mensuel fixe pour l’occupation du local"
+  },
+  {
+    _id: ObjectId("65f000000000000000000002"),
+    nom: "EAU",
+    description: "Consommation d’eau facturée selon usage"
+  },
+  {
+    _id: ObjectId("65f000000000000000000003"),
+    nom: "ELECTRICITE",
+    description: "Consommation électrique facturée selon compteur"
+  },
+  {
+    _id: ObjectId("65f000000000000000000004"),
+    nom: "SECURITE",
+    description: "Frais de sécurité du centre (gardiennage, surveillance)"
+  },
+  {
+    _id: ObjectId("65f000000000000000000005"),
+    nom: "ENTRETIEN",
+    description: "Nettoyage, maintenance, entretien des espaces communs"
+  },
+  {
+    _id: ObjectId("65f000000000000000000006"),
+    nom: "REPARATION",
+    description: "Intervention technique ponctuelle (plomberie, électricité, etc.)"
+  },
+  {
+    _id: ObjectId("65f000000000000000000007"),
+    nom: "PENALITE",
+    description: "Pénalité de retard ou non-respect de règlement"
+  },
+  {
+    _id: ObjectId("65f000000000000000000008"),
+    nom: "SERVICE",
+    description: "Service spécifique demandé par une boutique"
+  }
+]);
+
+db.runCommand({
+  collMod: "factures",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "id_boutique",
+        "id_type_charge",
+        "categorie",
+        "mois",
+        "annee",
+        "montant",
+        "date_facturation",
+        "date_echeance",   // ✅ REQUIRED
+        "statut"
+      ],
+      properties: {
+        id_boutique: { bsonType: "objectId" },
+        id_type_charge: { bsonType: "objectId" },
+
+        categorie: { enum: ["FIXE", "VARIABLE", "PONCTUEL"] },
+
+        mois: { bsonType: "int", minimum: 1, maximum: 12 },
+        annee: { bsonType: "int" },
+
+        montant: { bsonType: "number" },
+
+        date_facturation: { bsonType: "date" },
+
+        // ✅ NEW REQUIRED FIELD (French name)
+        date_echeance: { bsonType: "date" },
+
+        description: { bsonType: "string" },
+
+        statut: { enum: ["EN_ATTENTE", "PAYEE", "EN_RETARD"] },
+
+        date_paiement: { bsonType: ["date", "null"] }
+      }
+    }
+  },
+  validationLevel: "strict",   // now strict since old docs removed
+  validationAction: "error"
+});
+
+
 // Demande_Centre
 db.createCollection("demande_centre", {
   validator: {
@@ -178,8 +253,30 @@ db.createCollection("demande_centre", {
         description: { bsonType: "string" },
         id_admin_boutique_utilisateur: { bsonType: "objectId" },
         datetime_demande: { bsonType: "date" },
-        read_at: { bsonType: "date" },
-        read_by: { bsonType: "string" }
+      }
+    }
+  }
+});
+db.createCollection("commentaire_demande", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_demande", "id_utilisateur", "commentaire", "datetime_commentaire"],
+      properties: {
+        id_demande: {
+          bsonType: "objectId",
+          description: "Reference to demande_centre _id"
+        },
+        id_utilisateur: {
+          bsonType: "objectId",
+          description: "Reference to utilisateur _id"
+        },
+        commentaire: {
+          bsonType: "string"
+        },
+        datetime_commentaire: {
+          bsonType: "date"
+        }
       }
     }
   }
@@ -199,6 +296,26 @@ db.createCollection("annonces", {
       }
     }
   }
+});
+
+db.runCommand({
+  collMod: "annonces",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["target", "id_utilisateur", "datetime_annonce"],
+      properties: {
+        target: { 
+          enum: ["PUBLIC", "PRIVATE"]   // 🔒 restriction
+        },
+        id_utilisateur: { bsonType: "objectId" },
+        datetime_annonce: { bsonType: "date" },
+        photo: { bsonType: "string" }
+      }
+    }
+  },
+  validationLevel: "strict",
+  validationAction: "error"
 });
 
 // CATEGORIE_PRODUIT
@@ -304,7 +421,7 @@ db.createCollection("panier", {
         id_utilisateur_client: { bsonType: "objectId" },
         datetime_creation: { bsonType: "date" },
         last_updated: { bsonType: "date" },
-        statut: { enum: [1, 2, 3] }, // en cours, payed, livrer
+        statut: { enum: [1, 2, 3, 4] }, // en cours, confirmé, payed, livrer
         prix_total: { bsonType: "double" },
         mode_paiement: { enum: [1, 2] },
         type_livraison: { enum: [1, 2] }
@@ -428,3 +545,100 @@ db.createCollection("historique_favoris", {
     }
   }
 });
+
+db.createCollection("loyer_payments", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_utilisateur_centre", "id_boutique", "datetime_payment", "month", "year", "amount"],
+      properties: {
+        id_utilisateur_centre: { bsonType: "objectId" },
+        id_boutique: { bsonType: "objectId" },
+        description: { bsonType: "string" },
+        datetime_payment: { bsonType: "date" },
+        month: { bsonType: "int", minimum: 1, maximum: 12 },
+        year: { bsonType: "int" },
+        amount: { bsonType: "double", minimum: 0 }
+      }
+    }
+  }
+});
+
+db.createCollection("notifications", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "type",
+        "event",
+        "source_user_id",
+        "target_roles",
+        "message",
+        "created_at"
+      ],
+      properties: {
+        type: {
+          bsonType: "string",
+          enum: ["DEMANDE", "FACTURE", "ANNONCE"]
+        },
+        event: {
+          bsonType: "string"
+        },
+        source_user_id: {
+          bsonType: "objectId"
+        },
+        target_roles: {
+          bsonType: "array",
+          items: {
+            bsonType: "string",
+            enum: ["ADMIN_CENTRE", "ADMIN_BOUTIQUE", "ACHETEUR"]
+          }
+        },
+        target_boutiques: {
+          bsonType: ["array", "null"],
+          items: {
+            bsonType: "objectId"
+          }
+        },
+        message: {
+          bsonType: "string"
+        },
+        created_at: {
+          bsonType: "date"
+        }
+      }
+    }
+  }
+});
+
+
+db.createCollection("notification_reads", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "notification_id",
+        "utilisateur_id",
+        "read_at"
+      ],
+      properties: {
+
+        notification_id: {
+          bsonType: "objectId"
+        },
+
+        utilisateur_id: {
+          bsonType: "objectId"
+        },
+
+        read_at: {
+          bsonType: "date"
+        }
+      }
+    }
+  }
+});
+
+
+
+

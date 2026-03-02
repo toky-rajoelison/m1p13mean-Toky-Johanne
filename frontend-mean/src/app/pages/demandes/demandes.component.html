@@ -1,0 +1,54 @@
+<div class="demandes-container">
+
+  <h2>Demandes</h2>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <!-- CREATE DEMANDE (ADMIN_BOUTIQUE ONLY) -->
+  <div *ngIf="userRole === 'ADMIN_BOUTIQUE'" class="create-demande">
+    <h3>Create a demande</h3>
+    <textarea [(ngModel)]="nouvelleDescription" placeholder="Describe your request"></textarea>
+    <button (click)="creerDemande()">Send demande</button>
+  </div>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <!-- DEMANDES LIST -->
+  <div *ngFor="let d of demandes" class="demande-card">
+
+    <div class="demande-header">
+      <strong>{{ d.id_admin_boutique_utilisateur?.nom }} {{ d.id_admin_boutique_utilisateur?.prenom }}</strong>
+      <span>{{ d.datetime_demande | date:'short' }}</span>
+    </div>
+
+    <p class="description">{{ d.description }}</p>
+
+    <!-- COMMENTS -->
+    <div class="commentaires">
+      <div *ngFor="let c of d.commentaires" class="commentaire">
+        <strong>{{ c.id_utilisateur?.nom }} {{ c.id_utilisateur?.prenom }}</strong>
+        <span>{{ c.datetime_commentaire | date:'short' }}</span>
+        <p>{{ c.commentaire }}</p>
+      </div>
+    </div>
+
+    <!-- ADD COMMENT -->
+    <div class="add-comment">
+      <input
+        type="text"
+        [(ngModel)]="nouveauCommentaire[d._id]"
+        placeholder="Write a comment..."
+      />
+      <button (click)="ajouterCommentaire(d._id)">Send</button>
+    </div>
+
+  </div>
+
+  <!-- PAGINATION -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>
+
+</div>

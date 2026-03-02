@@ -1,0 +1,8 @@
+I have this mean project and I will add a dashboard to it. the one I am doing rn is the one of the admin_centre 
+
+I have a function where I(a user with admin_centre role) can facture a boutiques 
+
+FACTURE.JS MODEL 
+
+I want to show the list of factures that are past date, whose date paiement is > today.
+I have this api already to have all my facture, now I want all the facture due after a given date, which is today 
