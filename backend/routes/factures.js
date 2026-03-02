@@ -222,5 +222,103 @@ router.post('/payer/:id_facture', async (req, res) => {
 });
 
 
+router.get('/retard', async (req, res) => {
+  try {
+    const {
+      userId,
+      page = 1,
+      limit = 10,
+      mois,
+      annee,
+      categorie,
+      id_type_charge,
+      id_boutique
+    } = req.query;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'ID utilisateur invalide' });
+    }
+
+    const user = await Utilisateur.findById(userId);
+    if (!user) return res.status(404).json({ message: 'Utilisateur introuvable' });
+
+    const role = await Role.findById(user.id_role);
+    if (!role) return res.status(403).json({ message: 'Rôle introuvable' });
+
+    let filter = {};
+
+    // ROLE FILTER
+    if (role.libelle === 'ADMIN_CENTRE') {
+      filter = {};
+    } 
+    else if (role.libelle === 'ADMIN_BOUTIQUE') {
+      const adminBoutique = await Admin_Boutique.findOne({ id_utilisateur: user._id });
+      if (!adminBoutique) return res.status(404).json({ message: 'Boutique introuvable pour cet admin' });
+      filter.id_boutique = adminBoutique.id_boutique;
+    } 
+    else {
+      return res.status(403).json({ message: 'Accès refusé' });
+    }
+
+    // OPTIONAL FILTERS
+    if (mois) filter.mois = parseInt(mois);
+    if (annee) filter.annee = parseInt(annee);
+    if (categorie) filter.categorie = categorie;
+    if (id_type_charge) filter.id_type_charge = id_type_charge;
+    if (id_boutique && role.libelle === 'ADMIN_CENTRE') filter.id_boutique = id_boutique;
+
+    // ADD FILTER FOR PAST DUE FACTURES
+    const today = new Date();
+    filter.date_echeance = { $lt: today }; // due before today
+    filter.statut = { $ne: 'PAYEE' };      // not yet paid
+
+    const factures = await Facture.find(filter)
+      .sort({ date_facturation: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .populate('id_boutique', 'nom')
+      .populate('id_type_charge', 'nom description');
+
+    const total = await Facture.countDocuments(filter);
+
+    res.json({
+      page: parseInt(page),
+      limit: parseInt(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+      factures
+    });
+
+  } catch (err) {
+    console.error('Erreur récupération factures:', err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+router.get('/today', async (req, res) => {
+  try {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+
+    const factures = await Facture.find({
+      date_paiement: { $gte: start, $lte: end },
+      statut: 'PAYEE'
+    })
+      .sort({ date_paiement: -1 })
+      .populate('id_boutique', 'nom')
+      .populate('id_type_charge', 'nom description');
+
+    res.json({ factures });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+
 
 module.exports = router;

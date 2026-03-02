@@ -74,3 +74,15 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// LOGOUT
+router.post('/logout', (req, res) => {
+  try {
+    // If using JWT, you could invalidate a token here.
+    // For now, just respond success.
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
