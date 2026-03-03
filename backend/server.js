@@ -60,7 +60,7 @@ app.use('/api/notifications', notifRoutes);
 app.use(express.static(path.join(__dirname, '../frontend-mean/dist/browser')));
 
 // Catch all non-API routes and send index.html
-app.get('*', (req, res) => {
+app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '../frontend-mean/dist/browser/index.html'));
 });
 
