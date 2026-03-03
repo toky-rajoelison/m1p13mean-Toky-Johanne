@@ -1,19 +1,12 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');              // ✅ ADD
+const cors = require('cors');
 const connectDB = require('./config/db');
 const path = require('path');
 
 const app = express();
-// Serve Angular frontend
-app.use(express.static(path.join(__dirname, '../frontend-mean/dist/browser')));
 
-// Catch all other routes and redirect to Angular's index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend-mean/dist/browser/index.html'));
-});
-
-// ✅ CORS middleware
+// ✅ CORS FIRST
 app.use(cors({
   origin: [
     'http://localhost:4200',
@@ -22,17 +15,12 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json()); // parse JSON
+app.use(express.json());
 
 // Connect to MongoDB
 connectDB();
 
-// Test route
-app.get('/', (req, res) => {
-  res.send('Server running');
-});
-
-const PORT = process.env.PORT;
+// ================= API ROUTES =================
 
 const authRoutes = require('./routes/auth');
 const boutiqueRoutes = require('./routes/boutique');
@@ -65,5 +53,19 @@ app.use('/api/favoris', favorisRoutes);
 app.use('/api/avisProduit', avisProduitRoutes);
 app.use('/api/avisBoutique', avisBoutiqueRoutes);
 app.use('/api/notifications', notifRoutes);
+
+// ================= SERVE ANGULAR =================
+
+// Serve static Angular files
+app.use(express.static(path.join(__dirname, '../frontend-mean/dist/browser')));
+
+// Catch all non-API routes and send index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend-mean/dist/browser/index.html'));
+});
+
+// ================= START SERVER =================
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
