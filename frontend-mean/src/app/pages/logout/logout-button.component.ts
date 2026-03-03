@@ -46,8 +46,8 @@ export class LogoutButtonComponent {
         console.log('💾 LocalStorage vidé');
 
         // Redirect to login page
-        console.log('➡️ Redirection vers /login');
-        this.router.navigate(['/login']);
+        console.log('➡️ Redirection vers');
+        this.router.navigate(['']);
       },
       error: (err) => {
         console.log('💥 Erreur logout:', err);
