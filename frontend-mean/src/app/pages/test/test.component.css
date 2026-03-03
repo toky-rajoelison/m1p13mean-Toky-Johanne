@@ -58,6 +58,14 @@ body {
     color: var(--dark-blue);
 }
 
+.nav-item:hover {
+    background-color: var(--sidebar-hover);
+    color: var(--white);
+    /* --- ADD THESE TWO LINES --- */
+    padding-left: 25px; /* Creates a slight "slide" effect */
+    transition: all 0.3s ease;
+}
+
 .nav-list {
     padding: 20px 15px;
     flex-grow: 1;
@@ -107,13 +115,18 @@ body {
 
 .top-header {
     height: 80px;
-    background-color: var(--dark-blue); /* Matching Sidebar */
+    background-color: var(--dark-blue);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 40px;
     color: var(--white);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    /* --- ADD THESE THREE LINES --- */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensures it stays on top of content */
 }
 
 .search-box {
@@ -228,3 +241,4 @@ body {
     font-size: 0.85rem;
     color: #94a3b8;
 }
+
