@@ -42,6 +42,7 @@ export const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'avis-produit/:idProduitBoutique',component: AddAvisProduitComponent},
   { path: 'avis-boutique/:idBoutique',component: AddAvisBoutiqueComponent},
+    { path: 'test', component: TestComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   
 ];
