@@ -16,6 +16,7 @@ import { FooterComponent } from '../test/footer/footer';
   styleUrls: ['./annonces.component.css']
 })
 export class AnnoncesComponent implements OnInit {
+
   sidebarCollapsed = false;
 
   toggleSidebar() {

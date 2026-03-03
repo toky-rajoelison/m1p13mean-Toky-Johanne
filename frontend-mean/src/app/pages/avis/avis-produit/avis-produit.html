@@ -1,34 +1,45 @@
-<h2>Avis du produit</h2>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
 
-<div *ngIf="loading">
-  Chargement...
-</div>
+    <div class="main-wrapper">
+        <app-header></app-header>
 
-<div *ngIf="errorMessage">
-  {{ errorMessage }}
-</div>
-
-<div *ngIf="!loading && avis.length === 0">
-  Aucun avis pour ce produit.
-</div>
-
-<div *ngIf="!loading && avis.length > 0">
-
-  <h3>
+        <main class="content">
+          
+          <h2>Avis du produit</h2>
+          
+          <div *ngIf="loading">
+            Chargement...
+          </div>
+          
+          <div *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+          
+          <div *ngIf="!loading && avis.length === 0">
+            Aucun avis pour ce produit.
+          </div>
+          
+          <div *ngIf="!loading && avis.length > 0">
+            
+            <h3>
     ⭐ Moyenne : {{ moyenne }}/10  
     ({{ total }} avis)
   </h3>
-
+  
   <div *ngFor="let a of avis" class="card">
     <h3>
       {{ a.id_acheteur?.nom }} {{ a.id_acheteur?.prenom }}
     </h3>
-
+    
     <p>⭐ {{ a.note }}/10</p>
-
+    
     <p>{{ a.commentaire }}</p>
-
+    
     <small>{{ a.datetime_avis | date:'medium' }}</small>
   </div>
+  
+</div>
+</main>
 
+<app-footer></app-footer>
 </div>

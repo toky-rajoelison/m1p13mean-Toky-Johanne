@@ -1,14 +1,18 @@
-<h2>Welcome, {{ userName }} ({{ userRole }})</h2>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
+
+    <div class="main-wrapper">
+        <app-header></app-header>
+
+        <main class="content">
+          
+          
+          <h2>Welcome, {{ userName }} ({{ userRole }})</h2>
 
 <!-- Link to annonces page -->
-<div class="admin-links">
-  <a routerLink="/annonces" class="btn btn-primary">
-    Voir les annonces
-  </a>
-  <a routerLink="/produit_b" class="btn btn-primary">
-    Voir les produits
-  </a>
-  <a routerLink="/boutique_a" class="btn btn-primary">
-    Voir les boutiques
-  </a>
-</div>
+<!-- <div class="admin-links">
+  
+</div> -->
+</main>
+
+        <app-footer></app-footer>
+    </div>

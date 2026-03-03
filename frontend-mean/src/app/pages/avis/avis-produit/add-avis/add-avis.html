@@ -1,23 +1,34 @@
-<div class="avis-produit-form">
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
+
+    <div class="main-wrapper">
+        <app-header></app-header>
+
+        <main class="content">
+            
+            <div class="avis-produit-form">
   <h2>Laisser un avis pour le produit</h2>
 
   <label>
     Note (1 à 10) :
     <input type="number" [(ngModel)]="note" min="1" max="10">
-  </label>
+</label>
   <br>
-
+  
   <label>
     Commentaire :
     <textarea [(ngModel)]="commentaire" placeholder="Votre commentaire..."></textarea>
-  </label>
-  <br>
+</label>
+<br>
 
-  <button (click)="envoyerAvis()">Envoyer l'avis</button>
+<button (click)="envoyerAvis()">Envoyer l'avis</button>
 
-  
 
-  <div *ngIf="message" style="margin-top: 10px; color: green;">
+
+<div *ngIf="message" style="margin-top: 10px; color: green;">
     {{ message }}
-  </div>
+</div>
+</div>
+</main>
+
+<app-footer></app-footer>
 </div>

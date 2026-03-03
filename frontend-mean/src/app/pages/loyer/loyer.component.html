@@ -1,12 +1,19 @@
-<div class="loyer-page">
-  <h2>Loyer - Gestion des boutiques</h2>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
 
-  <div *ngIf="message" class="message">{{ message }}</div>
+    <div class="main-wrapper">
+        <app-header></app-header>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Boutique</th>
+        <main class="content">
+          
+          <div class="loyer-page">
+            <h2>Loyer - Gestion des boutiques</h2>
+            
+            <div *ngIf="message" class="message">{{ message }}</div>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>Boutique</th>
         <th>Status</th>
         <th>Dernier paiement</th>
         <th>Détails</th>
@@ -21,7 +28,7 @@
       </tr>
     </tbody>
   </table>
-
+  
   <!-- Payment / history modal -->
   <div *ngIf="selectedBoutique" class="modal">
     <h3>Historique Paiements - {{ selectedBoutique.nom }}</h3>
@@ -43,7 +50,7 @@
         </tr>
       </tbody>
     </table>
-
+    
     <div *ngIf="userRole==='ADMIN_CENTRE'" class="payment-form">
       <h4>Effectuer un paiement</h4>
       <p>Mois à payer: {{ nextMonth }}/{{ nextYear }}</p>
@@ -51,7 +58,11 @@
       <label>Description: <input [(ngModel)]="paymentDescription"></label>
       <button (click)="payLoyer()">Payer</button>
     </div>
-
+    
     <button (click)="selectedBoutique=null; showPayForm=false">Fermer</button>
   </div>
+</div>
+</main>
+
+<app-footer></app-footer>
 </div>

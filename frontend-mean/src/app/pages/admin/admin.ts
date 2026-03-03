@@ -18,7 +18,6 @@ import { FooterComponent } from '../test/footer/footer';
 })
 
 export class AdminComponent implements OnInit {
-
   sidebarCollapsed = false;
 
   toggleSidebar() {

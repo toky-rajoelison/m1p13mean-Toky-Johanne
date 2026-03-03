@@ -6,15 +6,23 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BoutiquePAcheteur } from "../boutique-p-acheteur/boutique-p-acheteur";
 import { Router } from '@angular/router'; // déjà dans les imports
+import { SidebarComponent } from '../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../test/header/header';
+import { FooterComponent } from '../../test/footer/footer';
 
 @Component({
   selector: 'app-boutique-acheteur',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, BoutiquePAcheteur],
+  imports: [CommonModule, FormsModule, RouterModule, BoutiquePAcheteur, SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './boutique-acheteur.html',
   styleUrls: ['./boutique-acheteur.css']
 })
 export class BoutiqueAcheteur implements OnInit {
+sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
   BASE_URL = environment.apiUrl;
 
   userId: string | null = localStorage.getItem('userId');
