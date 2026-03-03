@@ -35,22 +35,6 @@ db.createCollection("utilisateurs", {
 db.utilisateurs.createIndex({ email: 1 }, { unique: true });
 
 
-// Horaires_Centre
-db.createCollection("horaires_centre", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["id_centre", "id_jour", "heure_ouverture", "heure_fermeture"],
-      properties: {
-        id_centre: { bsonType: "objectId" },
-        id_jour: { bsonType: "int", minimum: 1, maximum: 7 },
-        heure_ouverture: { bsonType: "string" },
-        heure_fermeture: { bsonType: "string" }
-      }
-    }
-  }
-});
-
 // BOUTIQUE
 db.createCollection("boutiques", {
   validator: {
@@ -94,19 +78,6 @@ db.createCollection("admin_boutique", {
   }
 });
 
-// Categorie_Boutique
-db.createCollection("categorie_boutique", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["nom"],
-      properties: {
-        nom: { bsonType: "string" },
-        description: { bsonType: "string" }
-      }
-    }
-  }
-});
 
 // Emplacement - Loyer_Emplacement
 db.createCollection("loyer_emplacement", {
@@ -225,7 +196,6 @@ db.runCommand({
   validationAction: "error"
 });
 
-
 // Demande_Centre
 db.createCollection("demande_centre", {
   validator: {
@@ -240,6 +210,7 @@ db.createCollection("demande_centre", {
     }
   }
 });
+
 db.createCollection("commentaire_demande", {
   validator: {
     $jsonSchema: {

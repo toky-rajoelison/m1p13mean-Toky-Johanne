@@ -16,5 +16,20 @@ db.notifications_reads.find()
 db.utilisateurs.find().pretty()
 db.utilisateurs.find({ age: 25 })
 
-db.notifications.drop()
+
+db.horaires_centre.drop()
+db.categorie_boutique.drop()
+db.carte_fidelite.drop()
+
+db.panier.drop()
+db.details_panier.drop()
+db.loyer_payments.drop()
+db.loyer_emplacement.drop()
+
+
+data ilaina 
+- type charges 
+-roles 
+- utilisateurs 
+-produit
 
