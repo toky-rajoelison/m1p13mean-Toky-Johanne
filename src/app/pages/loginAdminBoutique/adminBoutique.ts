@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./adminBoutique.css']
 })
 export class LoginBoutiqueComponent {
-  email: string = 'johndoe@email.com';
+  email: string = 'johndoe@gmail.com';
   mot_de_passe: string = 'john';
   message: string = '';
 

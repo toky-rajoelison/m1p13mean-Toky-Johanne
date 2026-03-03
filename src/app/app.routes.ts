@@ -21,9 +21,11 @@ import { AddAvisBoutiqueComponent } from './pages/avis/avis-boutique/add-avis/ad
 import { TestComponent } from './pages/test/test.component';
 import { LoginBoutiqueComponent } from './pages/loginAdminBoutique/adminBoutique';
 import { LoginAcheteurComponent } from './pages/loginAcheteur/adminAcheteur';
+import { Home } from './pages/home/home';
 
 
 export const routes: Routes = [
+  { path: '', component: Home },
   { path: 'login', component: LoginComponent },
   { path: 'loginBoutique', component: LoginBoutiqueComponent },
    { path: 'loginAcheteur', component: LoginAcheteurComponent },
@@ -47,6 +49,5 @@ export const routes: Routes = [
   { path: 'avis-produit/:idProduitBoutique',component: AddAvisProduitComponent},
   { path: 'avis-boutique/:idBoutique',component: AddAvisBoutiqueComponent},
     { path: 'test', component: TestComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   
 ];
