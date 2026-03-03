@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  templateUrl: './adminAcheteur.html',
+  styleUrls: ['./adminAcheteur.css']
 })
-export class LoginComponent {
-  email: string = 'toky@email.com';
-  mot_de_passe: string = 'toky';
+export class LoginAcheteurComponent {
+  email: string = 'acheteur1@gmail.com';
+  mot_de_passe: string = '1';
   message: string = '';
 
   constructor(

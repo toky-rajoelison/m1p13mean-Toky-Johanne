@@ -40,8 +40,9 @@ async function createNotifications({ type, message, context_type, context_id, us
  */
 async function markAsRead(notificationId, userId) {
   await NotificationRead.findOneAndUpdate(
-    { id_notification: notificationId, id_utilisateur: userId },
-    { read: true, read_at: new Date() }
+    { notification_id: notificationId, utilisateur_id: userId },
+    { $set: { read_at: new Date() } },
+    { new: true }
   );
 }
 

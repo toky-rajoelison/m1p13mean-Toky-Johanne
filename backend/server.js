@@ -40,6 +40,7 @@ const categorieRoutes = require('./routes/categorie');
 const favorisRoutes = require('./routes/favoris');
 const avisProduitRoutes = require('./routes/avisProduit');
 const avisBoutiqueRoutes = require('./routes/avisBoutique');
+const notifRoutes = require('./routes/notification');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/boutique', boutiqueRoutes); 
@@ -55,5 +56,6 @@ app.use('/api/categorie', categorieRoutes);
 app.use('/api/favoris', favorisRoutes);
 app.use('/api/avisProduit', avisProduitRoutes);
 app.use('/api/avisBoutique', avisBoutiqueRoutes);
+app.use('/api/notifications', notifRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

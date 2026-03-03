@@ -12,7 +12,7 @@ db.roles.find()
 db.utilisateurs.find()
 db.admin_boutique.find()
 db.notifications.find()
-db.factures.find()
+db.notifications_reads.find()
 db.utilisateurs.find().pretty()
 db.utilisateurs.find({ age: 25 })
 

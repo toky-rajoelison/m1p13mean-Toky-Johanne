@@ -1,0 +1,10 @@
+what I want to do is that I will have a bell in my header
+when I click it , I will check all the notifications that are not read and that are pointed to me . mark them as read. 
+do you understand. 
+
+so first of all I need to display all the notifications.
+the ones that have been read, in a white and the ones not read in a bit of greyish color .
+I can scroll through the notifications div 
+
+
+first of all I want you to simulate static notifications to see how it looks 
