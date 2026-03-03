@@ -7,7 +7,10 @@ const app = express();
 
 // ✅ CORS middleware
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: [
+    'http://localhost:4200',
+    'https://m1p13mean-toky-johanne-pqc0.onrender.com'
+  ],
   credentials: true
 }));
 
