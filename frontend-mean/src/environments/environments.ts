@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://m1p13mean-toky-johanne.onrender.com/api/auth'
-  // apiUrl: 'http://localhost:5000/api'
+  apiUrl: 'https://m1p13mean-toky-johanne.onrender.com/api'
+
+  // apiUrl: 'http://localhost:5000/api
 };
