@@ -18,6 +18,7 @@ import { BoutiqueAcheteur } from './pages/boutique/boutique-acheteur/boutique-ac
 import { FavorisComponent } from './pages/acheteur/favoris/favoris';
 import { AddAvisProduitComponent } from './pages/avis/avis-produit/add-avis/add-avis';
 import { AddAvisBoutiqueComponent } from './pages/avis/avis-boutique/add-avis/add-avis';
+import { TestComponent } from './pages/test/test.component';
 
 
 export const routes: Routes = [
@@ -40,5 +41,6 @@ export const routes: Routes = [
   { path: 'demandes', component: DemandesComponent },
   { path: 'avis-produit/:idProduitBoutique',component: AddAvisProduitComponent},
   { path: 'avis-boutique/:idBoutique',component: AddAvisBoutiqueComponent},
+    { path: 'test', component: TestComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
