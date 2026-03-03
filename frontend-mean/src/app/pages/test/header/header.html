@@ -6,18 +6,21 @@
   </div>
 
   <div class="header-actions">
-      <div class="action-icon"><i class="fa-solid fa-expand"></i></div>
       <div class="notification">
           <i class="fa-solid fa-bell"></i>
           <span class="notif-dot"></span>
       </div>
       <div class="vertical-divider"></div>
-      <div class="profile">
-          <div class="profile-info">
-              <span class="user-name">Alex Rivera</span>
-              <span class="user-role">Administrator</span>
-          </div>
-          <img src="https://ui-avatars.com/api/?name=Alex+Rivera&background=00d1ff&color=fff" alt="Profile" class="avatar">
-      </div>
+      
+        <div class="profile">
+            <div class="profile-info">
+                <span class="user-name">{{ userName }}</span>
+                <span class="user-role">{{ userRole }}</span>
+            </div>
+
+            <div class="avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
   </div>
 </header>

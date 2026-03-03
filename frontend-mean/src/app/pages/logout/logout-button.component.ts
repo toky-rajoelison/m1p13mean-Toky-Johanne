@@ -7,11 +7,24 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-logout-button',
   standalone: true,
-  imports: [],
-  template: `<button (click)="logout()" class="btn btn-danger">Logout</button>`,
+  template: `
+    <a (click)="logout()" class="nav-item logout-item">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Logout</span>
+    </a>
+  `,
   styles: [`
-    .btn { padding: 8px 16px; border: none; border-radius: 5px; background-color: #dc3545; color: white; cursor: pointer; }
-    .btn:hover { background-color: #c82333; }
+    .logout-item {
+      cursor: pointer;
+    }
+      
+    .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 8px;
+  }
   `]
 })
 export class LogoutButtonComponent {

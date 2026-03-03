@@ -4,17 +4,26 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
-import { LogoutButtonComponent } from '../logout/logout-button.component';
+
+import { SidebarComponent } from '../test/sidebar/sidebar';
+import { HeaderComponent } from '../test/header/header';
+import { FooterComponent } from '../test/footer/footer';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, LogoutButtonComponent],
+  imports: [CommonModule, RouterModule, FormsModule,SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './admin.html',
   styleUrls: ['./admin.css']
 })
 
 export class AdminComponent implements OnInit {
+
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
 
   private BASE_URL = environment.apiUrl;
 

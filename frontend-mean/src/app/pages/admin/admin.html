@@ -1,92 +1,97 @@
-<div class="dashboard-header">
-  <h2>Welcome, {{ userName }} ({{ userRole }})</h2>
-  <app-logout-button></app-logout-button>
-</div>
 
-<div class="admin-links">
-  <a routerLink="/annonces" class="btn btn-primary">Voir les annonces</a>
-  <a routerLink="/factures" class="btn btn-info">Factures</a>
-  <a routerLink="/demandes" class="btn btn-warning">Voir les demandes</a>
-</div>
 
-<hr>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
 
-<!-- Factures en retard -->
-<div class="factures-section">
-  <h3>Factures en retard</h3>
-  <div *ngIf="loadingRetard">Chargement...</div>
-  <div *ngIf="messageRetard && !loadingRetard">{{ messageRetard }}</div>
+    <div class="main-wrapper">
+        <app-header></app-header>
 
-  <table *ngIf="facturesRetard.length > 0">
-    <thead>
-      <tr>
-        <th>Boutique</th>
-        <th>Type charge</th>
-        <th>Catégorie</th>
-        <th>Période</th>
-        <th>Montant</th>
-        <th>Date facturation</th>
-        <th>Date échéance</th>
-        <th>Date de paiement</th>
-        <th>Statut</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let f of facturesRetard">
-        <td>{{ f.id_boutique?.nom || '—' }}</td>
-        <td>{{ f.id_type_charge?.nom || '—' }}</td>
-        <td>{{ f.categorie }}</td>
-        <td>{{ f.mois }}/{{ f.annee }}</td>
-        <td>{{ f.montant | number:'1.0-2' }} Ar</td>
-        <td>{{ f.date_facturation | date:'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ f.date_echeance | date:'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ f.date_paiement ? (f.date_paiement | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
-        <td>{{ f.statut }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="!loadingRetard && facturesRetard.length === 0">
-    Aucun facture en retard.
-  </div>
-</div>
+        <main class="content">
 
-<hr>
+        <div class="items-section">
+          <h3>Factures en retard</h3>
+          <div *ngIf="loadingRetard">Chargement...</div>
+          <div *ngIf="messageRetard && !loadingRetard">{{ messageRetard }}</div>
 
-<!-- Factures payées aujourd'hui -->
-<div class="factures-section">
-  <h3>Factures payées aujourd'hui</h3>
-  <div *ngIf="loadingToday">Chargement...</div>
-  <div *ngIf="messageToday && !loadingToday">{{ messageToday }}</div>
+          <div class="table-wrapper" *ngIf="facturesRetard.length > 0">
+          <table *ngIf="facturesRetard.length > 0">
+            <thead>
+              <tr>
+                <th>Boutique</th>
+                <th>Type charge</th>
+                <th>Catégorie</th>
+                <th>Période</th>
+                <th>Montant</th>
+                <th>Date facturation</th>
+                <th>Date échéance</th>
+                <th>Date de paiement</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let f of facturesRetard">
+                <td>{{ f.id_boutique?.nom || '—' }}</td>
+                <td>{{ f.id_type_charge?.nom || '—' }}</td>
+                <td>{{ f.categorie }}</td>
+                <td>{{ f.mois }}/{{ f.annee }}</td>
+                <td>{{ f.montant | number:'1.0-2' }} Ar</td>
+                <td>{{ f.date_facturation | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ f.date_echeance | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ f.date_paiement ? (f.date_paiement | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
+                <td>{{ f.statut }}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
 
-  <table *ngIf="facturesToday.length > 0">
-    <thead>
-      <tr>
-        <th>Boutique</th>
-        <th>Type charge</th>
-        <th>Catégorie</th>
-        <th>Période</th>
-        <th>Montant</th>
-        <th>Date facturation</th>
-        <th>Date échéance</th>
-        <th>Date de paiement</th>
-        <th>Statut</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let f of facturesToday">
-        <td>{{ f.id_boutique?.nom || '—' }}</td>
-        <td>{{ f.id_type_charge?.nom || '—' }}</td>
-        <td>{{ f.categorie }}</td>
-        <td>{{ f.mois }}/{{ f.annee }}</td>
-        <td>{{ f.montant | number:'1.0-2' }} Ar</td>
-        <td>{{ f.date_facturation | date:'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ f.date_echeance | date:'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ f.date_paiement ? (f.date_paiement | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
-        <td>{{ f.statut }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="!loadingToday && facturesToday.length === 0">
-    Aucun facture payée aujourd'hui.
-  </div>
-</div>
+          <div *ngIf="!loadingRetard && facturesRetard.length === 0">
+            Aucun facture en retard.
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Factures payées aujourd'hui -->
+        <div class="items-section">
+          <h3>Factures payées aujourd'hui</h3>
+          <div *ngIf="loadingToday">Chargement...</div>
+          <div *ngIf="messageToday && !loadingToday">{{ messageToday }}</div>
+
+          <div class="table-wrapper" *ngIf="facturesRetard.length > 0">
+          <table *ngIf="facturesToday.length > 0">
+            <thead>
+              <tr>
+                <th>Boutique</th>
+                <th>Type charge</th>
+                <th>Catégorie</th>
+                <th>Période</th>
+                <th>Montant</th>
+                <th>Date facturation</th>
+                <th>Date échéance</th>
+                <th>Date de paiement</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let f of facturesToday">
+                <td>{{ f.id_boutique?.nom || '—' }}</td>
+                <td>{{ f.id_type_charge?.nom || '—' }}</td>
+                <td>{{ f.categorie }}</td>
+                <td>{{ f.mois }}/{{ f.annee }}</td>
+                <td>{{ f.montant | number:'1.0-2' }} Ar</td>
+                <td>{{ f.date_facturation | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ f.date_echeance | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ f.date_paiement ? (f.date_paiement | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
+                <td>{{ f.statut }}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div *ngIf="!loadingToday && facturesToday.length === 0">
+            Aucun facture payée aujourd'hui.
+          </div>
+        </div>
+
+        </main>
+
+        <app-footer></app-footer>
+    </div>

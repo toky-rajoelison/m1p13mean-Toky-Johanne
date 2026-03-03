@@ -5,13 +5,23 @@ import { HttpClient } from '@angular/common/http';
 import { RouterModule, Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
 
+import { SidebarComponent } from '../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../test/header/header';
+import { FooterComponent } from '../../test/footer/footer';
+
 @Component({
   selector: 'app-facturer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule,SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './facturer.component.html',
 })
 export class FacturerComponent implements OnInit {
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+
   private BASE_URL = environment.apiUrl;
 
   boutiques: any[] = [];
@@ -29,6 +39,7 @@ export class FacturerComponent implements OnInit {
   date_echeance: string = '';
 
   message: string = '';
+  messageType: 'success' | 'error' = 'success';
   loading = false;
 
   constructor(
@@ -60,6 +71,7 @@ export class FacturerComponent implements OnInit {
 
   creerFacture(): void {
     if (!this.selectedBoutique || !this.selectedTypeCharge || !this.montant || !this.mois || !this.annee || !this.date_echeance) {
+        this.messageType = 'error'
         this.message = "Tous les champs obligatoires doivent être remplis";
         return;
     }
@@ -90,6 +102,7 @@ export class FacturerComponent implements OnInit {
         error: (err) => {
         console.error(err);
         this.message = err.error?.message || 'Erreur serveur';
+        this.messageType = 'error'
         this.loading = false;
         this.cd.detectChanges();
         }

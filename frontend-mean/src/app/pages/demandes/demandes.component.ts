@@ -4,14 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
 
+import { SidebarComponent } from '../test/sidebar/sidebar';
+import { HeaderComponent } from '../test/header/header';
+import { FooterComponent } from '../test/footer/footer';
+
 @Component({
   selector: 'app-demandes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './demandes.component.html',
   styleUrls: ['./demandes.component.css']
 })
 export class DemandesComponent implements OnInit {
+
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+
 
   private BASE_URL = environment.apiUrl;
 

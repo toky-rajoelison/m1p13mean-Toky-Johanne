@@ -5,13 +5,23 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environments';
 import { RouterModule } from '@angular/router';
 
+import { SidebarComponent } from '../test/sidebar/sidebar';
+import { HeaderComponent } from '../test/header/header';
+import { FooterComponent } from '../test/footer/footer';
+
 @Component({
   selector: 'app-factures',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule],
+  imports: [CommonModule, FormsModule,RouterModule,SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './factures.component.html',
 })
 export class FacturesComponent implements OnInit {
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+
   private BASE_URL = environment.apiUrl;
 
   userId: string | null = localStorage.getItem('userId');
@@ -84,7 +94,16 @@ export class FacturesComponent implements OnInit {
     this.http.get<any>(`${this.BASE_URL}/factures`, { params }).subscribe({
       next: (res) => {
         this.factures = res.factures;
-        this.totalPages = res.totalPages;
+
+        // Calculate totalPages if backend provides totalItems instead of totalPages
+        if (res.totalPages) {
+          this.totalPages = res.totalPages;
+        } else if (res.totalItems) {
+          this.totalPages = Math.ceil(res.totalItems / this.limit);
+        } else {
+          this.totalPages = 1; // fallback
+        }
+
         this.loading = false;
         this.cd.detectChanges();
       },

@@ -15,7 +15,7 @@
 .btn-info { background-color: #17a2b8; }
 .btn-warning { background-color: #ffc107; color: #000; }
 
-.factures-section {
+.items-section {
   max-width: 1000px;
   margin: 30px auto;
 }
@@ -42,3 +42,4 @@ hr {
   align-items: center;
   margin-bottom: 20px;
 }
+

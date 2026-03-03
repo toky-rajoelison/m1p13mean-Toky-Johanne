@@ -1,16 +1,45 @@
 <!-- sidebar.component.html -->
 <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
-  <div class="brand">
-      <div class="logo-icon">M</div>
-      <span>PRIMER.</span>
-  </div>
+    <div class="brand">
+        <div class="logo-icon">
+            <i class="fa-solid fa-users-cog"></i>
+        </div>
+        <span>EcomManage</span>
+    </div>
   <nav class="nav-list">
-      <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="#" class="nav-item"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
-      <a href="#" class="nav-item"><i class="fa-solid fa-wallet"></i> Payments</a>
-      <a href="#" class="nav-item"><i class="fa-solid fa-user-shield"></i> Admin</a>
+    <a *ngIf="userRole" [routerLink]="dashboardLink" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a 
+    routerLink="/annonces"
+    class="nav-item"
+    >
+    <i class="fa-solid fa-bullhorn"></i>
+    <span>Annonces</span>
+    </a>
+
+    <a 
+    *ngIf="userRole === 'ADMIN_BOUTIQUE' || userRole === 'ADMIN_CENTRE'" 
+    routerLink="/factures"
+    class="nav-item"
+    >
+    <i class="fa-solid fa-file-invoice-dollar"></i>
+    <span>Factures</span>
+    </a>
+
+    <a 
+    *ngIf="userRole === 'ADMIN_BOUTIQUE' || userRole === 'ADMIN_CENTRE'" 
+    routerLink="/demandes"
+    class="nav-item"
+    >
+    <i class="fa-solid fa-clipboard-list"></i>
+    <span>Voir les demandes</span>
+    </a>
+
   </nav>
   <div class="sidebar-footer">
-      <a href="#" class="nav-item"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      <app-logout-button></app-logout-button>
   </div>
 </aside>

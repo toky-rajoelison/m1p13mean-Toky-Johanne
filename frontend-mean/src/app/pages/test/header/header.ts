@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,4 +8,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.html',
   styleUrls: ['./header.css']
 })
-export class HeaderComponent {}
+export class HeaderComponent implements OnInit {
+
+  userName: string | null = null;
+  userRole: string | null = null;
+
+  ngOnInit(): void {
+    this.userName = localStorage.getItem('userName');
+    this.userRole = localStorage.getItem('userRole');
+  }
+
+}
