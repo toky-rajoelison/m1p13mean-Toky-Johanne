@@ -1,0 +1,72 @@
+
+
+
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
+
+    <div class="main-wrapper">
+        <app-header></app-header>
+
+        <main class="content">
+
+        
+        <div class="annonces-container">
+          <!-- New Announcement Form -->
+          <div class="items-section">
+            <div *ngIf="userRole !== 'ACHETEUR'" class="create-annonce">
+              <div class="section-header">
+              <h3>Créer une nouvelle annonce</h3>
+              </div>
+              <textarea 
+                [(ngModel)]="nouveauContenu" 
+                placeholder="Écrire votre annonce ici..." 
+                rows="3">
+              </textarea>
+
+              <div class="target-select">
+                <label>
+                  Cible:
+                  <select [(ngModel)]="nouveauTarget">
+                    <option value="PUBLIC">PUBLIC</option>
+                    <option value="PRIVATE">PRIVATE</option>
+                  </select>
+                </label>
+              </div>
+
+              <button (click)="creerAnnonce()" class="btn-create">Créer</button>
+              <p class="message" [ngClass]="messageType">{{ message }}</p>
+            </div>
+          </div>
+
+          <div class="items-section">
+          <!-- Announcements List -->
+          <div class="annonces-list" *ngIf="!loading && annonces.length > 0">
+            <h3>Annonces</h3>
+            <ul>
+              <li *ngFor="let a of annonces">
+                <strong>{{ a.id_utilisateur?.nom }} {{ a.id_utilisateur?.prenom }}</strong>
+                &mdash; {{ a.datetime_annonce | date:'short' }}
+                <p>{{ a.contenu }}</p>
+                <small>Cible: {{ a.target }}</small>
+              </li>
+            </ul>
+
+            <!-- Pagination -->
+            <div class="pagination">
+              <button (click)="prevPage()" [disabled]="page === 1">Précédent</button>
+              <span>Page {{ page }} / {{ totalPages }}</span>
+              <button (click)="nextPage()" [disabled]="page === totalPages">Suivant</button>
+            </div>
+          </div>
+          </div>
+
+          <!-- Loading or empty -->
+          <div *ngIf="loading">Chargement des annonces...</div>
+          <div *ngIf="!loading && annonces.length === 0">Aucune annonce à afficher</div>
+        
+        </div>
+
+        </main>
+        <app-footer></app-footer>
+    </div>
+
+      

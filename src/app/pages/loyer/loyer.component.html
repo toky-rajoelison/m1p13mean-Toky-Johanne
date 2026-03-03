@@ -1,0 +1,57 @@
+<div class="loyer-page">
+  <h2>Loyer - Gestion des boutiques</h2>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Boutique</th>
+        <th>Status</th>
+        <th>Dernier paiement</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of boutiques">
+        <td>{{ b.boutique.nom }}</td>
+        <td>{{ b.status }}</td>
+        <td>{{ b.lastPayment ? (b.lastPayment | date:'dd/MM/yyyy') : 'N/A' }}</td>
+        <td><button (click)="showHistory(b)">Voir</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Payment / history modal -->
+  <div *ngIf="selectedBoutique" class="modal">
+    <h3>Historique Paiements - {{ selectedBoutique.nom }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Mois/Année</th>
+          <th>Montant</th>
+          <th>Date Paiement</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let h of history">
+          <td>{{ h.month }}/{{ h.year }}</td>
+          <td>{{ h.amount }}</td>
+          <td>{{ h.datetime_payment ? (h.datetime_payment | date:'dd/MM/yyyy') : 'N/A' }}</td>
+          <td>{{ h.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="userRole==='ADMIN_CENTRE'" class="payment-form">
+      <h4>Effectuer un paiement</h4>
+      <p>Mois à payer: {{ nextMonth }}/{{ nextYear }}</p>
+      <p>Montant: {{ amountToPay }}</p>
+      <label>Description: <input [(ngModel)]="paymentDescription"></label>
+      <button (click)="payLoyer()">Payer</button>
+    </div>
+
+    <button (click)="selectedBoutique=null; showPayForm=false">Fermer</button>
+  </div>
+</div>

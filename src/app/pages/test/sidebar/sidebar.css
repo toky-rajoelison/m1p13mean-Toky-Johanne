@@ -1,0 +1,74 @@
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--dark-blue);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+}
+
+.brand {
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo-icon {
+    background: var(--accent-blue);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--dark-blue);
+}
+
+.nav-list {
+    padding: 20px 15px;
+    flex-grow: 1;
+}
+
+.nav-item {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.nav-item i {
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+.nav-item:hover {
+    background-color: var(--sidebar-hover);
+    color: var(--white);
+    padding-left: 25px; /* slide effect */
+    transition: all 0.3s ease;
+}
+
+.nav-item.active {
+    background-color: var(--accent-blue);
+    color: var(--dark-blue);
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}

@@ -1,0 +1,32 @@
+<h2>Créer une nouvelle promotion</h2>
+
+<div *ngIf="successMessage" class="success">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="errorMessage" class="error">
+  {{ errorMessage }}
+</div>
+
+<form (ngSubmit)="creerPromotion()">
+
+  <label>Nom *</label>
+  <input type="text" [(ngModel)]="nom" name="nom" required />
+
+  <label>Description</label>
+  <textarea [(ngModel)]="description" name="description"></textarea>
+
+  <label>Pourcentage (%) *</label>
+  <input type="number" [(ngModel)]="pourcentage" name="pourcentage" min="1" max="100" required />
+
+  <label>Date début *</label>
+  <input type="datetime-local" [(ngModel)]="datetime_debut" name="datetime_debut" required />
+
+  <label>Date fin *</label>
+  <input type="datetime-local" [(ngModel)]="datetime_fin" name="datetime_fin" required />
+
+  <button type="submit" [disabled]="loading">
+    {{ loading ? 'Création en cours...' : 'Créer la promotion' }}
+  </button>
+
+</form>

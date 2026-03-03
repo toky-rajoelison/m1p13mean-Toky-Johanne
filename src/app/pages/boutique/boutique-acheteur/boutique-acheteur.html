@@ -1,0 +1,53 @@
+<div class="boutiques-container">
+  <h2>Boutiques</h2>
+
+  <div *ngIf="loading">Chargement...</div>
+  <div *ngIf="message && !loading">{{ message }}</div>
+
+  <!-- Boutiques Table -->
+<div *ngIf="!loading && boutiques.length > 0">
+  <table border="1">
+    <!-- ... ton thead ici ... -->
+    <tbody>
+      <tr *ngFor="let b of boutiques">
+        <td><img [src]="BASE_URL + '/uploads/' + b.logo" width="50" *ngIf="b.logo"></td>
+        <td>{{ b.nom }}</td>
+        <td>{{ b.etage }}</td>
+        <td>{{ b.emplacement }}</td>
+        <td>{{ b.telephone }}</td>
+        <td>{{ b.email }}</td>
+        <td><button (click)="openModal(b)">Voir</button></td>
+        <td>
+            <!-- Bouton Laisser un avis -->
+            <button (click)="allerAvisBoutique(b._id)" class="btn btn-sm btn-warning">
+                Laisser un avis
+            </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="page === 1">Précédent</button>
+      <span>Page {{ page }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="page === totalPages">Suivant</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Détails boutique : {{ selectedBoutique?.nom }}</h3>
+    <p>{{ selectedBoutique?.description }}</p>
+    <p>Etage: {{ selectedBoutique?.etage }}, Emplacement: {{ selectedBoutique?.emplacement }}</p>
+    <p>Téléphone: {{ selectedBoutique?.telephone }}, Email: {{ selectedBoutique?.email }}</p>
+    <img [src]="BASE_URL + '/uploads/' + selectedBoutique?.logo" width="100" *ngIf="selectedBoutique?.logo">
+
+    <hr>
+    <app-boutique-p-a [selectedBoutiqueId]="selectedBoutique?._id"></app-boutique-p-a>
+
+    <button (click)="closeModal()">Fermer</button>
+  </div>
+</div>
+
+  

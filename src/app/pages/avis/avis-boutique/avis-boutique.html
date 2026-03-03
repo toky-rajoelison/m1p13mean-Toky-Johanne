@@ -1,0 +1,12 @@
+<h2>Avis de la boutique</h2>
+
+<div *ngIf="avis.length === 0">
+  Aucun avis pour cette boutique.
+</div>
+
+<div *ngFor="let a of avis" class="card">
+  <h3>{{ a.id_acheteur.nom }} {{ a.id_acheteur.prenom }}</h3>
+  <p>⭐ {{ a.note }}/10</p>
+  <p>{{ a.commentaire }}</p>
+  <small>{{ a.datetime_avis | date }}</small>
+</div>
