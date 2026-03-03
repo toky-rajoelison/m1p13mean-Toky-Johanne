@@ -1,14 +1,21 @@
-<div class="produits-container">
-  <h3>Produits de la boutique</h3>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
 
+    <div class="main-wrapper">
+        <app-header></app-header>
+
+        <main class="content">
+            
+            <div class="produits-container">
+  <h3>Produits de la boutique</h3>
+  
   <!-- Filters -->
   <div class="filters mb-4 flex gap-4">
-    <label>
-      Catégorie:
-      <select [(ngModel)]="filterCategorie" class="border px-2 py-1 rounded">
-        <option value="">Toutes</option>
-        <option *ngFor="let c of categories" [value]="c._id">{{ c.nom }}</option>
-      </select>
+      <label>
+          Catégorie:
+          <select [(ngModel)]="filterCategorie" class="border px-2 py-1 rounded">
+              <option value="">Toutes</option>
+              <option *ngFor="let c of categories" [value]="c._id">{{ c.nom }}</option>
+            </select>
     </label>
 
     <label>
@@ -17,54 +24,58 @@
     </label>
 
     <button (click)="applyFilters()" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-      Filtrer
+        Filtrer
     </button>
   </div>
-
+  
   <hr>
-
+  
   <!-- Loading / Error -->
   <div *ngIf="loading" class="text-gray-500">Chargement...</div>
   <div *ngIf="message && !loading" class="text-red-500">{{ message }}</div>
-
+  
   <!-- Table -->
   <table *ngIf="produits.length > 0" border="1" class="w-full border-collapse mt-4">
-    <thead class="bg-gray-100">
-      <tr>
-        <th>Image</th>
-        <th>Produit</th>
-        <th>Stock</th>
-        <th>Description</th>
-        <th>Statut</th>
-        <th>Dernière MAJ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of produits" class="hover:bg-gray-50">
-        <td>
-          <img [src]="p.image ? BASE_URL + '/uploads/' + p.image : 'assets/img/fallback.png'" width="60" alt="{{ p.id_produit?.nom || 'Produit' }}">
-        </td>
-        <td>{{ p.id_produit?.nom || '—' }}</td>
-        <td>{{ p.stock }}</td>
-        <td>{{ p.description }}</td>
-        <td>{{ p.statut === 1 ? 'Actif' : 'Inactif' }}</td>
-        <td>{{ p.last_updated | date:'dd/MM/yyyy HH:mm' }}</td>
-      </tr>
-    </tbody>
-  </table>
+      <thead class="bg-gray-100">
+          <tr>
+              <th>Image</th>
+              <th>Produit</th>
+              <th>Stock</th>
+              <th>Description</th>
+              <th>Statut</th>
+              <th>Dernière MAJ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of produits" class="hover:bg-gray-50">
+                <td>
+                    <img [src]="p.image ? BASE_URL + '/uploads/' + p.image : 'assets/img/fallback.png'" width="60" alt="{{ p.id_produit?.nom || 'Produit' }}">
+                </td>
+                <td>{{ p.id_produit?.nom || '—' }}</td>
+                <td>{{ p.stock }}</td>
+                <td>{{ p.description }}</td>
+                <td>{{ p.statut === 1 ? 'Actif' : 'Inactif' }}</td>
+                <td>{{ p.last_updated | date:'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div *ngIf="!loading && produits.length === 0" class="text-gray-500 mt-4">
+        Aucun produit trouvé.
+    </div>
 
-  <div *ngIf="!loading && produits.length === 0" class="text-gray-500 mt-4">
-    Aucun produit trouvé.
-  </div>
+    <!-- Pagination -->
+    <div class="pagination flex items-center gap-4 mt-4">
+        <button (click)="prevPage()" [disabled]="page === 1" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">
+            Précédent
+        </button>
+        <span>Page {{ page }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="page === totalPages" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">
+            Suivant
+        </button>
+    </div>
+</div>
+</main>
 
-  <!-- Pagination -->
-  <div class="pagination flex items-center gap-4 mt-4">
-    <button (click)="prevPage()" [disabled]="page === 1" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">
-      Précédent
-    </button>
-    <span>Page {{ page }} / {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="page === totalPages" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">
-      Suivant
-    </button>
-  </div>
+<app-footer></app-footer>
 </div>

@@ -17,6 +17,7 @@ import { FooterComponent } from '../test/footer/footer';
 })
 export class DemandesComponent implements OnInit {
 
+
   sidebarCollapsed = false;
 
   toggleSidebar() {

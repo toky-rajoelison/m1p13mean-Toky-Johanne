@@ -4,14 +4,24 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environments';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../../test/header/header';
+import { FooterComponent } from '../../../test/footer/footer';
+
 
 @Component({
   selector: 'app-add-avis-boutique',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './add-avis.html'
 })
 export class AddAvisBoutiqueComponent implements OnInit {
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+
   BASE_URL = environment.apiUrl;
   userId: string | null = localStorage.getItem('userId');
 

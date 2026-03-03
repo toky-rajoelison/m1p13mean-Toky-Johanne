@@ -2,15 +2,24 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
+import { SidebarComponent } from '../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../test/header/header';
+import { FooterComponent } from '../../test/footer/footer';
 
 @Component({
   selector: 'app-favoris',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './favoris.html',
   styleUrls: ['./favoris.css'],
 })
+
 export class FavorisComponent implements OnInit {
+sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
 
   BASE_URL = environment.apiUrl;
 

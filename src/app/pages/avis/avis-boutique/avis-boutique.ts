@@ -3,15 +3,24 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../test/header/header';
+import { FooterComponent } from '../../test/footer/footer';
 
 @Component({
   selector: 'app-avis-boutique',
   standalone: true,
-  imports: [CommonModule, HttpClientModule], 
+  imports: [CommonModule, HttpClientModule, SidebarComponent, HeaderComponent, FooterComponent], 
   templateUrl: './avis-boutique.html',
   styleUrls: ['./avis-boutique.css']
 })
 export class AvisBoutiqueComponent {
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+  
   avis: any[] = [];
   idBoutique: string = '';
 

@@ -37,6 +37,27 @@
     <i class="fa-solid fa-clipboard-list"></i>
     <span>Voir les demandes</span>
     </a>
+    <a 
+    *ngIf="userRole === 'ADMIN_BOUTIQUE' || userRole === 'ADMIN_CENTRE'" 
+    routerLink="/promotion"
+    class="nav-item"
+    >
+    <i class="fa-solid fa-clipboard-list"></i>
+    <span>Insérer Promotion</span>
+    </a>
+
+    <!-- ---------------------------- -->
+  <a *ngIf="userRole === 'ACHETEUR'" 
+    routerLink="/produit_b" class="nav-item">
+    <i class="fa-solid fa-clipboard-list"></i>
+    <span>Voir les produits</span>
+</a>
+
+<a *ngIf="userRole === 'ACHETEUR'" 
+routerLink="/boutique_a" class="nav-item">
+<i class="fa-solid fa-clipboard-list"></i>
+    <span>Voir les boutiques</span>
+  </a>
 
   </nav>
   <div class="sidebar-footer">

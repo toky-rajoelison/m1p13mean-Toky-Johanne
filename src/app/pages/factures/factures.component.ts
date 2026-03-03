@@ -16,6 +16,7 @@ import { FooterComponent } from '../test/footer/footer';
   templateUrl: './factures.component.html',
 })
 export class FacturesComponent implements OnInit {
+
   sidebarCollapsed = false;
 
   toggleSidebar() {

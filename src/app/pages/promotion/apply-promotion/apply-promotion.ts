@@ -3,15 +3,24 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SidebarComponent } from '../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../test/header/header';
+import { FooterComponent } from '../../test/footer/footer';
 
 @Component({
   selector: 'app-apply-promotion',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './apply-promotion.html',
   styleUrls: ['./apply-promotion.css']
 })
 export class ApplyPromotionComponent {
+  
+  sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
 
   private BASE_URL = environment.apiUrl;
 

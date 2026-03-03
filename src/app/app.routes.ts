@@ -19,10 +19,14 @@ import { FavorisComponent } from './pages/acheteur/favoris/favoris';
 import { AddAvisProduitComponent } from './pages/avis/avis-produit/add-avis/add-avis';
 import { AddAvisBoutiqueComponent } from './pages/avis/avis-boutique/add-avis/add-avis';
 import { TestComponent } from './pages/test/test.component';
+import { LoginBoutiqueComponent } from './pages/loginAdminBoutique/adminBoutique';
+import { LoginAcheteurComponent } from './pages/loginAcheteur/adminAcheteur';
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'loginBoutique', component: LoginBoutiqueComponent },
+   { path: 'loginAcheteur', component: LoginAcheteurComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'boutique', component: BoutiqueComponent },

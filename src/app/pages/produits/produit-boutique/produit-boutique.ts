@@ -5,14 +5,23 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environments';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { SidebarComponent } from '../../test/sidebar/sidebar';
+import { HeaderComponent } from '../../test/header/header';
+import { FooterComponent } from '../../test/footer/footer';
 
 @Component({
   selector: 'app-produits-boutique',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './produit-boutique.html',
 })
+
 export class ProduitsBoutiqueComponent implements OnInit {
+sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
   BASE_URL = environment.apiUrl;
   
   userId: string | null = localStorage.getItem('userId');

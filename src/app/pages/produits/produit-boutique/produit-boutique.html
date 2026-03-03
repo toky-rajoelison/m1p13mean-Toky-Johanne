@@ -1,80 +1,87 @@
-<div class="produits-container">
-  <h2>Produits Boutique</h2>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
 
+    <div class="main-wrapper">
+        <app-header></app-header>
+
+        <main class="content">
+            
+            <div class="produits-container">
+                <h2>Produits Boutique</h2>
+                
   <!-- Filters -->
   <div class="filters">
-    <label>
-      Boutique:
-      <select [(ngModel)]="filterBoutique">
+      <label>
+          Boutique:
+          <select [(ngModel)]="filterBoutique">
         <option value="">Toutes</option>
         <option *ngFor="let b of boutiques" [value]="b._id">{{ b.nom }}</option>
-      </select>
-    </label>
+    </select>
+</label>
 
     <label>
       Catégorie:
       <select [(ngModel)]="filterCategorie">
-        <option value="">Toutes</option>
-        <option *ngFor="let c of categories" [value]="c._id">{{ c.nom }}</option>
-      </select>
+          <option value="">Toutes</option>
+          <option *ngFor="let c of categories" [value]="c._id">{{ c.nom }}</option>
+        </select>
     </label>
-
+    
     <label>
-      Description:
-      <input type="text" [(ngModel)]="filterDescription" placeholder="Recherche description">
+        Description:
+        <input type="text" [(ngModel)]="filterDescription" placeholder="Recherche description">
     </label>
-
+    
     <button (click)="applyFilters()">Filtrer</button>
-  </div>
+</div>
 
-  <hr>
+<hr>
 
-  <!-- Loading / Error -->
-  <div *ngIf="loading">Chargement...</div>
-  <div *ngIf="message && !loading">{{ message }}</div>
+<!-- Loading / Error -->
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="message && !loading">{{ message }}</div>
 
-  <div class="admin-links">
+<div class="admin-links">
     <a routerLink="/favoris" class="btn btn-primary">
         Voir les favoris
     </a>
 </div>
-  <!-- Table -->
-  <table *ngIf="produits.length > 0" border="1">
+<!-- Table -->
+<table *ngIf="produits.length > 0" border="1">
     <thead>
-      <tr>
-        <th>Image</th>
-        <th>Produit</th>
-        <th>Boutique</th>
-        <th>Stock</th>
-        <th>Description</th>
-        <th>Statut</th>
-        <th>Dernière MAJ</th>
-        <th></th>
-        <th></th>
-      </tr>
+        <tr>
+            <th>Image</th>
+            <th>Produit</th>
+            <th>Boutique</th>
+            <th>Stock</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Dernière MAJ</th>
+            <th></th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of produits">
-        <td>
-          <img [src]="BASE_URL + '/uploads/' + p.image" width="60" *ngIf="p.image">
-        </td>
-        <td>{{ p.id_produit?.nom || '—' }}</td>
-        <td>{{ p.id_boutique?.nom || '—' }}</td>
-        <td>{{ p.stock }}</td>
-        <td>{{ p.description }}</td>
-        <td>{{ p.statut === 1 ? 'Actif' : 'Inactif' }}</td>
+        <tr *ngFor="let p of produits">
+            <td>
+                <img [src]="BASE_URL + '/uploads/' + p.image" width="60" *ngIf="p.image">
+            </td>
+            <td>{{ p.id_produit?.nom || '—' }}</td>
+            <td>{{ p.id_boutique?.nom || '—' }}</td>
+            <td>{{ p.stock }}</td>
+            <td>{{ p.description }}</td>
+            <td>{{ p.statut === 1 ? 'Actif' : 'Inactif' }}</td>
         <td>{{ p.last_updated | date:'dd/MM/yyyy HH:mm' }}</td>
         <td>
             <button (click)="toggleFavori(p._id)" style="background: none; border: none; font-size: 20px; cursor: pointer;">
                 
                 <span *ngIf="isFavori(p._id)" style="color: red;">
-                ❤️
+                    ❤️
                 </span>
 
                 <span *ngIf="!isFavori(p._id)" style="color: gray;">
-                🤍
+                    🤍
                 </span>
-
+                
             </button>
         </td>
         <td>
@@ -88,13 +95,17 @@
 
   <div *ngIf="!loading && produits.length === 0">
     Aucun produit trouvé.
-  </div>
+</div>
 
   <!-- Pagination -->
   <div class="pagination" >
-  <!-- <div class="pagination" *ngIf="totalPages > 1"> -->
-    <button (click)="prevPage()" [disabled]="page === 1">Précédent</button>
-    <span>Page {{ page }} / {{ totalPages }}</span>
+      <!-- <div class="pagination" *ngIf="totalPages > 1"> -->
+          <button (click)="prevPage()" [disabled]="page === 1">Précédent</button>
+          <span>Page {{ page }} / {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="page === totalPages">Suivant</button>
   </div>
+</div>
+</main>
+
+<app-footer></app-footer>
 </div>

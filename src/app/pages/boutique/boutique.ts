@@ -5,16 +5,24 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { SidebarComponent } from '../test/sidebar/sidebar';
+import { HeaderComponent } from '../test/header/header';
+import { FooterComponent } from '../test/footer/footer';
 
 
 @Component({
   selector: 'app-boutique',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule, SidebarComponent, HeaderComponent, FooterComponent],
   templateUrl: './boutique.html',
   styleUrls: ['./boutique.css']
 })
 export class BoutiqueComponent implements OnInit {
+sidebarCollapsed = false;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
 
   private BASE_URL = environment.apiUrl;
 

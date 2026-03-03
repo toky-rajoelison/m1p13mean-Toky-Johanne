@@ -1,33 +1,44 @@
-<h2>Appliquer une promotion</h2>
+<app-sidebar [sidebarCollapsed]="sidebarCollapsed"></app-sidebar>
 
-<div *ngIf="successMessage" class="success">
-  {{ successMessage }}
-</div>
+    <div class="main-wrapper">
+        <app-header></app-header>
 
-<div *ngIf="errorMessage" class="error">
-  {{ errorMessage }}
-</div>
-
-<form (ngSubmit)="appliquerPromotion()">
-
-  <label>Produit *</label>
-  <select [(ngModel)]="selectedProduit" name="produit" required>
-    <option value="">-- Sélectionner un produit --</option>
-    <option *ngFor="let p of produits" [value]="p._id">
-      {{ p.id_produit?.nom }}
-    </option>
+        <main class="content">
+            
+            <h2>Appliquer une promotion</h2>
+            
+            <div *ngIf="successMessage" class="success">
+                {{ successMessage }}
+            </div>
+            
+            <div *ngIf="errorMessage" class="error">
+                {{ errorMessage }}
+            </div>
+            
+            <form (ngSubmit)="appliquerPromotion()">
+                
+                <label>Produit *</label>
+                <select [(ngModel)]="selectedProduit" name="produit" required>
+                    <option value="">-- Sélectionner un produit --</option>
+                    <option *ngFor="let p of produits" [value]="p._id">
+                        {{ p.id_produit?.nom }}
+                    </option>
   </select>
-
+  
   <label>Promotion *</label>
   <select [(ngModel)]="selectedPromotion" name="promotion" required>
-    <option value="">-- Sélectionner une promotion --</option>
-    <option *ngFor="let promo of promotions" [value]="promo._id">
-      {{ promo.nom }} ({{ promo.pourcentage }}%)
-    </option>
-  </select>
-
-  <button type="submit" [disabled]="loading">
-    {{ loading ? 'Application...' : 'Appliquer' }}
-  </button>
-
+      <option value="">-- Sélectionner une promotion --</option>
+      <option *ngFor="let promo of promotions" [value]="promo._id">
+          {{ promo.nom }} ({{ promo.pourcentage }}%)
+        </option>
+    </select>
+    
+    <button type="submit" [disabled]="loading">
+        {{ loading ? 'Application...' : 'Appliquer' }}
+    </button>
+    
 </form>
+</main>
+
+<app-footer></app-footer>
+</div>
