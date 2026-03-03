@@ -32,7 +32,7 @@
                 <label>Date fin *</label>
                 <input type="datetime-local" [(ngModel)]="datetime_fin" name="datetime_fin" required />
                 
-                <button type="submit" [disabled]="loading">
+                <button type="submit" [disabled]="loading"  class="btn-create">
                     {{ loading ? 'Création en cours...' : 'Créer la promotion' }}
                 </button>
 

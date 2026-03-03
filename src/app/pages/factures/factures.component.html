@@ -90,7 +90,7 @@
                 <td *ngIf="userRole === 'ADMIN_CENTRE'">
                   <button 
                     *ngIf="f.statut === 'EN_ATTENTE'" 
-                    (click)="payerFacture(f._id)">
+                    (click)="payerFacture(f._id)" class="btn-create">
                     Payer
                   </button>
                 </td>

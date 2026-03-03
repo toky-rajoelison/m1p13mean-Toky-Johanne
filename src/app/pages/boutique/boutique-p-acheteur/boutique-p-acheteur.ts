@@ -3,23 +3,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environments';
-import { SidebarComponent } from '../../test/sidebar/sidebar';
-import { HeaderComponent } from '../../test/header/header';
-import { FooterComponent } from '../../test/footer/footer';
+
 
 @Component({
   selector: 'app-boutique-p-a',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, HeaderComponent, FooterComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './boutique-p-acheteur.html',
 })
 export class BoutiquePAcheteur implements OnInit, OnChanges {
   // imports: [CommonModule, HttpClientModule, SidebarComponent, HeaderComponent, FooterComponent],
-  sidebarCollapsed = false;
-
-  toggleSidebar() {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
-  }
   @Input() selectedBoutiqueId: string | null = null;
 
   BASE_URL = environment.apiUrl;
