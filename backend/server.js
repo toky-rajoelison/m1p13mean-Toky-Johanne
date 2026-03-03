@@ -2,8 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');              // ✅ ADD
 const connectDB = require('./config/db');
+const path = require('path');
 
 const app = express();
+// Serve Angular frontend
+app.use(express.static(path.join(__dirname, '../frontend-mean/dist/browser')));
+
+// Catch all other routes and redirect to Angular's index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend-mean/dist/browser/index.html'));
+});
 
 // ✅ CORS middleware
 app.use(cors({
